@@ -1,0 +1,68 @@
+<?php require_once('app/Views/libraries/header.php'); ?>
+
+
+<link rel="stylesheet" href="<?php echo base_url('assets/admin_dashboard/vendor/datatables/dataTables.bootstrap4.min.css') ?>">
+<!-- template -->
+<link rel="stylesheet" href="<?php echo base_url('../../assets/main/css/styles.css') ?>">
+
+<!--multiselect dropdown-->
+<link rel="stylesheet" href="<?php echo base_url('assets/multi_select/dist/css/bootstrap-multiselect.css') ?>" type="text/css">
+
+<script type="text/javascript">
+	var user_id 	= <?php echo $_SESSION['userid']; ?>;
+	var first_login = <?php echo $profile["data"]->first_login; ?>;
+</script>
+
+
+
+<?php require_once('app/Views/libraries/top-bar.php'); ?>
+
+
+			
+
+
+<!--CONTENT END TAG-->			
+		</div><!--./col content-->
+		
+	</div><!--./row-->
+</div><!--./container-fluid-->
+<!--CONTENT END TAG-->	
+
+
+        
+
+
+<?php require_once('app/Views/libraries/copyright.php'); ?>
+  
+
+
+
+<!-- Footer Menu -->
+<?php require_once('app/Views/libraries/footer-menu.php'); ?>
+
+<?php require_once('app/Views/libraries/footer.php'); ?>
+<!-- Footer Menu -->
+
+<!-- multiselect dropdown -->
+<script src="<?php echo base_url('assets/multi_select/dist/js/bootstrap-multiselect.js') ?>"></script>
+
+
+<!-- datatables -->
+<script src="<?php echo base_url('assets/admin_dashboard/vendor/datatables/jquery.dataTables.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/admin_dashboard/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/admin_dashboard/vendor/datatables/datatables.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/admin_dashboard/vendor/datatables/dataTables.buttons.min.js') ?>"></script>
+<!-- datatables -->
+
+
+
+<!--Autocomplete-->
+<script src="http://localhost:81/hoteleers/assets/autocomplete/js/jquery.mockjax.js"></script>
+<script src="http://localhost:81/hoteleers/assets/autocomplete/js/jquery.autocomplete.js"></script>
+<!--Autocomplete-->
+
+
+
+<script src="<?php echo base_url('assets/main/js/home.js?v='). date('Ymdi') ?>"></script>
+
+

@@ -1,0 +1,1127 @@
+$(document).ready(function(){ 
+    var homeurl         = baseurl + '/home';
+    var homeurl_txt     = 'job_post';
+
+    if(parseInt(first_login)){
+        //setTimeout(function(){
+             $('#preference_modal').modal('show');
+        //},2000)
+       
+        //alert('sadfasf')
+    }//
+
+    if(!parseInt(password_changed)){
+        //setTimeout(function(){
+             $('#password_change_modal').modal('show');
+        //},2000)
+       
+        //alert('sadfasf')
+    }//
+
+    $(document.body).on('click','button[name=btn_login]',function(e){
+       
+       
+        
+    	var homeurl    = baseurl + '/home';
+    	var url        = baseurl + '/login/login';
+         
+    	$.ajax({
+            url: url,
+            data: $('#frm_preference').serialize(),
+            type: "POST",
+            dataType: "JSON",
+            beforeSend : (function (data){
+                $('button[name=btn_login]').text('Logging in...');
+                $('button[name=btn_login]').attr('disabled','disabled');
+            })
+        }).done(function (data) {
+            
+            //alert(Object.keys(data.messages).length);
+            if (data.success === true){
+            	
+                var msg_html    = '';
+                var arr         = [];
+                for (var i = 0; i <= data.messages.length - 1; i++) {
+                    for (var element in data.messages[i]) {
+                        arr.push(data.messages[i][element]);
+                        msg_html += data.messages[i][element] + '\n';
+                    }//end for
+                }//End for
+
+                $.notify(msg_html,{ 
+                    position:"top center",
+                    className:"success",
+                    arrowShow : true
+                });
+
+                
+                setTimeout(function(){
+                    window.location.replace(homeurl);
+                },2000)
+    			//window.location.replace(homeurl);
+            } else {
+                var msg_html    = '';
+                var arr         = [];
+                for (var i = 0; i <= data.messages.length - 1; i++) {
+                    for (var element in data.messages[i]) {
+                        arr.push(data.messages[i][element]);
+                        msg_html += data.messages[i][element] + '\n';
+                    }//end for
+                }//End for
+
+                $.notify(msg_html,{ 
+    				position:"top center",
+    				className:"error",
+    				arrowShow : true
+    			});
+
+                $('button[name=btn_login]').text('Login');
+                $('button[name=btn_login]').removeAttr('disabled');
+            }
+        }).fail(function(e){
+            alert(e.responseText);
+            $.notify(e.responseText,{ 
+				position:"top center",
+				style:'happyblue',
+				className:"error",
+				
+			});
+
+            $('button[name=btn_login]').text('Login');
+            $('button[name=btn_login]').removeAttr('disabled');
+        }).always(function(e){
+
+        });
+        
+    })
+
+    //events
+    //=====================================================================================================================
+
+    //submit
+    $(document.body).on('click','button.btn_submit',function(e){
+        var view_url     = homeurl + '/view/';
+
+        
+        var btn         = $(this);
+        var btn_text    = '';
+        var type_text   = "";
+
+       
+        var url         = homeurl;
+        url             = homeurl + '/submit_data';
+        var url_view    = homeurl + '/view';
+        
+        var frm_id      = '';
+        
+       
+
+        btn_text = "Submit";
+ 
+      
+        if(confirm("Are you sure you want to submit this record?")){
+
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: $('#frm_preference').serialize(),
+                dataType: "JSON",
+                beforeSend : function(){
+                    $(".outside_button *").css('pointer-events','none');
+                    btn.text('Processing...');
+                    btn.attr('disabled','disabled');
+
+                },
+            }).done(function (data) {
+                   
+                    //alert(Object.keys(data.messages).length);
+                    if (data.success === true){
+                        
+                        var msg_html    = '';
+                        var arr         = [];
+                        for (var i = 0; i <= data.messages.length - 1; i++) {
+                            for (var element in data.messages[i]) {
+                                arr.push(data.messages[i][element]);
+                                msg_html += data.messages[i][element] + '\n';
+                            }//end for
+                        }//End for
+
+                        $.notify(msg_html,{ 
+                            position:"top center",
+                            className:"success",
+                            arrowShow : true
+                        });
+
+
+                        
+                        setTimeout(function(){
+                            window.location.replace(homeurl);;
+                            btn.text(btn_text);
+                            btn.removeAttr('disabled');
+                        },2000)
+
+                        
+                        //load_record(0,type,type+'_container',type+'_pagination',type+'_loader');
+                        //$(frm_id+' input[name=header\\[id\\]').val('');
+                        //$(frm_id+' input[name=header\\[name\\]').val('');
+
+                        //load_record(0,'signup','main_container','main_pagination','main_loader');
+
+                        
+
+                    } else {
+                        var msg_html    = '';
+                        var arr         = [];
+                        for (var i = 0; i <= data.messages.length - 1; i++) {
+                            for (var element in data.messages[i]) {
+                                arr.push(data.messages[i][element]);
+                                msg_html += data.messages[i][element] + '<br/>';
+                            }//end for
+                        }//End for
+                        
+                        $('#error_cont').html('<div class="alert alert-danger">'+msg_html+'</div>');
+
+                       
+
+                        btn.text(btn_text);
+                        btn.removeAttr('disabled');
+                        $(".outside_button *").css('pointer-events','auto');
+                    }
+                }).fail(function(e){
+                    alert(e.responseText);
+                   
+
+                    btn.text(btn_text);
+                    btn.removeAttr('disabled');
+                    $(".outside_button *").css('pointer-events','auto');
+                }).always(function(e){
+
+            });
+        }//end if
+    })//end if
+    //end submit
+
+
+    //submit
+    $(document.body).on('click','button.btn_change_password',function(e){
+        var view_url     = homeurl + '/view/';
+
+        
+        var btn         = $(this);
+        var btn_text    = '';
+        var type_text   = "";
+
+       
+        var url         = homeurl;
+        url             = homeurl + '/change_password';
+        var url_view    = homeurl + '/view';
+        
+        var frm_id      = '';
+        
+       
+
+        btn_text = "Submit";
+ 
+      
+        if(confirm("Are you sure you want to submit this record?")){
+
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: $('#frm_change_password').serialize(),
+                dataType: "JSON",
+                beforeSend : function(){
+                    $(".outside_button *").css('pointer-events','none');
+                    btn.text('Processing...');
+                    btn.attr('disabled','disabled');
+
+                },
+            }).done(function (data) {
+                   
+                    //alert(Object.keys(data.messages).length);
+                    if (data.success === true){
+                        
+                        var msg_html    = '';
+                        var arr         = [];
+                        for (var i = 0; i <= data.messages.length - 1; i++) {
+                            for (var element in data.messages[i]) {
+                                arr.push(data.messages[i][element]);
+                                msg_html += data.messages[i][element] + '\n';
+                            }//end for
+                        }//End for
+
+                        $.notify(msg_html,{ 
+                            position:"top center",
+                            className:"success",
+                            arrowShow : true
+                        });
+
+
+                        
+                        setTimeout(function(){
+                            window.location.replace(homeurl);;
+                            btn.text(btn_text);
+                            btn.removeAttr('disabled');
+                        },2000)
+
+                        
+                        //load_record(0,type,type+'_container',type+'_pagination',type+'_loader');
+                        //$(frm_id+' input[name=header\\[id\\]').val('');
+                        //$(frm_id+' input[name=header\\[name\\]').val('');
+
+                        //load_record(0,'signup','main_container','main_pagination','main_loader');
+
+                        
+
+                    } else {
+                        var msg_html    = '';
+                        var arr         = [];
+                        for (var i = 0; i <= data.messages.length - 1; i++) {
+                            for (var element in data.messages[i]) {
+                                arr.push(data.messages[i][element]);
+                                //msg_html += data.messages[i][element] + '<br/>';
+                                msg_html += data.messages[i][element] + '\n';
+                            }//end for
+                        }//End for
+                        
+                        //$('#error_cont').html('<div class="alert alert-danger">'+msg_html+'</div>');
+
+                       $.notify(msg_html,{ 
+                            position:"top center",
+                            className:"error",
+                            arrowShow : true
+                        });
+
+                        btn.text(btn_text);
+                        btn.removeAttr('disabled');
+                        $(".outside_button *").css('pointer-events','auto');
+                    }
+                }).fail(function(e){
+                    alert(e.responseText);
+                   
+
+                    btn.text(btn_text);
+                    btn.removeAttr('disabled');
+                    $(".outside_button *").css('pointer-events','auto');
+                }).always(function(e){
+
+            });
+        }//end if
+    })//end if
+    //end submit
+
+
+
+    //append data
+    $(document.body).on('click','.btn_add_append',function(e){
+        var type = $(this).attr('aria-type');
+            type_txt = type.replace(/_/g,' ');
+
+
+        var selected = $('select[id=header\\['+type+'\\]]').val();
+
+            
+
+        //var id      = $('input[name=header\\['+type+'\\]]').val().trim();
+        //var name    = $('input[id=header\\['+type+'_text\\]]').val().trim();
+
+        var html = '';
+
+        var dup = 0;
+        $('#cont_'+type).find("input").each(function(){
+            var value = $(this).val();
+            if(value.toLowerCase() === name.toLowerCase()){
+                dup = 1;
+                return false;
+            }//end if
+        });
+        $('#cont_'+type).empty();
+
+
+        if(selected == ""){
+            var msg_html = 'Please enter '+type_txt+' name!'
+            $.notify(msg_html,{ 
+                position:"top center",
+                className:"error",
+                arrowShow : true
+            });
+            $('input[id=header\\['+type+'_text\\]]').focus();
+        }else{
+            if(dup == 0){
+                for(var key in selected){
+                    html += '<div class="col">';
+                        html += '<small class="text-muted">'+selected[key]+'</small>';
+                        //html += '<button title="Remove" class="text-danger close remove_append" aria-type="'+type+'">&times;</button>';
+                        html += '<input name="row['+type+'][]" class="d-none form-control form-control-sm mb-2" type="text" value="'+selected[key]+'">'
+                        html += '<input name="row[name][]" maxlength="200" class="d-none form-control form-control-sm mb-2" type="text" value="'+selected[key]+'">'
+                    html += '</div>';
+                }//end for
+                    
+                    $('#cont_'+type).append(html);
+            }else{
+                var msg_html = 'Duplicate entry of '+type_txt+' name!'
+                $.notify(msg_html,{ 
+                    position:"top center",
+                    className:"error",
+                    arrowShow : true
+                });
+            }//end
+
+            //$('input[name=header\\['+type+'\\]]').val("");
+            //$('input[id=header\\['+type+'_text\\]]').val("").focus();
+        }//end if
+        
+    })
+    //end append data
+
+    //remove appended data
+    $(document.body).on('click','.remove_append',function(e){
+        $(this).parent().remove();
+    })
+    //remove appended data
+    
+    //load industry autocomplete
+    $(document.body).on('focus','input[id=header\\[industry_text\\]]',function(){
+        if(!$(this).hasClass('wauto')){
+            load_industry_autocomplete($(this),$('input[name=header\\[industry\\]]'));
+            $(this).addClass('wauto');
+        }//End if
+    })//focus
+    $(document.body).on('blur','input[id=header\\[industry_text\\]]',function(){
+        if($(this).val() == ""){
+            $('input[name=header\\[industry\\]]').val('');
+        }//end if
+
+        if($('input[name=header\\[industry\\]]').val() == ''){
+            $(this).val('');
+        }//end if
+    })//blur
+
+    //load department autocomplete
+    $(document.body).on('focus','input[id=header\\[department_text\\]]',function(){
+        if(!$(this).hasClass('wauto')){
+            load_department_autocomplete($(this),$('input[name=header\\[department\\]]'));
+            $(this).addClass('wauto');
+        }//End if
+    })//focus
+    $(document.body).on('blur','input[id=header\\[department_text\\]]',function(){
+        if($(this).val() == ""){
+            $('input[name=header\\[department\\]]').val('');
+        }//end if
+
+        if($('input[name=header\\[department\\]]').val() == ''){
+            $(this).val('');
+        }//end if
+    })//blur
+
+    //load job level autocomplete
+    $(document.body).on('focus','input[id=header\\[job_level_text\\]]',function(){
+        if(!$(this).hasClass('wauto')){
+            load_job_level_autocomplete($(this),$('input[name=header\\[job_level\\]]'));
+            $(this).addClass('wauto');
+        }//End if
+    })//focus
+    $(document.body).on('blur','input[id=header\\[job_level_text\\]]',function(){
+        if($(this).val() == ""){
+            $('input[name=header\\[job_level\\]]').val('');
+        }//end if
+
+        if($('input[name=header\\[job_level\\]]').val() == ''){
+            $(this).val('');
+        }//end if
+    })//blur
+
+    //load job type autocomplete
+    $(document.body).on('focus','input[id=header\\[job_type_text\\]]',function(){
+        if(!$(this).hasClass('wauto')){
+            load_job_type_autocomplete($(this),$('input[name=header\\[job_type\\]]'));
+            $(this).addClass('wauto');
+        }//End if
+    })//focus
+    $(document.body).on('blur','input[id=header\\[job_type_text\\]]',function(){
+        if($(this).val() == ""){
+            $('input[name=header\\[job_type\\]]').val('');
+        }//end if
+
+        if($('input[name=header\\[job_type\\]]').val() == ''){
+            $(this).val('');
+        }//end if
+    })//blur
+
+
+    //load education autocomplete
+    $(document.body).on('focus','input[id=header\\[education_text\\]]',function(){
+        if(!$(this).hasClass('wauto')){
+            load_education_autocomplete($(this),$('input[name=header\\[education\\]]'));
+            $(this).addClass('wauto');
+        }//End if
+    })//focus
+    $(document.body).on('blur','input[id=header\\[education_text\\]]',function(){
+        if($(this).val() == ""){
+            $('input[name=header\\[education\\]]').val('');
+        }//end if
+
+        if($('input[name=header\\[education\\]]').val() == ''){
+            $(this).val('');
+        }//end if
+    })//blur
+
+    $(document.body).on('click','#frm_change_password .btn_show_pass',function(e){
+        var type = $(this).attr('aria-type');
+        var x;
+        if(type == "password"){
+            x = $('#frm_change_password input[name=header\\[new_password\\]]');
+        }else{
+            x = $('#frm_change_password input[name=header\\[confirm_password\\]]');
+        }//end if
+        
+        if(x.attr('type') === "password") {
+            x.prop("type", "text");
+            $(this).find('.input-group-text').html('<i class="fa fa-eye-slash"></i>');
+        } else {
+            x.prop("type", "password");
+            $(this).find('.input-group-text').html('<i class="fa fa-eye"></i>');
+        }
+    });
+
+    //=====================================================================================================================
+    //end events
+
+    //autocomplete
+    //===============================================================================================================================
+    //load dropdown
+    function load_dropdown(url,dropdown){
+        //var url     = baseurl + "/get/signup/industry/0";
+        $.ajax({
+            url: url,
+            type: "POST",
+            dataType: "JSON",
+            async : false,
+            beforeSend : function(){
+              
+            },
+        }).done(function (response) {
+
+            var html = '';
+            for(var key in response.data){
+                html += '<option value="'+response.data[key].id+'">'+response.data[key].name+'</option>';
+                
+            }//end for
+            dropdown.html(html);
+
+        }).fail(function(e){
+            alert(e.responseText);
+            
+        }).always(function(e){
+
+        });
+        /*html.autocomplete({
+            serviceUrl: url,
+            type : 'GET',
+            dataType : 'json',
+            showNoSuggestionNotice: true,
+            noSuggestionNotice: 'Sorry, no matching results',
+            autoSelectFirst : true,
+            triggerSelectOnValidInput : true,
+            orientation : 'auto',
+            transformResult: function(response) {
+                return {
+                    suggestions: $.map(response.data, function(dataItem) {
+                        if (dataItem.name.toLowerCase().indexOf(html.val().toLowerCase()) > -1) {
+                           return { value: dataItem.name, data: dataItem.id }; 
+                        }//end if
+                    })
+                };  
+            },
+            onSelect: function(suggestion) {
+                html_id.val(suggestion.data);
+
+            },
+
+            onSearchComplete : function (query, suggestions) {
+                if(suggestions.length == 0){
+                    html_id.val('');
+                }//end if
+
+
+            }
+        }).blur(function(){
+            if(html_id.val() == ''){
+                html.val('');
+            }
+        });*/
+    }
+
+
+    //Industry autocomplete
+    function load_industry_autocomplete(html,html_id){
+        var url     = baseurl + "/get/signup/industry/0";
+        $.ajax({
+            url: url,
+            type: "POST",
+            dataType: "JSON",
+            async : false,
+            beforeSend : function(){
+              
+            },
+        }).done(function (response) {
+
+            var html = '';
+            for(var key in response.data){
+                html += '<option value="'+response.data[key].id+'">'+response.data[key].name+'</option>';
+                
+            }//end for
+            $('#header\\[industry\\]').html(html);
+
+        }).fail(function(e){
+            alert(e.responseText);
+            btn.html(btn_text);
+            $(".outside_button *").css('pointer-events','auto');
+        }).always(function(e){
+
+        });
+        /*html.autocomplete({
+            serviceUrl: url,
+            type : 'GET',
+            dataType : 'json',
+            showNoSuggestionNotice: true,
+            noSuggestionNotice: 'Sorry, no matching results',
+            autoSelectFirst : true,
+            triggerSelectOnValidInput : true,
+            orientation : 'auto',
+            transformResult: function(response) {
+                return {
+                    suggestions: $.map(response.data, function(dataItem) {
+                        if (dataItem.name.toLowerCase().indexOf(html.val().toLowerCase()) > -1) {
+                           return { value: dataItem.name, data: dataItem.id }; 
+                        }//end if
+                    })
+                };  
+            },
+            onSelect: function(suggestion) {
+                html_id.val(suggestion.data);
+
+            },
+
+            onSearchComplete : function (query, suggestions) {
+                if(suggestions.length == 0){
+                    html_id.val('');
+                }//end if
+
+
+            }
+        }).blur(function(){
+            if(html_id.val() == ''){
+                html.val('');
+            }
+        });*/
+    }
+
+    //department autocomplete
+    function load_department_autocomplete(html,html_id){
+        var url     = baseurl + "/get/job_post/odepartment";
+        html.autocomplete({
+            serviceUrl: url,
+            type : 'GET',
+            dataType : 'json',
+            showNoSuggestionNotice: true,
+            noSuggestionNotice: 'Sorry, no matching results',
+            autoSelectFirst : true,
+            triggerSelectOnValidInput : true,
+            orientation : 'auto',
+            transformResult: function(response) {
+                return {
+                    suggestions: $.map(response.data, function(dataItem) {
+                        if (dataItem.name.toLowerCase().indexOf(html.val().toLowerCase()) > -1) {
+                           return { value: dataItem.name, data: dataItem.id }; 
+                        }//end if
+                    })
+                };  
+            },
+            onSelect: function(suggestion) {
+                html_id.val(suggestion.data);
+            },
+
+            onSearchComplete : function (query, suggestions) {
+                if(suggestions.length == 0){
+                    html_id.val('');
+                }//end if
+
+            }
+        }).blur(function(){
+            if(html_id.val() == ''){
+                html.val('');
+            }
+        });
+    }
+
+    //job level autocomplete
+    function load_job_level_autocomplete(html,html_id){
+        var url     = baseurl + "/get/job_post/ojob_level";
+        html.autocomplete({
+            serviceUrl: url,
+            type : 'GET',
+            dataType : 'json',
+            showNoSuggestionNotice: true,
+            noSuggestionNotice: 'Sorry, no matching results',
+            autoSelectFirst : true,
+            triggerSelectOnValidInput : true,
+            orientation : 'auto',
+            transformResult: function(response) {
+                return {
+                    suggestions: $.map(response.data, function(dataItem) {
+                        if (dataItem.name.toLowerCase().indexOf(html.val().toLowerCase()) > -1) {
+                           return { value: dataItem.name, data: dataItem.id }; 
+                        }//end if
+                    })
+                };  
+            },
+            onSelect: function(suggestion) {
+                html_id.val(suggestion.data);
+            },
+
+            onSearchComplete : function (query, suggestions) {
+                if(suggestions.length == 0){
+                    html_id.val('');
+                }//end if
+
+            }
+        }).blur(function(){
+            if(html_id.val() == ''){
+                html.val('');
+            }
+        });
+    }
+
+    //job type autocomplete
+    function load_job_type_autocomplete(html,html_id){
+        var url     = baseurl + "/get/job_post/ojob_type";
+        html.autocomplete({
+            serviceUrl: url,
+            type : 'GET',
+            dataType : 'json',
+            showNoSuggestionNotice: true,
+            noSuggestionNotice: 'Sorry, no matching results',
+            autoSelectFirst : true,
+            triggerSelectOnValidInput : true,
+            orientation : 'auto',
+            transformResult: function(response) {
+                return {
+                    suggestions: $.map(response.data, function(dataItem) {
+                        if (dataItem.name.toLowerCase().indexOf(html.val().toLowerCase()) > -1) {
+                           return { value: dataItem.name, data: dataItem.id }; 
+                        }//end if
+                    })
+                };  
+            },
+            onSelect: function(suggestion) {
+                html_id.val(suggestion.data);
+            },
+
+            onSearchComplete : function (query, suggestions) {
+                if(suggestions.length == 0){
+                    html_id.val('');
+                }//end if
+
+            }
+        }).blur(function(){
+            if(html_id.val() == ''){
+                html.val('');
+            }
+        });
+    }
+
+
+    //education autocomplete
+    function load_education_autocomplete(html,html_id){
+        var url     = baseurl + "/get/job_post/oeducation";
+        html.autocomplete({
+            serviceUrl: url,
+            type : 'GET',
+            dataType : 'json',
+            showNoSuggestionNotice: true,
+            noSuggestionNotice: 'Sorry, no matching results',
+            autoSelectFirst : true,
+            triggerSelectOnValidInput : true,
+            orientation : 'auto',
+            transformResult: function(response) {
+                return {
+                    suggestions: $.map(response.data, function(dataItem) {
+                        if (dataItem.name.toLowerCase().indexOf(html.val().toLowerCase()) > -1) {
+                           return { value: dataItem.name, data: dataItem.id }; 
+                        }//end if
+                    })
+                };  
+            },
+            onSelect: function(suggestion) {
+                html_id.val(suggestion.data);
+            },
+
+            onSearchComplete : function (query, suggestions) {
+                if(suggestions.length == 0){
+                    html_id.val('');
+                }//end if
+
+            }
+        }).blur(function(){
+            if(html_id.val() == ''){
+                html.val('');
+            }
+        });
+    }
+    //===============================================================================================================================
+    //end autocomplete
+
+    //modal
+    //=======================================================================================================================
+    //Lookup Modal
+    $('#preference_modal').on('shown.bs.modal',function(e){
+        //Set Title
+        var param   = {};
+        var title   = 'PREFERENCES'
+        var type    = 'preference';
+        
+
+        param.id    = user_id;
+        param.type  = type;
+        //alert(id)
+        $('#preference_modal_title').html(title);
+
+
+        //$('#btnOk').html('<span class="spinner-grow spinner-grow-sm"></span></span> Loading...');
+        //$('#btnOk').attr('disabled','disabled');
+
+        var html_table      = load_preference_form(param);
+        $('#preference_modal_body').html(html_table);
+        //load_industry_autocomplete();
+
+        var url         = baseurl + "/get/signup/industry/0";
+        var dropdown    = $('#header\\[industry\\]');
+        load_dropdown(url,dropdown)
+        load_dropdowns('industry');
+
+        url         = baseurl + "/get/job_post/ojob_level";
+        dropdown    = $('#header\\[job_level\\]');
+        load_dropdown(url,dropdown)
+        load_dropdowns('job_level');
+
+        url         = baseurl + "/get/job_post/ojob_type";
+        dropdown    = $('#header\\[job_type\\]');
+        load_dropdown(url,dropdown)
+        load_dropdowns('job_type');
+
+        url         = baseurl + "/get/job_post/odepartment";
+        dropdown    = $('#header\\[department\\]');
+        load_dropdown(url,dropdown)
+        load_dropdowns('department');
+
+
+    });
+
+    $('#preference_modal').on('hide.bs.modal',function(e){
+        $('#preference_modal_title').empty();
+        $('#preference_modal_body').empty();
+    })
+
+
+    $('#password_change_modal').on('shown.bs.modal',function(e){
+        //Set Title
+        var param   = {};
+        var title   = 'CHANGE PASSWORD'
+        var type    = 'change_password';
+        
+
+        param.id    = user_id;
+        param.type  = type;
+        //alert(id)
+        $('#password_change_modal_title').html(title);
+
+
+        //$('#btnOk').html('<span class="spinner-grow spinner-grow-sm"></span></span> Loading...');
+        //$('#btnOk').attr('disabled','disabled');
+
+        var html_table      = load_change_password_form(param);
+        $('#password_change_modal_body').html(html_table);
+        //load_industry_autocomplete();
+
+
+
+    });
+
+    $('#password_change_modal').on('hide.bs.modal',function(e){
+        $('#password_change_modal_title').empty();
+        $('#password_change_modal_body').empty();
+    })
+    //End Lookup Modal
+    //=======================================================================================================================
+    //end modal
+
+
+    //load dropdwowns
+    function load_dropdowns(type){
+         
+        $('#header\\['+type+'\\]').multiselect({
+            enableFiltering : true,
+            //selectAllValue: 'multiselect-all',
+            //selectAllText: 'Select All',
+            //includeSelectAllOption : true,
+            
+            maxHeight: 300,
+            enableCaseInsensitiveFiltering : true,
+            onChange: function(element, checked) {
+                if(checked){
+                    //alert(element.val());
+                    
+                    var html = '';
+                    $('option:selected', $('#header\\['+type+'\\]')).each(function(element2) {
+                        html += '<div class="col d-none">';
+                            html += '<small class="text-muted">'+$(this).val()+'</small>';
+                            //html += '<button title="Remove" class="text-danger close remove_append" aria-type="'+type+'">&times;</button>';
+                            html += '<input name="row['+type+'][]" class="d-none form-control form-control-sm mb-2" type="text" value="'+$(this).val()+'">'
+                            html += '<input name="row[name][]" maxlength="200" class="d-none form-control form-control-sm mb-2" type="text" value="'+$(this).val()+'">'
+                        html += '</div>';
+                    });
+                    
+                    $('#cont_'+type).html(html);
+
+                }else{
+                    var html = '';
+                    
+                    $('#cont_'+type).find("input[name=row\\["+type+"\\]\\[\\]]").each(function(){
+                        var edit_l = $(this).parent();
+                        var value = $(this).val();
+                        
+                        $('option:selected', $('#header\\['+type+'\\]')).each(function(element2) {
+                                if(value.toLowerCase() === $(this).val().toLowerCase()){
+                                    html += '<div class="col d-none">';
+                                        html += '<small class="text-muted">'+$(this).val()+'</small>';
+                                        //html += '<button title="Remove" class="text-danger close remove_append" aria-type="'+type+'">&times;</button>';
+                                        html += '<input name="row['+type+'][]" class="d-none form-control form-control-sm mb-2" type="text" value="'+$(this).val()+'">'
+                                        html += '<input name="row[name][]" maxlength="200" class="d-none form-control form-control-sm mb-2" type="text" value="'+$(this).val()+'">'
+                                    html += '</div>';
+                                }else{
+                                    edit_l.remove();
+
+                                    
+                                }//end if
+                            });
+                    });
+
+                    $('#cont_'+type).html(html);
+
+                   
+
+                    
+                }//end if
+                
+            }
+       });
+    }//end function
+
+    
+    
+
+
+    //table template
+    //=======================================================================================================================
+    function load_preference_form(param){
+        var html = '';
+
+        html += '<form id="frm_'+param.type+'">';
+            html += '<div class="row">';
+                html += '<div class="col">';
+                    
+                html += '</div>';  
+            html += '</div>';
+
+            html += '<div class="form-group row d-none">';
+                html += '<label class="col-3 col-form-label text-link">Id</label>';
+                html += '<div class="col">';
+                  html += '<input value="'+param.id+'" readonly class="form-control form-control-sm mb-2" type="text" aria-type="'+param.type+'" name="header[id]"/>';
+                html += '</div>';
+            html += '</div>';
+
+            html += '<div class="row">';
+                html += '<div class="col-3"></div>';
+                html += '<div class="col">';
+                    html += '<div id="cont_industry" class="row row-cols-3 mb-3">';
+                    html += '</div>'; 
+                html += '</div>';
+            html += '</div>';
+
+
+
+           html += '<div class="form-group row">';
+                html += '<label class="col-3 col-form-label text-link">Industry <span class="text-danger fw-bolder">*</span></label>';
+                html += '<div class="col-2 d-none">';
+                    //html += '<input readonly class="form-control form-control-sm" type="text" name="header[industry]"/>';
+                html += '</div>';
+                html += '<div class="col">';
+                    html += '<div class="input-group input-group-sm">';
+                        html += '<select id="header[industry]" multiple="multiple">';
+                        html += '</select>';
+                    html += '</div><!--./input-group input-group-sm-->';
+
+                    /*html += '<div class="input-group input-group-sm">';
+                        html += '<input class="form-control form-control-sm" type="text" id="header[industry_text]"/>';
+                        html += '<div class="input-group-append btn_add_append" aria-type="industry">';
+                            html += '<span class="input-group-text"><i class="fa fa-plus"></i></span>';
+                        html += '</div><!--./input-group-append-->';
+                    html += '</div><!--./input-group input-group-sm-->';*/
+                html += '</div><!--./col-10-->';
+            html += '</div><!--./form-group-->';
+
+
+            html += '<div class="row">';
+                html += '<div class="col-3"></div>';
+                html += '<div class="col">';
+                    html += '<div id="cont_job_level" class="row row-cols-3 mb-3">';
+                    html += '</div>'; 
+                html += '</div>';
+            html += '</div>';
+
+
+            html += '<div class="form-group row">';
+                html += '<label class="col-3 col-form-label text-link">Job Level <span class="text-danger fw-bolder">*</span></label>';
+                html += '<div class="col-2 d-none">';
+                    //html += '<input readonly class="form-control form-control-sm" type="text" name="header[job_level]"/>';
+                html += '</div>';
+                html += '<div class="col">';
+                    html += '<div class="input-group input-group-sm">';
+                        html += '<select id="header[job_level]" multiple="multiple">';
+                        html += '</select>';
+                    html += '</div><!--./input-group input-group-sm-->';
+                html += '</div><!--./col-10-->';
+            html += '</div><!--./form-group-->';
+
+
+            html += '<div class="row">';
+                html += '<div class="col-3"></div>';
+                html += '<div class="col">';
+                    html += '<div id="cont_job_type" class="row row-cols-3 mb-3">';
+                    html += '</div>'; 
+                html += '</div>';
+            html += '</div>';
+
+            html += '<div class="form-group row">';
+                html += '<label class="col-3 col-form-label text-link">Job Type <span class="text-danger fw-bolder">*</span></label>';
+                html += '<div class="col-2 d-none">';
+                    //html += '<input readonly class="form-control form-control-sm" type="text" name="header[job_type]"/>';
+                html += '</div>';
+                html += '<div class="col">';
+                    html += '<div class="input-group input-group-sm">';
+                        html += '<select id="header[job_type]" multiple="multiple">';
+                        html += '</select>';
+                    html += '</div><!--./input-group input-group-sm-->';
+                html += '</div><!--./col-10-->';
+            html += '</div><!--./form-group-->';
+
+            html += '<div class="row">';
+                html += '<div class="col-3"></div>';
+                html += '<div class="col">';
+                    html += '<div id="cont_department" class="row row-cols-3 mb-3">';
+                    html += '</div>'; 
+                html += '</div>';
+            html += '</div>';
+
+            html += '<div class="form-group row">';
+                html += '<label class="col-3 col-form-label text-link">Department <span class="text-danger fw-bolder">*</span></label>';
+                html += '<div class="col-2 d-none">';
+                    //html += '<input readonly class="form-control form-control-sm" type="text" name="header[department]"/>';
+                html += '</div>';
+                html += '<div class="col">';
+                    html += '<div class="input-group input-group-sm">';
+                        html += '<select id="header[department]" multiple="multiple">';
+                        html += '</select>';
+                    html += '</div><!--./input-group input-group-sm-->';
+                html += '</div><!--./col-10-->';
+            html += '</div><!--./form-group-->';
+
+            html += '<div class="form-group row">';
+                html += '<div id="error_cont" class="col">';
+                html += '</div>';
+            html += '</div>';
+
+          
+            
+        html += '</form>';
+        html += '<div class="text-right">';
+            html += '<button class="btn btn-pill-md btn-primary btn_submit" type="button" aria-type="'+param.type+'">Submit</button>';
+        html += '</div>';
+        return html;
+    }//end if
+
+
+    function load_change_password_form(param){
+        var html = '';
+
+        html += '<form id="frm_'+param.type+'">';
+            html += '<div class="row">';
+                html += '<div class="col">';
+                    
+                html += '</div>';  
+            html += '</div>';
+
+            html += '<div class="form-group row d-none">';
+                html += '<label class="col-3 col-form-label text-link">Id</label>';
+                html += '<div class="col">';
+                  html += '<input value="'+param.id+'" readonly class="form-control form-control-sm mb-2" type="text" aria-type="'+param.type+'" name="header[id]"/>';
+                html += '</div>';
+            html += '</div>';
+
+           
+
+
+
+          
+
+            html += '<div class="row">';
+              html += '<label class="col-3 col-form-label text-link text-right">New Password <span class="text-danger fw-bolder">*</span></label>';
+              html += '<div class="col-7">';
+                  html += '<div class="form-group">';
+                      html += '<div class="input-group input-group-md">';
+                        html += '<input value="" name="header[new_password]" type="password" class="form-control" maxlength="50">';
+                        html += '<div class="input-group-append input-group-addon btn_show_pass" aria-type="password">';
+                          html += '<div class="input-group-text"><i class="fa fa-eye"></i></div>';
+                        html += '</div>';
+                      html += '</div>';
+                  html += '</div><!--./form-group-->';
+              html += '</div><!--./col-->';
+            html += '</div><!--./row-->';
+
+            html += '<div class="row">';
+              html += '<label class="col-3 col-form-label text-link text-right">Confirm Password <span class="text-danger fw-bolder">*</span></label>';
+              html += '<div class="col-7">';
+                  html += '<div class="form-group input-group-md">';
+                      html += '<div class="input-group">';
+                        html += '<input value="" name="header[confirm_password]" type="password" class="form-control" maxlength="50">';
+                        html += '<div class="input-group-append input-group-addon btn_show_pass" aria-type="confirm_password">';
+                          html += '<div class="input-group-text"><i class="fa fa-eye"></i></div>';
+                        html += '</div>';
+                      html += '</div>';
+                  html += '</div><!--./form-group-->';
+              html += '</div><!--./col-->';
+            html += '</div><!--./row-->';
+
+
+            html += '<div class="row">';
+                html += '<label class="col-3 col-form-label text-info text-right"><span class="fa fa-info-circle"></span></label>';
+                html += '<div class="col-7 text-info">';
+                    html += 'Password must be minimum of 8 characters with upper case, lower case and number';
+                html += '</div>';
+            html += '</div>';
+            
+        html += '</form>';
+        html += '<div class="text-right">';
+            html += '<button class="btn btn-pill-md btn-primary btn_change_password" type="button" aria-type="'+param.type+'">Submit</button>';
+        html += '</div>';
+        return html;
+    }//end if
+    //=======================================================================================================================
+    //end table template
+
+
+});//End document.ready
+

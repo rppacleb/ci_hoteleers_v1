@@ -1,0 +1,275 @@
+<?php require_once('app/Views/libraries/header.php'); ?>
+
+<script type="text/javascript">
+
+var user_id                     = <?php echo !isset($_GET['user_id'])? '""' : $_GET['user_id']; ?>;
+var job_post_id                 = <?php echo !isset($_GET['job_post'])? '""' : $_GET['job_post']; ?>;
+var type                        = <?php echo '"'.$type.'"'; ?>;
+var type                        = <?php echo '"'.$type.'"'; ?>;
+var country_dial_code           = <?php echo json_encode($country_dial_code["data"]); ?>;
+</script>
+
+<link rel="stylesheet" href="<?php echo base_url('assets/admin_dashboard/vendor/datatables/dataTables.bootstrap4.min.css') ?>">
+<!-- template -->
+<link rel="stylesheet" href="<?php echo base_url('../../assets/main/css/styles.css') ?>">
+<link rel="stylesheet" href="<?php echo base_url('assets/multi_select/dist/css/bootstrap-multiselect.css') ?>" type="text/css">
+
+<?php
+$user_id    = !isset($_GET['user_id'])? "" : $_GET['user_id'];
+$job_post_id    = !isset($_GET['job_post'])? "" : $_GET['job_post'];
+?>
+
+<?php require_once('app/Views/libraries/top-bar.php'); ?>
+<div class="row">
+	<div class="col mb-5">
+		<h4>
+			Create a Schedule
+		</h4>
+	</div><!--./col-->
+	<div class="col">
+        <div class="outside_button text-right">
+            <a href="<?php echo base_url('schedule/') ?>" class="text-primary mr-4">Cancel</a>  
+            <button class="btn-pill-sm-no-brdr btn-primary text-white btn_add btn-sm btn_submit" aria-type="Company">Submit</button>
+        </div><!--./text-right-->
+	</div><!--./col-->
+</div><!--./row-->
+
+
+<div class="row">
+	
+	<div class="col">
+
+		<form id="frm_data_entry">
+            <div class="card mb-3">
+                <div class="card-body pt-5 pb-5">
+
+
+                    <div class="form-group row d-none">
+                        <label class="col-3 col-form-label text-link text-right">Type</label>
+                        <div class="col">
+                          <input readonly class="form-control form-control-sm mb-2" type="text" name="placeholder[type]" value="<?php echo $type;?>" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row d-none">
+                        <label class="col-3 col-form-label text-link">Id</label>
+                        <div class="col">
+                          <input readonly class="form-control form-control-sm mb-2" type="text" aria-type="<?php echo $type;?>" aria-applicant="<?php echo $id;?>" name="header[id]" value="<?php echo $id;?>" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row d-none">
+                        <label class="col-3 col-form-label text-link">Job Post ID</label>
+                        <div class="col">
+                          <input readonly class="form-control form-control-sm mb-2" type="text" value="<?php echo $job_post_id;?>" name="header[job_post_id]"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row d-none">
+                        <label class="col-3 col-form-label text-link">User ID</label>
+                        <div class="col">
+                          <input readonly class="form-control form-control-sm mb-2" type="text" aria-type="<?php echo $type;?>" name="header[user_id]" value="<?php echo $user_id;?>" />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label text-link text-right">Interview Date <span class="text-danger fw-bolder">*</span></label>
+                        <div class="col-xl-6 col-lg-6">
+                            <div class="input-group input-group-md">
+                                <input class="form-control" type="text" name="header[interview_date]"/>
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                </div><!--./input-group-append-->
+                            </div><!--./input-group input-group-sm-->
+                        </div><!--./col-->
+                    </div><!--./form-group-->
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label text-link text-right">Start Time <span class="text-danger fw-bolder">*</span></label>
+                        <div class="col-xl-6 col-lg-6">
+                            <div class="input-group input-group-md">
+                                <input class="form-control form-control-md" type="text" name="header[interview_start_time]"/>
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fa fa-clock"></i></span>
+                                </div><!--./input-group-append-->
+                            </div><!--./input-group input-group-sm-->
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label text-link text-right">End Time <span class="text-danger fw-bolder">*</span></label>
+                        <div class="col-xl-6 col-lg-6">
+                            <div class="input-group input-group-md">
+                                <input class="form-control form-control-md" type="text" name="header[interview_end_time]"/>
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fa fa-clock"></i></span>
+                                </div><!--./input-group-append-->
+                            </div><!--./input-group input-group-sm-->
+                        </div><!--./col-->
+                    </div><!--./form-group-->
+                    
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label text-link text-right">Applicant Name <span class="text-danger fw-bolder">*</span></label>
+                        <div class="col-xl-6 col-lg-6">
+                            <input readonly class="form-control-md form-control-plaintext" type="text" name="placeholder[applicant_name]" maxlength="100"/>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    <div class="form-group row d-none">
+                        <label class="col-4 col-form-label text-link text-right">Applicant Email <span class="text-danger fw-bolder">*</span></label>
+                        <div class="col-xl-6 col-lg-6">
+                            <input readonly class="form-control-md form-control-plaintext" type="text" name="placeholder[applicant_email]" maxlength="100"/>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    <div class="form-group row d-none">
+                        <label class="col-4 col-form-label text-link text-right">Company <span class="text-danger fw-bolder">*</span></label>
+                        <div class="col-xl-6 col-lg-6">
+                            <input readonly class="form-control-md form-control-plaintext" type="text" name="placeholder[company_name]"/>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label text-link text-right">Recruiter Email Address <span class="text-danger fw-bolder">*</span></label>
+                        <div class="col-xl-6 col-lg-6">
+                              <input value="<?php echo $_SESSION['username'];?>" readonly name="placeholder[rec_email_add]" type="text" class="form-control-plaintext form-control-md" maxlength="100">
+                        </div><!--./col-->
+                    </div><!--./row-->
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label text-link text-right">Applying for <span class="text-danger fw-bolder">*</span></label>
+                        <div class="col-xl-6 col-lg-6">
+                              <input readonly name="placeholder[job_title]" type="text" class="form-control-plaintext form-control-md" maxlength="100">
+                        </div><!--./col-->
+                    </div><!--./row-->
+
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label text-link text-right">Interviewer Name / Position</label>
+                        <div class="col-xl-6 col-lg-6">
+                              <input name="header[interviewer_name_position]" type="text" class="form-control form-control-sm" maxlength="500">
+                        </div><!--./col-->
+                    </div><!--./row-->
+
+
+                    
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label text-link text-right">Interview Type <span class="text-danger fw-bolder">*</span></label>
+                        <div class="col-xl-6 col-lg-6">
+                            <select class="custom-select custom-select-md" name="header[interview_type]">
+                                <option value="face_to_face">Face to Face</option>
+                                <option value="virtual">Virtual</option>
+                            </select>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+
+                    <div class="form-group row virtual d-none">
+                        <label class="col-4 col-form-label text-link text-right">Virtual Interviewer Link <span class="text-danger fw-bolder">*</span></label>
+                        <div class="col-xl-6 col-lg-6">
+                              <input name="header[virtual_interview_link]" type="text" class="form-control form-control-md" maxlength="500">
+                        </div><!--./col-->
+                    </div><!--./row-->
+
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label text-link text-right">Location</label>
+                        <div class="col-xl-6 col-lg-6">
+                            <div class="input-group input-group-md">
+                                <input class="form-control form-control-md d-none" type="text" name="placeholder[location]"/>
+                                <select name="header[location]" class="custom-select custom-select-md"></select>
+                            </div>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+
+
+                    
+                    
+                    <div class="form-group row d-none">
+                      <label class="col-4 col-form-label text-link text-right">Country</label>
+                      <div class="col-xl-6 col-lg-6">
+                        <input readonly class="form-control form-control-md" type="text" name="header[country]"/>
+                      </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+
+
+
+
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label text-link text-right">Notes to Interviewee</label>
+                        <div class="col-xl-6 col-lg-6">
+                              <textarea name="header[notes_to_interviewee]" type="text" class="form-control form-control-md" maxlength="5000" rows="5"></textarea>
+                        </div><!--./col-->
+                    </div><!--./row-->
+                    
+                   
+                </div><!--./card-body-->
+            </div><!--./card-->
+
+            
+
+
+
+            
+        </form>
+
+        <div class="row">
+            <div class="col">
+                <div class="outside_button text-right">
+                    <a href="<?php echo base_url('employer/') ?>" class="text-primary mr-4">Cancel</a>  
+                    <button class="btn-pill-sm-no-brdr btn-primary text-white btn_add btn-sm btn_submit">Submit</button>
+                </div><!--./text-right-->
+            </div>
+        </div>
+	</div><!--./col-->
+	
+</div><!--./row-->
+
+
+
+
+
+<!--CONTENT END TAG-->			
+		</div><!--./col content-->
+	</div><!--./row-->
+</div><!--./container-fluid-->
+<!--CONTENT END TAG-->	
+
+<?php require_once('app/Views/libraries/copyright.php'); ?>
+  
+
+<!-- Footer Menu -->
+<?php require_once('app/Views/libraries/footer-menu.php'); ?>
+<?php require_once('app/Views/libraries/footer.php'); ?>
+<!-- Footer Menu -->
+
+
+
+<!-- datatables -->
+<script src="<?php echo base_url('assets/admin_dashboard/vendor/datatables/jquery.dataTables.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/admin_dashboard/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/admin_dashboard/vendor/datatables/datatables.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/admin_dashboard/vendor/datatables/dataTables.buttons.min.js') ?>"></script>
+<!-- datatables -->
+
+
+
+
+
+<!--Autocomplete-->
+<script src="<?php echo base_url('assets/autocomplete/js/jquery.mockjax.js') ?>"></script>
+<script src="<?php echo base_url('assets/autocomplete/js/jquery.autocomplete.js') ?>"></script>
+<!--Autocomplete-->
+
+<!--multiselect dropdown-->
+<script src="<?php echo base_url('assets/multi_select/dist/js/bootstrap-multiselect.js') ?>"></script>
+
+<script src="<?php echo base_url('assets/main/js/schedule_vw.js?v='). date('Ymdi') ?>"></script>
+
+
+

@@ -1,0 +1,331 @@
+<?php require_once('app/Views/libraries/header.php'); ?>
+<!-- template -->
+<link rel="stylesheet" href="<?php echo base_url('../../assets/main/css/styles.css') ?>">
+
+
+<?php
+        $upload_path        = base_url('files/uploads');
+        $urlimgdef          = 'https://dummyimage.com/1650x780/dee2e6/6c757d.jpg';
+        $banner_a           = "";
+        $banner_a_title     = "";
+        $banner_a_desc      = "";
+        $banner_b           = "";
+        $banner_b_title     = "";
+        $banner_b_desc      = "";
+
+        $banner_b_bg         = base_url('assets/img/main');
+        $banner_b_bg          .= '/bg.png';
+        if(count($home_page_banner)>0){
+            $banner_a           = $upload_path.'/'.$home_page_banner[0]["doc_image_a"];
+            $banner_a_title     = $home_page_banner[0]["title_a"];
+            $banner_a_desc      = $home_page_banner[0]["description_a"];
+
+            $banner_b           = $upload_path.'/'.$home_page_banner[0]["doc_image_b"];
+            $banner_b_title     = $home_page_banner[0]["title_b"];
+            $banner_b_desc      = $home_page_banner[0]["description_b"];
+        }else{
+            $banner_a = $urlimgdef;
+            $banner_b = $urlimgdef;
+        }//end if
+        
+        
+    ?>
+
+<style type="text/css">
+    div.banner_a_section {
+      padding-top: 10rem;
+      padding-bottom: calc(10rem - 4.5rem);
+      /*background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("../../../assets/img/news-bg.jpg");
+      */
+      /*background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%);*/
+     
+      /*background-image: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%);*/
+      background-image: url("<?php echo $banner_a?>") !important;
+      
+
+      
+      background-repeat: no-repeat;
+      background-attachment: scroll;
+      background-size: 10in 100%;
+      background-position: right;
+    }
+    div.banner_b_section_bg {
+            
+          /*background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("../../../assets/img/news-bg.jpg");
+          */
+          /*background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%);*/
+         
+          /*background-image: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%);*/
+          background-image: url("<?php echo $banner_b_bg?>") !important;
+          
+
+          
+          background-repeat: no-repeat;
+          background-attachment: scroll;
+          background-size: 50% 75%;
+          background-position: right;
+    }
+
+    div.banner_b_section {
+      padding-top: 10rem;
+      padding-bottom: calc(10rem - 4.5rem);
+      /*background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%), url("../../../assets/img/news-bg.jpg");
+      */
+      /*background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%);*/
+     
+      /*background-image: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%);*/
+      background-image: url("<?php echo $banner_b?>") !important;
+      
+
+      
+      background-repeat: no-repeat;
+      background-attachment: scroll;
+      background-size: 7.5in 100%;
+      background-position: right;
+      margin-right: 15%;
+    }
+</style>
+<!--
+<style type="text/css">
+    @media (max-width: 768px) {
+        .carousel-inner .carousel-item > div {
+            display: none;
+        }
+        .carousel-inner .carousel-item > div:first-child {
+            display: block;
+        }
+    }
+
+    .carousel-inner .carousel-item.active,
+    .carousel-inner .carousel-item-next,
+    .carousel-inner .carousel-item-prev {
+        display: flex;
+    }
+
+    /* display 3 */
+    @media (min-width: 768px) {
+
+        .carousel-inner .carousel-item-right.active,
+        .carousel-inner .carousel-item-next {
+          transform: translateX(33.333%);
+        }
+
+        .carousel-inner .carousel-item-left.active, 
+        .carousel-inner .carousel-item-prev {
+          transform: translateX(-33.333%);
+        }
+    }
+
+    .carousel-inner .carousel-item-right,
+    .carousel-inner .carousel-item-left{ 
+        transform: translateX(0);
+    }
+
+
+</style>
+-->
+<!-- template -->
+    
+	<!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 pt-3">
+        <div class="container px-4 px-lg-5">
+
+            
+            <a class="navbar-brand fw-bolder text-link" href="<?php echo base_url(); ?>"><h2>Hoteleers</h2></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    
+                </div>
+
+                <ul class="navbar-nav mb-2 mb-lg-0 ms-lg-4">
+                    <?php if(!isset($_SESSION['userid'])){?>
+                        <li class="nav-item"><a class="btn btn-pill-sm-no-brdr btn-sm text-muted active" aria-current="page" href="<?php echo base_url('job_search/private/'); ?>">Find Jobs</a></li>
+                        
+                        <li class="nav-item"><a class="btn btn-pill-sm-no-brdr btn-sm text-muted" href="<?php echo base_url('login/'); ?>">Login</a></li>
+
+                        <li class="nav-item"><a class="btn btn-pill-sm-no-brdr btn-sm text-muted" href="<?php echo base_url('signup'); ?>">Sign up</a></li>
+                    <?php }else{?>
+                        <li class="nav-item"><a class="btn btn-pill-sm-no-brdr btn-sm text-muted" aria-current="page" href="<?php echo base_url('home'); ?>">Home</a></li>
+                    <?php }?>
+                </ul>
+                
+            </div>
+        </div>
+    </nav>
+
+
+
+	<!-- Header-->
+    <header>        
+        
+            <div class="text-left">
+                <div class="row">
+                    <div class="col-12 banner_a_section">
+                        <div class="row ">
+                            <div class="col-1"></div>
+                            <div class="col-xl-10 col-lg-10 col-md-11 col-sm-11  col-xs-11 align-self-center">
+                                <h3 class="display-3 text-link">Explore Careers.</h3>
+                                <h3 class="display-3 fw-bolder text-link"><?php echo $banner_a_title?></h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-xs-11 col-sm-11 align-self-center">
+                                
+                                <p class="lead fw-normal mb-0" style="max-width:520px;"><?php echo $banner_a_desc?></p>
+                            </div><!--/div.col-->
+                        </div>
+                   
+                       <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-xl-4 col-lg-4 col-md-11 col-xs-11 col-sm-11 align-self-center">
+                                <div class="input-group input-group-lg my-3">
+                                  <input name="header[find_job_search]" type="text" class="form-control" aria-describedby="basic-addon2">
+                                  <div class="input-group-append">
+                                    <button name="header[btn_find_job]" class="btn btn-primary btn-lg" type="button">Find Job</button>
+                                  </div><!--/div.input-group-->
+                                </div><!--/div.input-group--> 
+                            </div>
+                       </div>
+                    
+                    </div>
+                   
+                </div> <!--/div.row-->
+            </div><!--/div-->
+        
+    </header><!--/header-->
+
+    <div class="py-5">
+        <div class="row ">
+
+            <div class="col-xl-8 col-lg-8 mid_section">
+                
+
+                    <div class="px-4 px-lg-5  text-white mb-5 pb-5 ml-5 pl-5">
+                        <h3 class="display-3">Curated only for</h3>
+                        <h4 class="display-4 fw-bolder">Hoteleers</h4>
+                        <p class="lead fw-normal mb-0" style="max-width:520px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam non condimentum erat, a aliquet enim. Nam dapibus sed dui sit amet egestas. Nullam sed aliquet lacus, vitae venenatis mi. Sed id hendrerit odio. Cras venenatis nisl lacus, vitae varius arcu vestibulum eget. Donec ultricies suscipit dui vel varius.</p>
+                    </div>
+                
+                
+            </div>
+        </div>
+    </div>
+    
+
+
+
+    <div class="py-5">        
+            <div class="text-left">
+                <div class="row job_list_section">
+                    
+                    <div class="col-xl-4 align-self-start">
+                        
+                    </div><!--/div.col style="left:-0.5in;position:absolute;" -->  
+
+                    <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <a href="<?php echo base_url('trending_jobs')?>" style="text-decoration:none;"><h4 class="text-center text-link">Trending Jobs</h4></a>
+                        <div class="container my-3">
+
+                            <div class="row mx-auto my-auto">
+                                <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+                                    <div id="trending_jobs_container" class="carousel-inner mb-3" role="listbox">
+
+
+                                       
+                                    </div>
+                                    
+
+                                    <div class="col-xl-6 col-lg-6 text-right">
+                                        <a class="btn btn-pill-2x btn-pill-sm-outline-light text-primary mr-2" href="#recipeCarousel" role="button" data-slide="prev">
+                                            <i class="fa fa-chevron-left "></i>
+                                        </a>
+                                        <a class="btn btn-pill-2x btn-pill-sm-outline-light text-primary" href="#recipeCarousel" role="button" data-slide="next">
+                                            <i class="fa fa-chevron-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div><!--/.row-->
+                        </div><!--/.container-->
+                    </div><!--/div.col-->
+                </div> <!--/div.row-->
+            </div><!--/div-->
+
+       
+    </div><!--/header-->
+
+
+    <!-- Header-->
+    <header class="py-5">        
+        
+            <div class="text-left banner_b_section_bg">
+                <div class="row ">
+
+                    <div class="col-12 banner_b_section">
+                        <div class="row ">
+                            <div class="col-1"></div>
+                            <div class="col-xl-10 col-lg-10 col-md-11 col-sm-11  col-xs-11 align-self-center">
+                                <h3 class="display-3 text-link">Looking for :</h3>
+                                <h3 class="display-3 fw-bolder text-link"><?php echo $banner_b_title?></h3>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-xl-3 col-lg-3 col-md-11 col-xs-11 col-sm-11 align-self-center">
+                                
+                                <p class="lead fw-normal mb-0" style="max-width:520px;"><?php echo $banner_b_desc?></p>
+
+                            </div><!--/div.col-->
+                        </div>
+                   
+                     
+                    
+                    </div>
+
+
+                    
+
+                    
+                    
+                </div> <!--/div.row-->
+
+            </div><!--/div-->
+        
+    </header><!--/header-->
+
+
+   
+
+
+    
+
+    <!-- Copyright -->
+    <?php require_once('app/Views/libraries/copyright.php'); ?>
+    <!-- Copyright -->
+
+
+  <!-- Footer Menu -->
+  <?php require_once('app/Views/libraries/footer-menu.php'); ?>
+  <!-- Footer Menu -->
+
+
+
+
+<?php require_once('app/Views/libraries/footer.php'); ?>
+
+
+
+<script type="text/javascript">
+    var user_id = <?php echo isset($_SESSION['userid'])?$_SESSION['userid']:0; ?>;
+
+  
+
+
+</script>
+
+
+<script src="<?php echo base_url('assets/main/js/main.js?v='). date('Ymdi') ?>"></script>
+

@@ -1,0 +1,508 @@
+<?php
+
+namespace App\Controllers;
+use App\Models\Home_model;
+use App\Models\Audit_trail_model;
+class Home extends BaseController{
+	protected $model;
+	protected $session;
+	protected $audit_trail;
+	protected $record_type;
+
+	public function __construct(){
+		$this->model 			= new Home_model();
+		$this->audit_trail 		= new Audit_trail_model();
+		$this->record_type 		= 'logout';
+		$this->session 			= session();
+    }
+
+    public function index(){
+    	
+    	//$session = \Config\Services::session();
+		if(!$this->session->has('username')){
+			return redirect()->to(base_url('login/'));
+  		}else{
+  			
+  			if($this->session->get('usertype')=='USER'){
+				return redirect()->to(base_url());
+			}else{
+				//return redirect()->to(base_url('active_jobs'));
+				$param 				= array();
+				$param['user_id'] 	= $this->session->get('userid');
+				$param['profile'] 	= $this->model->get_profile($param);
+				if($param["profile"]['data']->user_type == 'applicant'){
+					//if(!$param["profile"]['data']->first_login && $param["profile"]['data']->password_changed){
+						return redirect()->to(base_url('job_search/private'));
+					//}//end if
+				}else if($param["profile"]['data']->user_type == 'employer'){
+					if($param["profile"]['data']->password_changed){
+						return redirect()->to(base_url('active_jobs'));
+					}//end if
+				}else{
+					return redirect()->to(base_url('partner_application'));
+				}//end if//end if
+				
+				//homeurl = baseurl + '/job_search/private';
+				return view('Home/index',$param);
+			}
+  		}
+    	//echo $this->session->get('username');
+    	//echo $session->get('usertype');
+        
+    }//end function
+
+    public function logout(){
+    	if(isset($_SESSION['userid'])){
+	    	//audit trail
+	       	$data['audit']   = array();
+			$data['audit'][] = array(
+				'record_id' 		=> 0,
+				'user_id' 	  		=> $this->session->get('userid'),
+				'action' 			=> 'logged out',
+				'record_type' 		=> $this->record_type
+			);
+			$aud 	= $this->audit_trail->add($data);
+			if(!$aud){
+				throw new \Exception('Error on creation of audit trail!');
+			}//end if
+	       	//end audit trail
+			unset($_SESSION['userid']);
+			unset($_SESSION['username']);
+			unset($_SESSION['password']);
+			unset($_SESSION['usertype']);
+			unset($_SESSION['name']);
+		}//end if
+		
+    	//session_destroy();
+    	return redirect()->to(base_url('Login/'));
+    }
+
+    
+
+    public function login(){
+    	$validator = [];
+
+    	$request 		= \Config\Services::request();
+    	$validation 	=  \Config\Services::validation();
+
+		
+
+		$rules = [
+            "username" => [
+                "label" => "username", 
+                "rules" => "trim|required|max_length[50]"
+            ],
+            "password" => [
+                "label" => "password", 
+                "rules" => "trim|required|max_length[20]"
+            ]
+        ];
+
+        
+
+		if ($this->validate($rules)){
+			
+			try{
+				
+				$username 	= $request->getPost('username');
+				$password 	= $request->getPost('password');
+				//throw new \Exception($request->getPost('username'));
+				//$validator['success'] = $this->validate($rules);
+				//$validator['messages'] = "Success!";
+				
+				$res 		= $this->model->auth_user($username,$password);
+
+				if(!is_null($res)){
+					
+
+					
+					$_SESSION['userid']   		= $res->id;
+					$_SESSION['username'] 		= $res->user_name;
+			       	$_SESSION['password'] 		= $res->password;
+			       	$_SESSION['usertype'] 		= $res->user_type;
+			       	$_SESSION['name'] 			= $res->name;
+
+			       	$validator['success'] 		= true;
+					$validator['messages'][] 	= array("success" => "Login successfully!");
+			       	
+			       	
+				}else{
+					$validator['success'] 		= false;
+					$validator['messages'][] 	= array("exception" => "Invalid Username/Password!");
+				}
+				
+			}catch (\Exception $e) {
+				$validator['success'] 		= false;
+				$validator['messages'][] 	= array("exception" => $e->getMessage());
+				
+			}//End try	
+			
+		}else{
+			$validator['success'] 		= false;
+			$validator['messages'][] 	= $validation->getErrors();
+		}
+		
+
+		echo json_encode($validator);
+
+    }
+
+
+    public function submit_data(){
+    	$validator 			= [];
+    	$data 				= array();
+    	$param 				= $this->request->getVar();
+    	$rec_type 			= "profile";
+    	
+    	
+    	$rules = [
+            "row.industry" => [
+                "label" => "industry", 
+                "rules" => "trim|required"
+            ],
+            "row.job_level" => [
+                "label" => "job level", 
+                "rules" => "trim|required"
+            ],
+            "row.job_type" => [
+                "label" => "job type", 
+                "rules" => "trim|required"
+            ],
+            "row.department" => [
+                "label" => "department", 
+                "rules" => "trim|required"
+            ]
+        ];
+
+        if ($this->validate($rules)){
+			try{
+				
+				
+				$data['response'] 							= array();
+				$data['table_name'] 						= 'oprofile';
+				
+				$header 									= $param['header'];
+				$row 										= $param['row'];
+				
+				$line_count_industry						= count($row['industry']);
+				$line_count_job_level						= count($row['job_level']);
+				$line_count_job_type						= count($row['job_type']);
+				$line_count_department						= count($row['department']);
+
+				$data['audit']   							= array();
+				$data['record_header'] 						= $header;
+				$data['record_lines_industry'] 				= array();
+				$data['record_lines_job_level'] 			= array();
+				$data['record_lines_job_type'] 				= array();
+				$data['record_lines_deparment'] 			= array();
+
+				
+				unset($data['record_header']['industry']);
+				unset($data['record_header']['job_level']);
+				unset($data['record_header']['job_type']);
+				unset($data['record_header']['department']);
+				$data['record_header']['first_login'] 	= 0;
+ 				
+				
+
+				//Get Industry Lines
+				$row_keys 					= array_keys($row['industry']);
+				for ($x=0; $x <= $line_count_industry - 1; $x++) { 
+					$data_row 			= array();
+					$data_row['id'] 	= $data['record_header']["id"];
+					$data_row['line'] 	= $x+1;
+					for ($i=0; $i < count($row_keys); $i++) { 
+						$data_row['industry'] = $row['industry'][$x];
+					}//end for
+					$data['record_lines_industry'][] 	= $data_row;
+					
+				}//end for
+				//end Get Industry lines
+
+				//Get Job Level Lines
+				$row_keys 					= array_keys($row['job_level']);
+				for ($x=0; $x <= $line_count_job_level - 1; $x++) { 
+					$data_row 			= array();
+					$data_row['id'] 	= $data['record_header']["id"];
+					$data_row['line'] 	= $x+1;
+					for ($i=0; $i < count($row_keys); $i++) { 
+						$data_row['job_level'] = $row['job_level'][$x];
+					}//end for
+					$data['record_lines_job_level'][] 	= $data_row;
+					
+				}//end for
+				//end Get Job Level lines
+
+
+				//Get Job Type Lines
+				$row_keys 					= array_keys($row['job_type']);
+				for ($x=0; $x <= $line_count_job_type - 1; $x++) { 
+					$data_row 			= array();
+					$data_row['id'] 	= $data['record_header']["id"];
+					$data_row['line'] 	= $x+1;
+					for ($i=0; $i < count($row_keys); $i++) { 
+						$data_row['job_type'] = $row['job_type'][$x];
+					}//end for
+					$data['record_lines_job_type'][] 	= $data_row;
+					
+				}//end for
+				//end Get Job Type lines
+
+				//Get Department Lines
+				$row_keys 					= array_keys($row['department']);
+				for ($x=0; $x <= $line_count_department - 1; $x++) { 
+					$data_row 			= array();
+					$data_row['id'] 	= $data['record_header']["id"];
+					$data_row['line'] 	= $x+1;
+					for ($i=0; $i < count($row_keys); $i++) { 
+						$data_row['department'] = $row['department'][$x];
+					}//end for
+					$data['record_lines_deparment'][] 	= $data_row;
+					
+				}//end for
+				//end Department lines
+ 				
+				
+				
+				
+				
+				if($data['record_header']["id"] > 0){
+					//update record
+					//--------------------------------------------------------------------------------------------------
+
+
+					
+
+					//add record
+					$res 		= $this->model->add_record_batch($data);
+					if(!$res['success']){
+						throw new \Exception($res['message']);
+					}//end if
+					//end add record
+					
+					//set audit trail
+					
+			       	$ids 				= $res['data']['industry_ids'];
+			       	for ($x=0; $x <= count($ids) - 1; $x++) { 
+			       			$data['audit'][] = array(
+								'record_id' 		=> $ids[$x],
+								'user_id' 	  		=> $this->session->get('userid'),
+								'action' 			=> 'created',
+								'record_type' 		=> 'profile_industry'
+							);
+			       	}//end for
+
+			       	$ids 				= $res['data']['job_level_ids'];
+			       	for ($x=0; $x <= count($ids) - 1; $x++) { 
+			       			$data['audit'][] = array(
+								'record_id' 		=> $ids[$x],
+								'user_id' 	  		=> $this->session->get('userid'),
+								'action' 			=> 'created',
+								'record_type' 		=> 'profile_job_level'
+							);
+			       	}//end for
+
+			       	$ids 				= $res['data']['job_type_ids'];
+			       	for ($x=0; $x <= count($ids) - 1; $x++) { 
+			       			$data['audit'][] = array(
+								'record_id' 		=> $ids[$x],
+								'user_id' 	  		=> $this->session->get('userid'),
+								'action' 			=> 'created',
+								'record_type' 		=> 'profile_job_type'
+							);
+			       	}//end for
+
+			       	$ids 				= $res['data']['department_ids'];
+			       	for ($x=0; $x <= count($ids) - 1; $x++) { 
+			       			$data['audit'][] = array(
+								'record_id' 		=> $ids[$x],
+								'user_id' 	  		=> $this->session->get('userid'),
+								'action' 			=> 'created',
+								'record_type' 		=> 'profile_department'
+							);
+			       	}//end for
+					//end set audit trail
+
+					//--------------------------------------------------------------------------------------------------
+					//end update record
+				}else{
+					
+
+				}//end if
+		
+
+
+				//Insert Audit Trail header
+				if(count($data['audit']) > 0){
+					$audit_res 			= $this->audit_trail->add($data);
+					if(!$audit_res){
+						throw new \Exception("Error on creating audit trail!");
+					}//End if
+				}//End if
+				$data['audit']   = array();
+				//End Insert Audit Trail header
+
+			
+
+
+				
+
+
+
+			
+
+			    $validator['success'] 		= true;
+				$validator['messages'][] 	= array("success" => "Successfully completed");
+			    $validator['data'] 			= $data['response'];  	
+			
+				
+			}catch (\Exception $e) {
+				$validator['success'] 		= false;
+				$validator['messages'][] 	= array("exception" => $e->getMessage());
+				
+			}//End try	
+			
+		}else{
+			$validator['success'] 		= false;
+			$validator['messages'][] 	= $this->validation->getErrors();
+		}
+		
+
+		echo json_encode($validator);
+	
+    }//end function
+
+
+    public function change_password(){
+    	$validator 			= [];
+    	$data 				= array();
+    	$param 				= $this->request->getVar();
+    	$rec_type 			= "profile";
+    	
+    	
+    	$rules = [
+            "header.new_password" => [
+                "label" => "new password", 
+                "rules" => "trim|required|min_length[8]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/]|max_length[50]",
+                'errors' => [
+	                'required' => 'Please input your new password.'
+	            ]
+            ],
+            "header.confirm_password" => [
+                "label" => "confirm password", 
+                "rules" => "trim|required|min_length[8]|regex_match[/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/]|matches[header.new_password]|max_length[50]",
+                'errors' => [
+	                'required' => 'Please input your confirm password.',
+	                'matches' => 'Password doesn\'t match.'
+	            ]
+            ]
+        ];
+
+        
+        if ($this->validate($rules)){
+			try{
+				
+				
+				$data['response'] 							= array();
+				$data['table_name'] 						= 'ousr';
+				
+				$header 									= $param['header'];
+				//$row 										= $param['row'];
+
+				
+				
+				
+
+				$data['audit']   							= array();
+				$data['record_header'] 						= $header;
+				$data['record_header']['password_changed'] 	= 1;
+				$data['record_header']['password'] 			= $header['new_password'];
+
+				unset($data['record_header']['new_password']);
+				unset($data['record_header']['confirm_password']);
+ 				
+				
+
+				
+ 				
+				
+				
+				
+				
+				if($data['record_header']["id"] > 0){
+					//update record
+					//--------------------------------------------------------------------------------------------------
+
+
+					
+
+					//update record
+					$res 		= $this->model->update_record($data);
+					if(!$res['success']){
+						throw new \Exception($res['message']);
+					}//end if
+					//end update record
+
+					//set audit trail
+					$data['audit'][] = array(
+						'record_id' 		=> $data['record_header']["id"],
+						'user_id' 	  		=> $this->session->get('userid'),
+						'action' 			=> 'updated',
+						'record_type' 		=> 'user'
+					);
+					//end set audit trail
+					
+					
+					
+			       	
+
+					//--------------------------------------------------------------------------------------------------
+					//end update record
+				}else{
+					
+
+				}//end if
+		
+
+
+				//Insert Audit Trail header
+				if(count($data['audit']) > 0){
+					$audit_res 			= $this->audit_trail->add($data);
+					if(!$audit_res){
+						throw new \Exception("Error on creating audit trail!");
+					}//End if
+				}//End if
+				$data['audit']   = array();
+				//End Insert Audit Trail header
+
+			
+
+
+				
+
+
+
+			
+
+			    $validator['success'] 		= true;
+				$validator['messages'][] 	= array("success" => "Successfully completed");
+			    $validator['data'] 			= $data['response'];  	
+			
+				
+			}catch (\Exception $e) {
+				$validator['success'] 		= false;
+				$validator['messages'][] 	= array("exception" => $e->getMessage());
+				
+			}//End try	
+			
+		}else{
+			$validator['success'] 		= false;
+			$validator['messages'][] 	= $this->validation->getErrors();
+		}
+		
+
+		echo json_encode($validator);
+	
+    }//end function
+
+}//end class

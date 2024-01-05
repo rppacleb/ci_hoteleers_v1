@@ -1,0 +1,397 @@
+<?php require_once('app/Views/libraries/header.php'); ?>
+
+<script type="text/javascript">
+var mod_state                   = <?php echo '"'.$mod_state.'"'; ?>;
+var applied                     = <?php echo $applied; ?>;
+var favorites                    = <?php echo $favorites; ?>;
+var type                        = <?php echo '"'.$type.'"'; ?>;
+var perks_and_benefits          = <?php echo json_encode($perks_and_benefits); ?>;
+var country_dial_code           = <?php echo json_encode($country_dial_code["data"]); ?>;
+</script>
+
+<link rel="stylesheet" href="<?php echo base_url('assets/admin_dashboard/vendor/datatables/dataTables.bootstrap4.min.css') ?>">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- template -->
+<link rel="stylesheet" href="<?php echo base_url('../../assets/main/css/styles.css') ?>">
+
+
+<?php require_once('app/Views/libraries/top-bar.php'); ?>
+<div class="row mb-3">
+    <div class="col-xl-4 col-lg-4">
+        
+    </div><!--./col-->
+	<div class="col">
+        <div class="outside_button">
+            <?php if(isset($_SESSION['userid'])){?>
+                <button class="btn btn-pill-sm btn-pill-sm-outline-light text-muted" data-toggle="modal" data-target="#report_modal"><i class="fa fa-flag"></i></button>
+            <?php }?>  
+
+            <button name="btn_copy_link" type="button" class="btn btn-pill-sm btn-pill-sm-outline-light text-muted"><i class="fa fa-link"></i></button>
+
+            <?php
+                $fb_url = "http://stackoverflow.com/questions/16463030/how-to-add-facebook-share-button-on-my-website";
+                $fb_url = base_url('job_search/public/view/'.$id);
+            ?>
+
+             <button class="btn btn-pill-sm btn-pill-sm-outline-light text-muted" data-toggle="modal" data-target="#share_modal"><i class="fa fa-share"></i></button>
+
+            
+        </div><!--./text-right-->
+
+	</div><!--./col-->
+	<div class="col">
+		<!--<div class="text-right">
+			
+			<button class="btn btn-pill-sm btn-pill-sm-outline-light mb-2 text-primary btn_submit" type="button" aria-type="Company">Submit</button>
+		</div>-->
+
+        <div class="outside_button text-right">
+            
+            <?php if(isset($_SESSION['userid'])){?>
+
+                
+                <?php if(!$favorites){?>
+                    <button class="btn btn-pill-hover-link btn-pill-lg text-link btn_add_fav"><i class="fa fa-heart-o"></i></button>
+                <?php }else{ ?>
+                    <button class="btn btn-pill-hover-primary btn-pill-lg text-primary btn_add_fav"><i class="fa fa-heart"></i></button>
+                <?php }?> 
+
+                <?php if(!$applied){?>
+                    <button class="btn btn-pill-sm-no-brdr btn-primary btn-sm text-white btn_submit">Apply</button>
+                <?php }else{ ?>
+
+                    <button disabled class="btn btn-pill-sm-no-brdr btn-primary btn-sm text-white btn_submit disabled">Apply</button>
+                <?php }?>  
+            <?php }else{?>
+                <a href="<?php echo base_url('login?type=job_search&rdr_id='.$id.'')?>" class="btn btn-pill-sm-no-brdr btn-primary btn-sm text-white btn_submit">Apply</a>
+            <?php }?>
+        </div><!--./text-right-->
+
+	</div><!--./col-->
+	
+</div><!--./row-->
+
+
+<div class="row">
+    <div class="col-1">
+        
+    </div><!--./col-->
+
+	<div class="col-3">
+		<div class="media">
+          <img id="header[company_logo]" class="mr-3 img-fluid rounded" style="width:76px;height:76px;">
+          <div class="media-body">
+            <h6 id="header[job_title]" class="mt-0"></h6>
+            <p id="header[company_name]"></p>
+          </div>
+        </div>
+        <hr/>
+        <p id="header[recruiter]"></p>
+
+
+        <h6 class="mt-0">Company Image</h6>
+        <div id="image_cont" class="row row-cols-1">
+            
+        </div>
+        
+        
+	</div>
+	<div class="col">
+
+		<form id="frm_data_entry">
+            <div class="card mb-3">
+                <div class="card-body">
+                   
+
+                    <div class="form-group row d-none">
+                        <label class="col-3 col-form-label text-link">Doc Content</label>
+                        <div class="col">
+                            <input readonly class="form-control form-control-sm" type="text" name="file[doc_content]"/>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    <div class="form-group row d-none">
+                        <label class="col-3 col-form-label text-link">Doc Image</label>
+                        <div class="col">
+                            <input readonly class="form-control form-control-sm" type="text" name="header[doc_image]"/>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    <div class="form-group row d-none">
+                        <label class="col-3 col-form-label text-link">Old Image</label>
+                        <div class="col">
+                            <input readonly class="form-control form-control-sm" type="text" name="file[old_doc_image]"/>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+                    
+                    <div class="form-group row d-none">
+                        <label class="col-3 col-form-label text-link">Id</label>
+                        <div class="col">
+                          <input readonly class="form-control form-control-sm mb-2" type="text" aria-type="<?php echo $type;?>" name="header[id]" value="<?php echo $id;?>" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-link align-self-center">Date Posted</label>
+                        <div class="col align-self-center">
+                            <input class="form-control form-control-sm text-primary fw-bolder" type="text" name="header[date_created]" maxlength="100"/>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-link align-self-center">Apply Before</label>
+                        <div class="col align-self-center">
+                            <input class="form-control form-control-sm text-primary fw-bolder" type="text" name="header[job_expiration_date]" maxlength="100"/>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    <hr/>
+
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-link align-self-center">Job Title</label>
+                        <div class="col align-self-center">
+                            <input class="form-control form-control-sm" type="text" name="header[job_title]"/>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-link align-self-center">Job Level</label>
+                        <div class="col align-self-center">
+                            <input class="form-control form-control-sm" type="text" id="header[job_level_text]"/>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-link align-self-center">Job Type</label>
+                        <div class="col align-self-center">
+                            <input class="form-control form-control-sm" type="text" id="header[job_type_text]"/>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-link">Job Description</label>
+                        <div class="col">
+                            <textarea rows="5" class="form-control form-control-sm" name="header[job_description]" /></textarea>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-link">Qualifications</label>
+                        <div class="col">
+                            <textarea rows="5" class="form-control form-control-sm" name="header[qualification]"/></textarea>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-link align-self-center">Salary</label>
+                        <div class="col align-self-center">
+                            <input class="form-control form-control-sm fw-bolder" type="text" name="header[salary]"/>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    
+
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-link align-self-center">Location </label>
+                        <div class="col align-self-center">
+                            <input class="form-control form-control-sm" name="header[location]"></textarea>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    
+
+                    <div class="form-group row d-none">
+                      <label class="col-3 col-form-label text-link align-self-center">Country</label>
+                      <div class="col align-self-center">
+                        <input readonly class="form-control form-control-sm" type="text" name="header[country]"/>
+                      </div><!--./col-10-->
+                    </div><!--./form-group-->
+                    
+
+
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-link">Perks & Benefits</label>
+                        <div class="col">
+                           <div id="p_b_content" class="row row-cols-1">
+                                
+                           </div><!--./row-->
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+                    <hr/>
+
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-link">Job Summary</label>
+                        <div class="col">
+                            <div class="form-group row">
+                                <label class="col-3 col-form-label text-muted">Industry</label>
+                                <div class="col">
+                                    <input class="form-control form-control-sm" type="text" id="header[industry_text]"/>
+                                </div><!--./col-10-->
+                            </div><!--./form-group-->
+
+                            <div class="form-group row">
+                                <label class="col-3 col-form-label text-muted">Department</label>
+                                <div class="col">
+                                    <input class="form-control form-control-sm" type="text" id="header[department_text]"/>
+                                </div><!--./col-10-->
+                            </div><!--./form-group-->
+
+                            <div class="form-group row">
+                                <label class="col-3 col-form-label text-muted">Education</label>
+                                <div class="col">
+                                    <input class="form-control form-control-sm" type="text" id="header[education_text]"/>
+                                </div><!--./col-10-->
+                            </div><!--./form-group-->
+
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-link align-self-center"># of Vacancies</label>
+                        <div class="col align-self-center">
+                            <input class="form-control form-control-sm" type="text" name="header[vacancies]"/>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-link">About </label>
+                        <div class="col">
+                            <textarea rows="5" class="form-control form-control-sm" name="header[about]"/></textarea>
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label text-link align-self-center">Website </label>
+                        <div class="col align-self-center">
+                              <input value="" name="header[website]" type="text" class="form-control form-control-sm">
+                              <a target="_blank" name="placeholder[website]" class="text-link d-none"></a>
+                        </div><!--./col-->
+                    </div><!--./row-->
+                   
+                    
+                    
+                    
+                    
+                </div><!--./card-body-->
+            </div><!--./card-->
+
+        </form>
+
+        <div class="outside_button text-right">
+            
+            <?php if(isset($_SESSION['userid'])){?>
+                
+
+                <?php if(!$favorites){?>
+                    <button class="btn btn-pill-hover-link btn-pill-lg text-link btn_add_fav"><i class="fa fa-heart-o"></i></button>
+                <?php }else{ ?>
+                    <button class="btn btn-pill-hover-primary btn-pill-lg text-primary btn_add_fav"><i class="fa fa-heart"></i></button>
+                <?php }?> 
+                
+                <?php if(!$applied){?>
+                    <button class="btn btn-pill-sm-no-brdr btn-primary btn-sm text-white btn_submit">Apply</button>
+                <?php }else{ ?>
+
+                    <button disabled class="btn btn-pill-sm-no-brdr btn-primary btn-sm text-white btn_submit disabled">Apply</button>
+                <?php }?>  
+            <?php }?>
+        </div><!--./text-right-->
+	</div><!--./col-->
+	
+</div><!--./row-->
+
+
+
+
+<!--CONTENT END TAG-->			
+		</div><!--./col content-->
+	</div><!--./row-->
+</div><!--./container-fluid-->
+<!--CONTENT END TAG-->	
+
+<?php require_once('app/Views/libraries/copyright.php'); ?>
+  
+
+<!-- Footer Menu -->
+<div class="modal fade" id="report_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Report</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="frm_report">
+            <div class="form-group row d-none">
+                <label class="col-3 col-form-label text-link">Id</label>
+                <div class="col">
+                  <input readonly class="form-control form-control-sm mb-2" type="text" aria-type="<?php echo $type;?>" name="header[id]" value="<?php echo $id;?>" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-3 col-form-label text-link">Comment <i class="text-danger fw-bolder">*</i></label>
+                <div class="col">
+                    <textarea rows="5" class="form-control form-control-sm" name="header[comment]" /></textarea>
+                </div><!--./col-10-->
+            </div><!--./form-group-->
+
+          </form><!--./form-->
+        </div>
+        <div class="modal-footer">
+          <button name="btn_report" class="btn btn-outline-info btn-sm" type="button">Submit</button>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!--share modal-->
+<div class="modal fade" id="share_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        
+        <div class="modal-body mb-5 mt-5 align-middle text-center">
+           
+
+            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $fb_url?>') ?>" class="btn btn-pill-sm btn-pill-sm-outline-light text-muted"><i class="fa fa-facebook"></i> facebook</a>
+
+            <a target="_blank" href="https://twitter.com/intent/tweet?url=<?php echo $fb_url?>&text=test" class="btn btn-pill-sm btn-pill-sm-outline-light text-muted"><i class="fa fa-twitter"></i> twitter</a>
+
+            <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo $fb_url?>" class="btn btn-pill-sm btn-pill-sm-outline-light text-muted"><i class="fa fa-linkedin"></i> Linked in</a>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+<?php require_once('app/Views/libraries/footer-menu.php'); ?>
+<?php require_once('app/Views/libraries/footer.php'); ?>
+<!-- Footer Menu -->
+
+
+
+<!-- datatables -->
+<script src="<?php echo base_url('assets/admin_dashboard/vendor/datatables/jquery.dataTables.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/admin_dashboard/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/admin_dashboard/vendor/datatables/datatables.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/admin_dashboard/vendor/datatables/dataTables.buttons.min.js') ?>"></script>
+<!-- datatables -->
+
+
+
+
+
+<!--Autocomplete-->
+<script src="<?php echo base_url('assets/autocomplete/js/jquery.mockjax.js') ?>"></script>
+<script src="<?php echo base_url('assets/autocomplete/js/jquery.autocomplete.js') ?>"></script>
+<!--Autocomplete-->
+
+<script src="<?php echo base_url('assets/main/js/job_search_vw.js?v='). date('Ymdi') ?>"></script>
+
+
+
