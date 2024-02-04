@@ -41,6 +41,9 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
     </div>
 
     <div class="col-xl-4 col-lg-4 col-md-8 align-self-center mx-auto signup-company">
+      <div class="d-flex justify-content-end">
+      <button class="btn btn-sm btn-link text-decoration-none text-primary mb-3 btn_signup_company" aria-type="Company" type="button">Sign up as an Employer</button>
+      </div>
       <div class="card w-100 shadow">
 
         <div class="card-body">
@@ -113,18 +116,6 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
                               </small>
                       </div><!--./col-->
                       
-                    </div><!--./row-->
-
-                    <div class="row">
-                        <div class="col text-center text-muted pe-none mb-3">
-                            Or
-                        </div>
-                    </div><!--./row-->
-
-                    <div class="row">
-                        <div class="col text-center">
-                            <button class="btn btn-primary btn-pill-sm-primary mb-3 btn_signup_company" aria-type="Company" type="button">Sign up as an Employer</button>
-                        </div>
                     </div><!--./row-->
 
                     <div class="row">

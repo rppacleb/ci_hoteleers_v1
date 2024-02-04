@@ -32,16 +32,6 @@ $side_menu = !isset($_GET['side_menu'])? "" : $_GET['side_menu'];
 		    <h4 class="mb-5"><?php echo $employer_data["company_name"]?> - User / <?php echo $type;?></h4>
 		</h4>
 	</div><!--./col-->
-
-    <div class="col align-self-center">
-        <div class="outside_button text-right">
-            
-
-            <a href="<?php echo base_url('employer/view/'.$employer_id.'?side_menu='.$side_menu.'&type='.$title_type.'') ?>" class="text-primary mr-4 uvw-cancelbtn">Cancel</a> 
-            <button class="btn-pill-sm-no-brdr btn-primary text-white btn_add btn-sm btn_submit">Save</button>
-        </div><!--./text-right-->
-    </div>
-	
 </div><!--./row-->
 
 

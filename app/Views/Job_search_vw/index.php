@@ -208,7 +208,7 @@ var profile_id                   = <?php echo isset($_SESSION['userid'])? '"'.$_
 
                     <div class="form-group row desktop-jsvwjobdescrow">
                         <label class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-3 col-form-label text-right">Job Description</label>
-                        <div class="col pcl_qte_editor" name="placeholder[job_description]">
+                        <div class="col pcl_qte_editor jd" name="placeholder[job_description]">
                             <textarea class="form-control form-control-sm jsvw-textarea texteditor" name="header[job_description]"></textarea>
 
                            
@@ -296,7 +296,7 @@ var profile_id                   = <?php echo isset($_SESSION['userid'])? '"'.$_
 
                     <div class="form-group row desktop-jsvwjobdescrow">
                         <label class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-3 col-form-label text-right">Perks & Benefits</label>
-                        <div class="col">
+                        <div class="col pb-content">
                            <div id="p_b_content_desktop" class="row row-cols-2">
                                 
                            </div><!--./row-->
@@ -377,14 +377,14 @@ var profile_id                   = <?php echo isset($_SESSION['userid'])? '"'.$_
                     </div><!--./form-group-->
 
                     <div class="form-group row desktop-jsvwjobdescrow">
-                        <label class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-3 col-form-label align-self-center text-right"># of Vacancies</label>
+                        <label class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-3 col-form-label align-self-center text-right">No. of Vacancies</label>
                         <div class="col align-self-center">
                             <input class="form-control form-control-sm" type="text" name="header[vacancies]"/>
                         </div><!--./col-10-->
                     </div><!--./form-group-->
 
                     <div class="form-group row mobile-jsvwjobdescrow">
-                        <label class="col-5 col-form-label align-self-center text-left"># of Vacancies</label>
+                        <label class="col-5 col-form-label align-self-center text-left">No. of Vacancies</label>
                         <div class="row">
                             <div class="col align-self-center">
                                 <input class="form-control form-control-sm" type="text" name="header[vacancies]"/>
@@ -550,8 +550,6 @@ var profile_id                   = <?php echo isset($_SESSION['userid'])? '"'.$_
             <p>Share this job post at</p>
 
             <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $fb_url?>" class="mr-4"><img src="<?php echo base_url('/files/images/default/fb-logo.png')?>" class="jsvw-socicons" /></a>
-
-            <a target="_blank" href="https://twitter.com/intent/tweet?url=<?php echo $fb_url?>&text=test" class="mr-4"><img src="<?php echo base_url('/files/images/default/tw-logo.png')?>" class="jsvw-socicons" /></a>
 
             <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo $fb_url?>"><img src="<?php echo base_url('/files/images/default/ln-logo.png')?>" class="jsvw-socicons" /></a>
         </div>

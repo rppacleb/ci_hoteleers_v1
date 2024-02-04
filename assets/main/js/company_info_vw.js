@@ -1,536 +1,665 @@
+$(document).ready(function () {
+  var homeurl = baseurl + "/company_info";
+  var homeurl_txt = "company_info";
+  var urlimgdef = baseurl + "/files/images/default/image.png";
+  var upload_path = baseurl + "/files/uploads/";
+  var dropdown_loaded = 0;
+  // load_record(0,'signup','main_container','main_pagination','main_loader');
 
+  if ($(window).width() >= 1441) {
+    $(".container-fluid").css({ "max-width": "1440px" });
+  } else if ($(window).width() >= 1360 && $(window).width() <= 1440) {
+    $(".container-fluid").css({ "max-width": "1350px" });
+  } else if ($(window).width() >= 1200 && $(window).width() <= 1359) {
+    $(".container-fluid").css({ "max-width": "1200px" });
+  }
 
-$(document).ready(function(){
-    var homeurl         = baseurl + '/company_info';
-    var homeurl_txt     = 'company_info';
-    var urlimgdef       = baseurl + '/files/images/default/image.png';
-    var upload_path     = baseurl + '/files/uploads/';
-    var dropdown_loaded = 0;
-   // load_record(0,'signup','main_container','main_pagination','main_loader');
+  if (window.location.href.indexOf("edit") > -1) {
+    $(".btn_edit").addClass("d-none");
+  }
 
-   if ($(window).width() >= 1441 ) {
-    $('.container-fluid').css({'max-width': '1440px'});
-   } else if ($(window).width() >= 1360 && $(window).width() <= 1440) {
-    $('.container-fluid').css({'max-width': '1350px'});
-   } else if ($(window).width() >= 1200 && $(window).width() <= 1359) {
-    $('.container-fluid').css({'max-width': '1200px'});
-   }
+  //alert(moment('4/30/2016', 'MM/DD/YYYY').add(1, 'day'));
 
-    if (window.location.href.indexOf("edit") > -1) {
-        $('.btn_edit').addClass('d-none');
-    }
+  //Initialize date time picker
+  $("input[name=header\\[start_date\\]]").datetimepicker({
+    format: "M/D/YYYY",
+    defaultDate: new Date(),
+  });
 
-   //alert(moment('4/30/2016', 'MM/DD/YYYY').add(1, 'day'));
+  $("input[name=header\\[start_time\\]]").datetimepicker({
+    format: "LT",
+    defaultDate: new Date(),
+  });
 
-   //Initialize date time picker
-    $('input[name=header\\[start_date\\]]').datetimepicker({
-        format: 'M/D/YYYY',
-        defaultDate : new Date()
+  $("input[name=header\\[end_date\\]]").datetimepicker({
+    format: "M/D/YYYY",
+    defaultDate: new Date(),
+  });
 
-    });
+  $("input[name=header\\[end_time\\]]").datetimepicker({
+    format: "LT",
+    defaultDate: new Date(),
+  });
 
-    $('input[name=header\\[start_time\\]]').datetimepicker({
-        format: 'LT',
-        defaultDate : new Date()
-    });
+  if (type == "edit") {
+    $(".custom-file-upload").addClass("custom-file-upload-show");
+    $(".custom-file-upload2").addClass("custom-file-upload-show");
+  }
 
-    $('input[name=header\\[end_date\\]]').datetimepicker({
-        format: 'M/D/YYYY',
-        defaultDate : new Date()
-    });
+  //load_data
+  //load record
+  $(document.body).on("blur", "input[name=header\\[id\\]]", function (e) {
+    var id = $(this).val();
+    var type = $(this).attr("aria-type");
 
-    $('input[name=header\\[end_time\\]]').datetimepicker({
-        format: 'LT',
-        defaultDate : new Date()
-    });
+    var param = {};
+    //param["type"]   = type;
+    param["id"] = id;
+    param["mode"] = type;
+    load_data(param);
+  });
+  //end load record
 
-    if(type == 'edit'){
-        $('.custom-file-upload').addClass('custom-file-upload-show');
-        $('.custom-file-upload2').addClass('custom-file-upload-show');
-    }
+  $("input[name=header\\[id\\]]").trigger("blur");
 
-    //load_data
-    //load record
-    $(document.body).on('blur','input[name=header\\[id\\]]',function(e){
-        var id          = $(this).val();
-        var type        = $(this).attr('aria-type');
+  function load_pagination(param) {
+    //test
+    var pgntn_current_page = parseInt(param.page === 0 ? 1 : param.page);
+    var pgntn_total_page = param.total_page;
+    var pgntn_per_pages = 8;
+    var pgntn_per_page = parseInt(pgntn_current_page) * pgntn_per_pages;
 
-        var param       = {};
-        //param["type"]   = type;
-        param["id"]     = id;
-        param["mode"]   = type;
-        load_data(param);
-    })
-    //end load record
+    var init_ctr = 1;
+    if (pgntn_per_page > pgntn_total_page) {
+      pgntn_per_page = pgntn_total_page;
+    } //end if
 
-    $('input[name=header\\[id\\]]').trigger('blur');
-    
+    init_ctr = pgntn_per_page - pgntn_per_pages + 1;
 
+    if (param.page == 0 || param.page == 1) {
+      init_ctr = 1;
+    } //end if
+    //alert(init_ctr);
 
+    $("." + param.pagination + "").empty();
 
+    //previous button
+    if (pgntn_current_page > 1) {
+      var html = "";
+      html =
+        '<li class="page-item" aria-page="prev" aria-total_page="' +
+        pgntn_total_page +
+        '" aria-current_page="' +
+        pgntn_current_page +
+        '"><a class="page-link">Prev</a></li>';
+      $("." + param.pagination + "").append(html);
+    } //end if
+    //end previous button
 
+    for (var i = init_ctr; i <= pgntn_per_page; i++) {
+      var html = "";
 
-    function load_pagination(param) {
-        //test
-        var pgntn_current_page  = parseInt((param.page === 0? 1 : param.page));
-        var pgntn_total_page    = param.total_page;
-        var pgntn_per_pages     = 8;
-        var pgntn_per_page      = (parseInt(pgntn_current_page) * pgntn_per_pages);
-     
-        var init_ctr = 1;
-        if(pgntn_per_page > pgntn_total_page){
-            pgntn_per_page = pgntn_total_page;
-        }//end if
-        
-       
-        init_ctr = (pgntn_per_page - pgntn_per_pages) + 1;
+      html +=
+        '<li class="page-item" aria-page="' +
+        i +
+        '" aria-total_page="' +
+        pgntn_total_page +
+        '"><a class="page-link">' +
+        i +
+        "</a></li>";
+      $("." + param.pagination + "").append(html);
+    } //end if
 
-        if(param.page == 0 || param.page == 1){
-            init_ctr = 1;
-        }//end if
-        //alert(init_ctr);
+    //next button
+    if (pgntn_per_page !== pgntn_total_page) {
+      var html = "";
+      html =
+        '<li class="page-item" aria-page="next" aria-total_page="' +
+        pgntn_total_page +
+        '" aria-current_page="' +
+        pgntn_current_page +
+        '"><a class="page-link">Next</a></li>';
+      $("." + param.pagination + "").append(html);
+    } //end if
+    //end test
+    //end next button
+  } //end function
 
-         
-        $('.'+param.pagination+'').empty();
+  //event
+  //=====================================================================================================================
+  //pagination button
 
-        //previous button
-        if(pgntn_current_page > 1){
-            var html = '';
-             html = '<li class="page-item" aria-page="prev" aria-total_page="'+pgntn_total_page+'" aria-current_page="'+pgntn_current_page+'"><a class="page-link">Prev</a></li>';
-            $('.'+param.pagination+'').append(html);
-        }//end if
-        //end previous button
+  //approve
+  $(document.body).on("click", "button.btn_submit", function (e) {
+    var view_url = homeurl + "/view/";
 
-        for (var i = init_ctr; i <= pgntn_per_page; i++) {
-            var html = '';
-            
-                html += '<li class="page-item" aria-page="'+i+'" aria-total_page="'+pgntn_total_page+'"><a class="page-link">'+i+'</a></li>';
-                $('.'+param.pagination+'').append(html);
+    var id = $(this).attr("aria-id");
+    var btn = $(this);
+    var btn_text = "";
+    var id = $(this).attr("aria-id");
+    var type = $(this).attr("aria-type");
+    var type_text = "";
 
-        }//end if
+    var url = homeurl;
+    url = homeurl + "/submit_data";
+    var url_view = homeurl + "/view";
 
-        //next button
-        if(pgntn_per_page !== pgntn_total_page){
-            var html = '';
-             html = '<li class="page-item" aria-page="next" aria-total_page="'+pgntn_total_page+'" aria-current_page="'+pgntn_current_page+'"><a class="page-link">Next</a></li>';
-            $('.'+param.pagination+'').append(html);
-        }//end if
-        //end test
-        //end next button
-    }//end function
+    var frm_id = "";
 
+    var data = {};
+    data.header = {};
+    data.header.id = id;
+    data.header.status = type;
+    data.header.username = $(this).attr("aria-username");
 
-    //event
-    //=====================================================================================================================
-    //pagination button
-    
-    
-    //approve
-    $(document.body).on('click','button.btn_submit',function(e){
-        var view_url     = homeurl + '/view/';
+    btn_text = "Submit";
 
-        var id          = $(this).attr('aria-id');
-        var btn         = $(this);
-        var btn_text    = '';
-        var id          = $(this).attr('aria-id');
-        var type        = $(this).attr('aria-type');
-        var type_text   = "";
+    if (confirm("Are you sure you want to submit this record?")) {
+      $.ajax({
+        url: url,
+        type: "POST",
+        data: $("#frm_data_entry").serialize(),
+        dataType: "JSON",
+        beforeSend: function () {
+          $(".outside_button *").css("pointer-events", "none");
+          btn.text("Processing...");
+          btn.attr("disabled", "disabled");
+        },
+      })
+        .done(function (data) {
+          //alert(Object.keys(data.messages).length);
+          if (data.success === true) {
+            var msg_html = "";
+            var arr = [];
+            for (var i = 0; i <= data.messages.length - 1; i++) {
+              for (var element in data.messages[i]) {
+                arr.push(data.messages[i][element]);
+                msg_html += data.messages[i][element] + "\n";
+              } //end for
+            } //End for
 
-       
-        var url         = homeurl;
-        url             = homeurl + '/submit_data';
-        var url_view    = homeurl + '/view';
-        
-        var frm_id      = '';
-        
-        var data                    = {};
-            data.header             = {}
-            data.header.id          = id;
-            data.header.status      = type;
-            data.header.username    = $(this).attr('aria-username');
-
-        btn_text = "Submit";
- 
-      
-        if(confirm("Are you sure you want to submit this record?")){
-
-
-            $.ajax({
-                url: url,
-                type: "POST",
-                data: $('#frm_data_entry').serialize(),
-                dataType: "JSON",
-                beforeSend : function(){
-                    $(".outside_button *").css('pointer-events','none');
-                    btn.text('Processing...');
-                    btn.attr('disabled','disabled');
-
-                },
-            }).done(function (data) {
-                   
-                    //alert(Object.keys(data.messages).length);
-                    if (data.success === true){
-                        
-                        var msg_html    = '';
-                        var arr         = [];
-                        for (var i = 0; i <= data.messages.length - 1; i++) {
-                            for (var element in data.messages[i]) {
-                                arr.push(data.messages[i][element]);
-                                msg_html += data.messages[i][element] + '\n';
-                            }//end for
-                        }//End for
-
-                        $.notify(msg_html,{ 
-                            position:"top center",
-                            className:"success",
-                            arrowShow : true
-                        });
-
-
-                        view_url += data.data.id;
-                        setTimeout(function(){
-                            window.location.replace(view_url);;
-                            btn.text(btn_text);
-                            btn.removeAttr('disabled');
-                        },2000)
-
-                        
-                        //load_record(0,type,type+'_container',type+'_pagination',type+'_loader');
-                        //$(frm_id+' input[name=header\\[id\\]').val('');
-                        //$(frm_id+' input[name=header\\[name\\]').val('');
-
-                        //load_record(0,'signup','main_container','main_pagination','main_loader');
-
-                        
-
-                    } else {
-                        var msg_html    = '';
-                        var arr         = [];
-                        for (var i = 0; i <= data.messages.length - 1; i++) {
-                            for (var element in data.messages[i]) {
-                                arr.push(data.messages[i][element]);
-                                msg_html += data.messages[i][element] + '\n';
-                            }//end for
-                        }//End for
-
-                        $.notify(msg_html,{ 
-                            position:"top center",
-                            className:"error",
-                            arrowShow : true
-                        });
-
-                        btn.text(btn_text);
-                        btn.removeAttr('disabled');
-                        $(".outside_button *").css('pointer-events','auto');
-                    }
-                }).fail(function(e){
-                    alert(e.responseText);
-                   
-
-                    btn.text(btn_text);
-                    btn.removeAttr('disabled');
-                    $(".outside_button *").css('pointer-events','auto');
-                }).always(function(e){
-
+            $.notify(msg_html, {
+              position: "top center",
+              className: "success",
+              arrowShow: true,
             });
-        }//end if
-    })//end if
-    //end approve
 
+            view_url += data.data.id;
+            setTimeout(function () {
+              window.location.replace(view_url);
+              btn.text(btn_text);
+              btn.removeAttr("disabled");
+            }, 2000);
 
-    //load industry autocomplete
-    $(document.body).on('focus','input[id=header\\[industry_text\\]]',function(){
-        if(!$(this).hasClass('wauto')){
-            load_industry_autocomplete($(this),$('input[name=header\\[industry\\]]'));
-            $(this).addClass('wauto');
-        }//End if
-    })//focus
-    $(document.body).on('blur','input[id=header\\[industry_text\\]]',function(){
-        if($(this).val() == ""){
-            $('input[name=header\\[industry\\]]').val('');
-        }//end if
+            //load_record(0,type,type+'_container',type+'_pagination',type+'_loader');
+            //$(frm_id+' input[name=header\\[id\\]').val('');
+            //$(frm_id+' input[name=header\\[name\\]').val('');
 
-        if($('input[name=header\\[industry\\]]').val() == ''){
-            $(this).val('');
-        }//end if
-    })//blur
+            //load_record(0,'signup','main_container','main_pagination','main_loader');
+          } else {
+            var msg_html = "";
+            var arr = [];
+            for (var i = 0; i <= data.messages.length - 1; i++) {
+              for (var element in data.messages[i]) {
+                arr.push(data.messages[i][element]);
+                msg_html += data.messages[i][element] + "\n";
+              } //end for
+            } //End for
 
+            $.notify(msg_html, {
+              position: "top center",
+              className: "error",
+              arrowShow: true,
+            });
 
+            btn.text(btn_text);
+            btn.removeAttr("disabled");
+            $(".outside_button *").css("pointer-events", "auto");
+          }
+        })
+        .fail(function (e) {
+          alert(e.responseText);
 
-    //=====================================================================================================================
-    //end events
+          btn.text(btn_text);
+          btn.removeAttr("disabled");
+          $(".outside_button *").css("pointer-events", "auto");
+        })
+        .always(function (e) {});
+    } //end if
+  }); //end if
+  //end approve
 
-    
+  //load industry autocomplete
+  $(document.body).on(
+    "focus",
+    "input[id=header\\[industry_text\\]]",
+    function () {
+      if (!$(this).hasClass("wauto")) {
+        load_industry_autocomplete(
+          $(this),
+          $("input[name=header\\[industry\\]]")
+        );
+        $(this).addClass("wauto");
+      } //End if
+    }
+  ); //focus
+  $(document.body).on(
+    "blur",
+    "input[id=header\\[industry_text\\]]",
+    function () {
+      if ($(this).val() == "") {
+        $("input[name=header\\[industry\\]]").val("");
+      } //end if
 
+      if ($("input[name=header\\[industry\\]]").val() == "") {
+        $(this).val("");
+      } //end if
+    }
+  ); //blur
 
-    
+  //=====================================================================================================================
+  //end events
 
-    //sourcing
-    //=======================================================================================================================
-    //load data
-    function load_data(param){
-        var url         = homeurl + '/load_data/'+param.id+'?employer='+employer_id;
-        var btn         = $('.btn_submit');
-        var btn_text    = 'Submit';
-        $.ajax({
-            url: url,
-            type: "POST",
-            dataType: "JSON",
-            beforeSend : function(){
-                $(".outside_button *").css('pointer-events','none');
-                //$('#'+loader+'').html('<div class="col-12 text-center"><div class="spinner-grow text-muted"></div></div>');
-                btn.html('<div class="spinner-grow"></div>');
-            },
-        }).done(function (response) {
+  //sourcing
+  //=======================================================================================================================
+  //load data
+  function load_data(param) {
+    var url = homeurl + "/load_data/" + param.id + "?employer=" + employer_id;
+    var btn = $(".btn_submit");
+    var btn_text = "Submit";
+    $.ajax({
+      url: url,
+      type: "POST",
+      dataType: "JSON",
+      beforeSend: function () {
+        $(".outside_button *").css("pointer-events", "none");
+        //$('#'+loader+'').html('<div class="col-12 text-center"><div class="spinner-grow text-muted"></div></div>');
+        btn.html('<div class="spinner-grow"></div>');
+      },
+    })
+      .done(function (response) {
+        if (response.data !== null) {
+          if (dropdown_loaded == 0) {
+            load_filter_dropdowns();
+          } //end if
 
-            if(response.data !== null){
-                if(dropdown_loaded == 0){
-                    load_filter_dropdowns();    
-                }//end if
+          var data = response.data[0];
+          console.log(data);
 
-                var data = response.data[0];
+          if (param.mode == "edit" || param.mode == "view") {
+            //view and edit mode
+            //----------------------------------------------------------------------------------------------------
+            $("#frm_data_entry input[name=header\\[doc_image\\]]").val(
+              data.doc_image
+            );
+            $("#frm_data_entry input[name=file\\[old_doc_image\\]]").val(
+              data.doc_image
+            );
+            $("#frm_data_entry input[name=header\\[company_name\\]]").val(
+              data.company_name
+            );
+            $("#frm_data_entry textarea[name=header\\[about\\]]").val(
+              data.about
+            );
+            $("#frm_data_entry input[name=header\\[website\\]]").val(
+              data.website
+            );
 
-                if(param.mode == 'edit' || param.mode == 'view'){
-                    //view and edit mode
-                    //----------------------------------------------------------------------------------------------------
-                        $('#frm_data_entry input[name=header\\[doc_image\\]]').val(data.doc_image);
-                        $('#frm_data_entry input[name=file\\[old_doc_image\\]]').val(data.doc_image);
-                        $('#frm_data_entry input[name=header\\[company_name\\]]').val(data.company_name);
-                        $('#frm_data_entry textarea[name=header\\[about\\]]').val(data.about);
-                        $('#frm_data_entry input[name=header\\[website\\]]').val(data.website);
+            // var d_code = map_dial_code(data.location);
+            // if (d_code.dial_code !== undefined) {
+            //   $(
+            //     "#frm_data_entry select[name=header\\[dial_code\\]]"
+            //   ).multiselect("select", d_code.dial_code);
+            // } //end if
 
-                        var d_code = map_dial_code(data.location);
-                        if(d_code.dial_code !== undefined){
-                            $('#frm_data_entry select[name=header\\[dial_code\\]]').multiselect('select',d_code.dial_code);
-                        }//end if
-                        $('#frm_data_entry select[name=header\\[dial_code\\]]').val(data.dial_code);
-                        $('#frm_data_entry input[name=header\\[contact_number\\]]').val(data.contact_number);
+            $(".view-tel-no")
+              .empty()
+              .append(`${data.dial_code} ${data.contact_number}`);
+            $("#frm_data_entry select[name=header\\[dial_code\\]]").val(
+              data.dial_code
+            );
+            $("#frm_data_entry input[name=header\\[contact_number\\]]").val(
+              data.contact_number
+            );
 
-                        $('#frm_data_entry input[name=header\\[start_date\\]]').val(data.start_date);
-                        $('#frm_data_entry input[name=header\\[start_time\\]]').val(data.start_time);
-                        $('#frm_data_entry input[name=header\\[end_date\\]]').val(data.end_date);
-                        $('#frm_data_entry input[name=header\\[end_time\\]]').val(data.end_time);
-                        $('#frm_data_entry textarea[name=header\\[other_notes\\]]').val(data.other_notes);
+            $("#frm_data_entry input[name=header\\[start_date\\]]").val(
+              data.start_date
+            );
+            $("#frm_data_entry input[name=header\\[start_time\\]]").val(
+              data.start_time
+            );
+            $("#frm_data_entry input[name=header\\[end_date\\]]").val(
+              data.end_date
+            );
+            $("#frm_data_entry input[name=header\\[end_time\\]]").val(
+              data.end_time
+            );
+            $("#frm_data_entry textarea[name=header\\[other_notes\\]]").val(
+              data.other_notes
+            );
 
-                        $('h6[id=header\\[company_name\\]]').html(data.company_name);
-                        $('#frm_data_entry input[id=search_location]').val(data.location);
-                        
-                        $('p[id=header\\[location\\]]').html('<small class="text-muted">'+data.location+'</small>');
+            $("h6[id=header\\[company_name\\]]").html(data.company_name);
+            $("#frm_data_entry input[id=search_location]").val(data.location);
 
-                        //$('#frm_data_entry textarea[name=header\\[location\\]]').val(data.location);
-                        $('#frm_data_entry select[name=header\\[location\\]]').multiselect('select',data.location);
-                        $('#frm_data_entry input[name=placeholder\\[location\\]]').val(data.location);
+            $("p[id=header\\[location\\]]").html(
+              '<small class="text-muted">' + data.location + "</small>"
+            );
 
-                        $('#frm_data_entry textarea[name=header\\[address\\]]').val(data.address);
-                        
-                        
-                        $('#frm_data_entry input[name=header\\[country\\]]').val(data.country);
-                        $('#frm_data_entry select[name=header\\[industry\\]]').multiselect('select',data.industry);
-                        $('#frm_data_entry input[name=placeholder\\[industry\\]]').val(data.industry_text);
-                        //$('#frm_data_entry input[name=header\\[industry\\]]').val(data.industry);
-                        //$('#frm_data_entry input[id=header\\[industry_text\\]]').val(data.industry_text);
+            //$('#frm_data_entry textarea[name=header\\[location\\]]').val(data.location);
+            $("#frm_data_entry select[name=header\\[location\\]]").multiselect(
+              "select",
+              data.location
+            );
+            $("#frm_data_entry input[name=placeholder\\[location\\]]").val(
+              data.location
+            );
 
+            $("#frm_data_entry textarea[name=header\\[address\\]]").val(
+              data.address
+            );
 
-                        $('p[id=header\\[date_created\\]]').html('<small class="text-muted">Joined '+data.joined_date+'</small>');
-                        
-                        if(data.doc_image === null || data.doc_image == ""){
-                            $('img[id=header\\[company_logo\\]]').attr('src',urlimgdef); 
-                        }else{
-                            $('img[id=header\\[company_logo\\]]').attr('src',upload_path+data.doc_image);
-                        }//end if
-                        
-                      
+            $("#frm_data_entry input[name=header\\[country\\]]").val(
+              data.country
+            );
+            $("#frm_data_entry select[name=header\\[industry\\]]").multiselect(
+              "select",
+              data.industry
+            );
+            $("#frm_data_entry input[name=placeholder\\[industry\\]]").val(
+              data.industry_text
+            );
+            //$('#frm_data_entry input[name=header\\[industry\\]]').val(data.industry);
+            //$('#frm_data_entry input[id=header\\[industry_text\\]]').val(data.industry_text);
 
-                        //populate lines
-                        var html            = ''
-                        var html_form       = '';
-                        var total_size      = 0;
-                        var total_files     = 0;
-                        var data_lines  = response.data;
-                        for(var key in data_lines){
-                            var src = "";
-                            if(data_lines[key].line_doc_image === null || data_lines[key].line_doc_image == ""){
-                                continue;
-                                src = urlimgdef;
-                            }else{
-                                src = upload_path+data_lines[key].line_doc_image;;   
-                            }//end if
-                            total_files += 1;
-                            total_size += catchIsNaN(data_lines[key]['line_file_size']);;
-                           
-                            html += '<div class="col mb-3">';
-                                
-                                html += '<button aria-line="'+data_lines[key]['line']+'" type="button" class="close remove to_hide" aria-label="Close">';
-                                  html += '<span aria-hidden="true" class="text-danger">&times;</span>';
-                                html += '</button>';
+            $("p[id=header\\[date_created\\]]").html(
+              '<small class="text-muted">Joined ' +
+                data.joined_date +
+                "</small>"
+            );
 
-                                html += '<img src="'+src+'" class="img-fluid rounded" style="width:200px;height:150px;">';
-                            html += '</div><!--./col-->';
+            if (data.doc_image === null || data.doc_image == "") {
+              $("img[id=header\\[company_logo\\]]").attr("src", urlimgdef);
+            } else {
+              $("img[id=header\\[company_logo\\]]").attr(
+                "src",
+                upload_path + data.doc_image
+              );
+            } //end if
 
-                            html_form += '<div class="col mb-3 remove-'+data_lines[key]['line']+' d-none">';
-                                html_form += '<input readonly name="row[line][]" value="'+data_lines[key]['line']+'" class="form-control form-control-sm" />';
-                                html_form += '<input readonly name="row[doc_image][]" value="'+data_lines[key]['line_doc_image']+'" class="form-control form-control-sm" />';
-                                html_form += '<input readonly name="row[file_size][]" value="'+data_lines[key]['line_file_size']+'" class="form-control form-control-sm" />'
-                                html_form += '<input readonly name="row[doc_content][]" value="" class="form-control form-control-sm" />';
-                            html_form += '</div><!--./col-->';
-                        }//end for
+            //populate lines
+            var html = "";
+            var html_form = "";
+            var total_size = 0;
+            var total_files = 0;
+            var data_lines = response.data;
+            for (var key in data_lines) {
+              var src = "";
+              if (
+                data_lines[key].line_doc_image === null ||
+                data_lines[key].line_doc_image == ""
+              ) {
+                continue;
+                src = urlimgdef;
+              } else {
+                src = upload_path + data_lines[key].line_doc_image;
+              } //end if
+              total_files += 1;
+              total_size += catchIsNaN(data_lines[key]["line_file_size"]);
 
+              html += '<div class="col mb-3">';
 
+              html +=
+                '<button aria-line="' +
+                data_lines[key]["line"] +
+                '" type="button" class="close remove to_hide" aria-label="Close">';
+              html +=
+                '<span aria-hidden="true" class="text-danger">&times;</span>';
+              html += "</button>";
 
-                        $('input[name=file\\[total_uploaded_file\\]]').val(total_size.toFixed(2));
-                        $('input[name=file\\[total_files\\]]').val(total_files);
+              html +=
+                '<img src="' +
+                src +
+                '" class="img-fluid rounded" style="width:200px;height:150px;">';
+              html += "</div><!--./col-->";
 
-                        $('#image_cont').append(html);
-                        $('#image_cont_form').append(html_form);
+              html_form +=
+                '<div class="col mb-3 remove-' +
+                data_lines[key]["line"] +
+                ' d-none">';
+              html_form +=
+                '<input readonly name="row[line][]" value="' +
+                data_lines[key]["line"] +
+                '" class="form-control form-control-sm" />';
+              html_form +=
+                '<input readonly name="row[doc_image][]" value="' +
+                data_lines[key]["line_doc_image"] +
+                '" class="form-control form-control-sm" />';
+              html_form +=
+                '<input readonly name="row[file_size][]" value="' +
+                data_lines[key]["line_file_size"] +
+                '" class="form-control form-control-sm" />';
+              html_form +=
+                '<input readonly name="row[doc_content][]" value="" class="form-control form-control-sm" />';
+              html_form += "</div><!--./col-->";
+            } //end for
 
-                        autosize($('.civw-textarea'));
-                        //end populate lines
-                    //----------------------------------------------------------------------------------------------------
-                    //end view and edit mode
-                }else{
-                    //add mode
-                    //----------------------------------------------------------------------------------------------------
-                    $('img[id=header\\[company_logo\\]]').attr('src',urlimgdef); 
-                    //----------------------------------------------------------------------------------------------------
-                    //end add mode
-                }//end if
+            $("input[name=file\\[total_uploaded_file\\]]").val(
+              total_size.toFixed(2)
+            );
+            $("input[name=file\\[total_files\\]]").val(total_files);
 
-                
+            $("#image_cont").append(html);
+            $("#image_cont_form").append(html_form);
 
+            autosize($(".civw-textarea"));
+            //end populate lines
+            //----------------------------------------------------------------------------------------------------
+            //end view and edit mode
+          } else {
+            //add mode
+            //----------------------------------------------------------------------------------------------------
+            $("img[id=header\\[company_logo\\]]").attr("src", urlimgdef);
+            //----------------------------------------------------------------------------------------------------
+            //end add mode
+          } //end if
 
-                if(param.mode == 'view'){
-                    $('#frm_data_entry input:not([readonly]),textarea:not([readonly]),select,button').addClass(param.mode);
-                    //$('#frm_data_entry input:not([readonly]),textarea:not([readonly]),select').addClass('form-control-plaintext');
-                    
-                    $('.to_hide').addClass('d-none');
-                    //$('#frm_data_entry .tooltip_icon').addClass('d-none');
+          if (param.mode == "view") {
+            $(".edit-tel-no").addClass("d-none");
+            $(".view-tel-no").removeClass("d-none");
 
+            $(
+              "#frm_data_entry input:not([readonly]),textarea:not([readonly]),select,button"
+            ).addClass(param.mode);
+            //$('#frm_data_entry input:not([readonly]),textarea:not([readonly]),select').addClass('form-control-plaintext');
 
-                    $('#frm_data_entry .input-group-append').addClass('d-none');
+            $(".to_hide").addClass("d-none");
+            //$('#frm_data_entry .tooltip_icon').addClass('d-none');
 
+            $("#frm_data_entry .input-group-append").addClass("d-none");
 
-                    $('#frm_data_entry select.'+param.mode+'').removeClass('custom-select');
+            $("#frm_data_entry select." + param.mode + "").removeClass(
+              "custom-select"
+            );
 
+            $(
+              "#frm_data_entry button." +
+                param.mode +
+                ", input." +
+                param.mode +
+                ",textarea." +
+                param.mode +
+                ",select." +
+                param.mode +
+                ""
+            ).removeClass("form-control");
+            $(
+              "#frm_data_entry button." +
+                param.mode +
+                ", input." +
+                param.mode +
+                ",textarea." +
+                param.mode +
+                ",select." +
+                param.mode +
+                ""
+            ).addClass("form-control-plaintext");
 
-                    $('#frm_data_entry button.'+param.mode+', input.'+param.mode+',textarea.'+param.mode+',select.'+param.mode+'').removeClass('form-control');
-                    $('#frm_data_entry button.'+param.mode+', input.'+param.mode+',textarea.'+param.mode+',select.'+param.mode+'').addClass('form-control-plaintext');
+            $(
+              "#frm_data_entry button." +
+                param.mode +
+                ", input." +
+                param.mode +
+                ",textarea." +
+                param.mode +
+                ",select." +
+                param.mode +
+                ""
+            ).prop("disabled", true);
+            $("#frm_data_entry input[name^=placeholder]").removeClass("d-none");
+            $("#frm_data_entry button").addClass("d-none");
 
-                    $('#frm_data_entry button.'+param.mode+', input.'+param.mode+',textarea.'+param.mode+',select.'+param.mode+'').prop('disabled',true);
-                    $('#frm_data_entry input[name^=placeholder]').removeClass('d-none');
-                    $('#frm_data_entry button').addClass('d-none');
+            $(".btn_submit").addClass("d-none");
+            $(".btn_cancel").addClass("d-none");
+            $(".btn_edit").removeClass("mr-4");
 
-                    $('.btn_submit').addClass('d-none');
-                    $('.btn_cancel').addClass('d-none');
-                    $('.btn_edit').removeClass('mr-4');
-                    
-                    $('.custom-file-upload').remove();
-                    $('.custom-file-upload2').remove();
-                    
-                    //custom can be omitted
-                    $('#frm_data_entry input#search_location').parent().parent().addClass('d-none');
-                    $('#frm_data_entry textarea[name=header\\[location\\]]').parent().parent().removeClass('d-none');
-                    $('#frm_data_entry textarea[name=header\\[location\\]]').addClass('form-control-plaintext');
-                    $('#frm_data_entry textarea[name=header\\[location\\]]').removeClass('form-control');
-                    
-                    $('.civw-asterisk').addClass('d-none');
+            $(".custom-file-upload").remove();
+            $(".custom-file-upload2").remove();
 
-                }//end if
+            //custom can be omitted
+            $("#frm_data_entry input#search_location")
+              .parent()
+              .parent()
+              .addClass("d-none");
+            $("#frm_data_entry textarea[name=header\\[location\\]]")
+              .parent()
+              .parent()
+              .removeClass("d-none");
+            $("#frm_data_entry textarea[name=header\\[location\\]]").addClass(
+              "form-control-plaintext"
+            );
+            $(
+              "#frm_data_entry textarea[name=header\\[location\\]]"
+            ).removeClass("form-control");
 
-                if (param.mode == 'edit'){
-                    $('.civw-headers').remove();
-                }
+            $(".civw-asterisk").addClass("d-none");
+          } //end if
 
-                btn.html(btn_text);
-                $(".outside_button *").css('pointer-events','auto');
-            }else{
-                window.location.replace(baseurl+'/home')
-                //add mode
-                //----------------------------------------------------------------------------------------------------
-                $('img[id=header\\[company_logo\\]]').attr('src',urlimgdef);
-                btn.html(btn_text);
-                $(".outside_button *").css('pointer-events','auto');
-                //----------------------------------------------------------------------------------------------------
-                //end add mode
-            }//end if
-            if(dropdown_loaded == 0){
-                load_filter_dropdowns();    
-            }//end if
-            $('#loading').hide();
-        }).fail(function(e){
-            alert(e.responseText);
-            btn.html(btn_text);
-            $(".outside_button *").css('pointer-events','auto');
-            $('#loading').hide();
-        }).always(function(e){
+          if (param.mode == "edit") {
+            $(".edit-tel-no").removeClass("d-none");
+            $(".view-tel-no").addClass("d-none");
+            $(".civw-headers").remove();
+          }
 
-        });
-    }//end load_record
-    //=======================================================================================================================
-    //end load data
+          btn.html(btn_text);
+          $(".outside_button *").css("pointer-events", "auto");
+        } else {
+          window.location.replace(baseurl + "/home");
+          //add mode
+          //----------------------------------------------------------------------------------------------------
+          $("img[id=header\\[company_logo\\]]").attr("src", urlimgdef);
+          btn.html(btn_text);
+          $(".outside_button *").css("pointer-events", "auto");
+          //----------------------------------------------------------------------------------------------------
+          //end add mode
+        } //end if
+        if (dropdown_loaded == 0) {
+          load_filter_dropdowns();
+        } //end if
+        $("#loading").hide();
+      })
+      .fail(function (e) {
+        alert(e.responseText);
+        btn.html(btn_text);
+        $(".outside_button *").css("pointer-events", "auto");
+        $("#loading").hide();
+      })
+      .always(function (e) {});
+  } //end load_record
+  //=======================================================================================================================
+  //end load data
 
+  //autocomplete
+  //===============================================================================================================================
 
-    //autocomplete
-    //===============================================================================================================================
-    
-    function load_dropdowns(type){
-        
-        $('select[name=header\\['+type+'\\]]').multiselect({
-            enableFiltering : true,
-            //selectAllValue: 'multiselect-all',
-            //selectAllText: 'Select All',
-            //includeSelectAllOption : true,
-            
-            maxHeight: 300,
-            enableCaseInsensitiveFiltering : true
-       });
-    }//end function
+  function load_dropdowns(type) {
+    $("select[name=header\\[" + type + "\\]]").multiselect({
+      enableFiltering: true,
+      //selectAllValue: 'multiselect-all',
+      //selectAllText: 'Select All',
+      //includeSelectAllOption : true,
 
+      maxHeight: 300,
+      enableCaseInsensitiveFiltering: true,
+    });
+  } //end function
 
+  //load dropdown
+  function load_dropdown(url, dropdown, type) {
+    //var url     = baseurl + "/get/signup/industry/0";
+    $.ajax({
+      url: url,
+      type: "POST",
+      dataType: "JSON",
+      async: false,
+      beforeSend: function () {},
+    })
+      .done(function (response) {
+        var html = '<option value="">Select</option>';
 
-    //load dropdown
-    function load_dropdown(url,dropdown,type){
-        //var url     = baseurl + "/get/signup/industry/0";
-        $.ajax({
-            url: url,
-            type: "POST",
-            dataType: "JSON",
-            async : false,
-            beforeSend : function(){
-              
-            },
-        }).done(function (response) {
-            
-            var html = '<option value="">Select</option>';
-
-            for(var key in response.data){
-                if(response.data[key].job_title !== undefined){
-                    html += '<option value="'+response.data[key].job_title+'">'+response.data[key].job_title+'</option>';    
-                }else if(response.data[key].language !== undefined){
-                    html += '<option value="'+response.data[key].language+'">'+response.data[key].language+'</option>';    
-                }else if(response.data[key].skills !== undefined){
-                    html += '<option value="'+response.data[key].skills+'">'+response.data[key].skills+'</option>';    
-                }else{
-                    if(type == 'location'){
-                        
-                        html += '<option value="'+response.data[key].name+'">'+response.data[key].name+'</option>';
-                    }else if(type == 'salary_currency'){
-                        html += '<option value="'+response.data[key].code+'">'+response.data[key].code+'</option>';
-                    }else{
-                        html += '<option value="'+response.data[key].id+'">'+response.data[key].name+'</option>';
-                    }//end if
-                }
-                
-                
-            }//end for
-            dropdown.html(html);
-
-        }).fail(function(e){
-            alert(e.responseText);
-            
-        }).always(function(e){
-
-        });
-        /*html.autocomplete({
+        for (var key in response.data) {
+          if (response.data[key].job_title !== undefined) {
+            html +=
+              '<option value="' +
+              response.data[key].job_title +
+              '">' +
+              response.data[key].job_title +
+              "</option>";
+          } else if (response.data[key].language !== undefined) {
+            html +=
+              '<option value="' +
+              response.data[key].language +
+              '">' +
+              response.data[key].language +
+              "</option>";
+          } else if (response.data[key].skills !== undefined) {
+            html +=
+              '<option value="' +
+              response.data[key].skills +
+              '">' +
+              response.data[key].skills +
+              "</option>";
+          } else {
+            if (type == "location") {
+              html +=
+                '<option value="' +
+                response.data[key].name +
+                '">' +
+                response.data[key].name +
+                "</option>";
+            } else if (type == "salary_currency") {
+              html +=
+                '<option value="' +
+                response.data[key].code +
+                '">' +
+                response.data[key].code +
+                "</option>";
+            } else {
+              html +=
+                '<option value="' +
+                response.data[key].id +
+                '">' +
+                response.data[key].name +
+                "</option>";
+            } //end if
+          }
+        } //end for
+        dropdown.html(html);
+      })
+      .fail(function (e) {
+        alert(e.responseText);
+      })
+      .always(function (e) {});
+    /*html.autocomplete({
             serviceUrl: url,
             type : 'GET',
             dataType : 'json',
@@ -565,383 +694,407 @@ $(document).ready(function(){
                 html.val('');
             }
         });*/
+  }
+
+  function load_filter_dropdowns() {
+    var url = baseurl + "/get/job_post/olocation";
+    var dropdown = $("select[name=header\\[location\\]]");
+    load_dropdown(url, dropdown, "location");
+    load_dropdowns("location");
+
+    var url = baseurl + "/get/signup/industry/0";
+    var dropdown = $("select[name=header\\[industry\\]]");
+    load_dropdown(url, dropdown, "industry");
+    load_dropdowns("industry");
+    dropdown_loaded = 1;
+  } //end function
+
+  //Customer autocomplete
+  function load_industry_autocomplete(html, html_id) {
+    var url = baseurl + "/get/signup/industry/0";
+    html
+      .autocomplete({
+        serviceUrl: url,
+        type: "GET",
+        dataType: "json",
+        showNoSuggestionNotice: true,
+        noSuggestionNotice: "Sorry, no matching results",
+        autoSelectFirst: true,
+        triggerSelectOnValidInput: true,
+        orientation: "auto",
+        transformResult: function (response) {
+          return {
+            suggestions: $.map(response.data, function (dataItem) {
+              if (
+                dataItem.name.toLowerCase().indexOf(html.val().toLowerCase()) >
+                -1
+              ) {
+                return { value: dataItem.name, data: dataItem.id };
+              } //end if
+            }),
+          };
+        },
+        onSelect: function (suggestion) {
+          html_id.val(suggestion.data);
+        },
+
+        onSearchComplete: function (query, suggestions) {
+          if (suggestions.length == 0) {
+            html_id.val("");
+          } //end if
+        },
+      })
+      .blur(function () {
+        if (html_id.val() == "") {
+          html.val("");
+        }
+      });
+  }
+  //===============================================================================================================================
+  //end autocomplete
+  //upload trigger
+  $(document.body).on("click", "button[name=btn_upload]", function (e) {
+    upload_image();
+  });
+  //end upload trigger
+
+  //upload trigger multiple
+  $(document.body).on(
+    "click",
+    "button[name=btn_upload_multiple]",
+    function (e) {
+      upload_image_multiple();
     }
+  );
+  //end upload trigger multiple
 
-    function load_filter_dropdowns(){
-        var url     = baseurl + "/get/job_post/olocation";
-        var dropdown    = $('select[name=header\\[location\\]]');
-        load_dropdown(url,dropdown,'location');
-        load_dropdowns('location');
+  //validate file
+  $(document.body).on(
+    "change",
+    "input[name=header\\[company_file\\]\\[\\]]",
+    function () {
+      var fileInput = $(this);
+      var totalSize = 0;
+      fileInput.each(function () {
+        for (var i = 0; i < this.files.length; i++) {
+          totalSize += this.files[i].size / 1024 / 1024;
+        } //end for
+      });
 
-
-        var url     = baseurl + "/get/signup/industry/0";
-        var dropdown    = $('select[name=header\\[industry\\]]');
-        load_dropdown(url,dropdown,'industry');
-        load_dropdowns('industry');
-        dropdown_loaded = 1;
-    }//end function
-
-
-    
-
-
-    //Customer autocomplete
-    function load_industry_autocomplete(html,html_id){
-        var url     = baseurl + "/get/signup/industry/0";
-        html.autocomplete({
-            serviceUrl: url,
-            type : 'GET',
-            dataType : 'json',
-            showNoSuggestionNotice: true,
-            noSuggestionNotice: 'Sorry, no matching results',
-            autoSelectFirst : true,
-            triggerSelectOnValidInput : true,
-            orientation : 'auto',
-            transformResult: function(response) {
-                return {
-                    suggestions: $.map(response.data, function(dataItem) {
-                        if (dataItem.name.toLowerCase().indexOf(html.val().toLowerCase()) > -1) {
-                           return { value: dataItem.name, data: dataItem.id }; 
-                        }//end if
-                    })
-                };  
-            },
-            onSelect: function(suggestion) {
-                html_id.val(suggestion.data);
-            },
-
-            onSearchComplete : function (query, suggestions) {
-                if(suggestions.length == 0){
-                    html_id.val('');
-                }//end if
-
-            }
-        }).blur(function(){
-            if(html_id.val() == ''){
-                html.val('');
-            }
+      if (totalSize > 40) {
+        var msg_html = "Max file size of 40MB exceeded!";
+        $.notify(msg_html, {
+          position: "top center",
+          className: "error",
+          arrowShow: true,
         });
+      } //end if
     }
-    //===============================================================================================================================
-    //end autocomplete
-    //upload trigger
-    $(document.body).on('click','button[name=btn_upload]',function(e){
-        upload_image();
-    })
-    //end upload trigger
+  );
+  //validate file
 
-    //upload trigger multiple
-    $(document.body).on('click','button[name=btn_upload_multiple]',function(e){
-        upload_image_multiple();
-    })
-    //end upload trigger multiple
+  //remove trigger
+  $(document.body).on("click", "button[name=btn_remove]", function (e) {
+    $("img[id=header\\[company_logo\\]]").attr("src", urlimgdef);
+    $("input[name=file\\[doc_content\\]]").val("");
+    $("input[name=header\\[doc_image\\]]").val("");
+    //$('input[name=header\\[doc_image\\]]').val('');
+  });
 
-    //validate file
-    $(document.body).on('change','input[name=header\\[company_file\\]\\[\\]]',function() {
-        var fileInput = $(this);
-        var totalSize = 0;
-        fileInput.each(function() {
-            for (var i = 0; i < this.files.length; i++) {
-              totalSize += (this.files[i].size / 1024) / 1024;
-            }//end for
-        });
+  $(document.body).on("click", ".custom-file-upload2", function (e) {
+    $("button[name=btn_remove]").trigger("click");
+  });
+  //end remove trigger
 
-        if (totalSize > 40) {
-            var msg_html = "Max file size of 40MB exceeded!"
-            $.notify(msg_html,{ 
-                position:"top center",
-                className:"error",
-                arrowShow : true
-            });
-        }//end if
+  //remove trigger
+  $(document.body).on("click", ".remove", function (e) {
+    var line = $(this).attr("aria-line");
 
+    $(this).parent().remove();
+    $(".remove-" + line).remove();
 
-
+    var total_size = 0;
+    $("input[name=row\\[file_size\\]\\[\\]]").each(function () {
+      total_size += catchIsNaN($(this).val());
     });
-    //validate file
+    $("input[name=file\\[total_uploaded_file\\]]").val(total_size.toFixed(2));
+    $("input[name=file\\[total_files\\]]").val(
+      $("input[name=row\\[line\\]\\[\\]]").length
+    );
+  });
+  //end remove trigger
 
-    //remove trigger
-    $(document.body).on('click','button[name=btn_remove]',function(e){
-        
-        $('img[id=header\\[company_logo\\]]').attr('src',(urlimgdef));
-        $('input[name=file\\[doc_content\\]]').val('');
-        $('input[name=header\\[doc_image\\]]').val('');
-        //$('input[name=header\\[doc_image\\]]').val('');
+  $(document.body).on(
+    "change",
+    "input[name=header\\[userfile\\]\\[\\]]",
+    function (e) {
+      // alert($(this).val());
+      // alert('sfsad');
+      $("button[name=btn_upload]").trigger("click");
+      //var file_path = URL.createObjectURL(event.target.files[0]);
+      //alert(file_path)
+      //$('img[id=header\\[company_logo\\]]').attr('src',file_path);
+    }
+  );
+
+  $(document.body).on(
+    "change",
+    "input[name=header\\[company_file\\]\\[\\]]",
+    function (e) {
+      // alert($(this).val());
+      // alert('sfsad');
+      $("button[name=btn_upload_multiple]").trigger("click");
+      //var file_path = URL.createObjectURL(event.target.files[0]);
+      //alert(file_path)
+      //$('img[id=header\\[company_logo\\]]').attr('src',file_path);
+    }
+  );
+
+  //remove trigger
+  $(document.body).on("click", ".btn_remove_multiple", function (e) {
+    $("#image_cont_form").empty();
+    $("#image_cont").empty();
+    var total_size = 0;
+    $("input[name=row\\[file_size\\]\\[\\]]").each(function () {
+      total_size += catchIsNaN($(this).val());
+    });
+    $("input[name=file\\[total_uploaded_file\\]]").val(total_size.toFixed(2));
+    $("input[name=file\\[total_files\\]]").val(
+      $("input[name=row\\[line\\]\\[\\]]").length
+    );
+  });
+  //end remove trigger
+  //Upload image
+  //===============================================================================================================================
+  //upload image
+  function upload_image() {
+    var url = homeurl + "/do_upload";
+    var btn = $("button[name=btn_upload]");
+    var formData = new FormData($("#frm_data_entry")[0]);
+
+    //formData.append('action', action);
+    $.ajax({
+      url: url, // Controller URL
+      type: "POST",
+      data: formData,
+      async: false,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "JSON",
+      beforeSend: function (data) {
+        $(".outside_button *").css("pointer-events", "none");
+        btn.html(
+          '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Processing...'
+        );
+        btn.attr("disabled", "disabled");
+
+        $("img[id=header\\[company_logo\\]]").attr(
+          "src",
+          "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        );
+      },
     })
+      .done(function (data) {
+        if (data.success === true) {
+          var file = data.data.file[0];
 
-    $(document.body).on('click','.custom-file-upload2',function(e){
-        
-        $('button[name=btn_remove]').trigger('click');
-    })
-    //end remove trigger
+          setTimeout(function () {
+            btn.html("Upload Image");
+            btn.removeAttr("disabled");
+            $(".outside_button *").css("pointer-events", "auto");
+            $("input[name=file\\[doc_content\\]]").val(file.file);
+            $("img[id=header\\[company_logo\\]]").attr(
+              "src",
+              "data:image/jpeg;base64, " + file.file
+            );
+            $("input[name=header\\[doc_image\\]]").val(file.file_attr.name);
 
-    //remove trigger
-    $(document.body).on('click','.remove',function(e){
-        
-        var line = $(this).attr('aria-line');
+            //$(form+' img#patientimg').attr('src',"data:image/jpeg;base64, "+data.header.file);
+          }, 2000);
+        } else {
+          setTimeout(function () {
+            var msg_html = "";
+            var arr = [];
+            for (var i = 0; i <= data.messages.length - 1; i++) {
+              for (var element in data.messages[i]) {
+                arr.push(data.messages[i][element]);
+                msg_html += data.messages[i][element] + "\n";
+              } //end for
+            } //End for
 
-        $(this).parent().remove();
-        $('.remove-'+line).remove();
-
-
-        var total_size = 0;
-        $('input[name=row\\[file_size\\]\\[\\]]').each(function(){
-            total_size += catchIsNaN($(this).val());
-        })
-        $('input[name=file\\[total_uploaded_file\\]]').val(total_size.toFixed(2));
-        $('input[name=file\\[total_files\\]]').val($('input[name=row\\[line\\]\\[\\]]').length);
-    })
-    //end remove trigger
-
-    $(document.body).on('change','input[name=header\\[userfile\\]\\[\\]]',function(e){
-       // alert($(this).val());
-       // alert('sfsad');
-        $('button[name=btn_upload]').trigger('click');
-       //var file_path = URL.createObjectURL(event.target.files[0]);
-        //alert(file_path)
-        //$('img[id=header\\[company_logo\\]]').attr('src',file_path);
-    })
-
-    $(document.body).on('change','input[name=header\\[company_file\\]\\[\\]]',function(e){
-       // alert($(this).val());
-       // alert('sfsad');
-        $('button[name=btn_upload_multiple]').trigger('click');
-       //var file_path = URL.createObjectURL(event.target.files[0]);
-        //alert(file_path)
-        //$('img[id=header\\[company_logo\\]]').attr('src',file_path);
-    })
-
-    //remove trigger
-    $(document.body).on('click','.btn_remove_multiple',function(e){
-        
-        $('#image_cont_form').empty();
-        $('#image_cont').empty();
-        var total_size = 0;
-        $('input[name=row\\[file_size\\]\\[\\]]').each(function(){
-            total_size += catchIsNaN($(this).val());
-        })
-        $('input[name=file\\[total_uploaded_file\\]]').val(total_size.toFixed(2));
-        $('input[name=file\\[total_files\\]]').val($('input[name=row\\[line\\]\\[\\]]').length);
-    })
-    //end remove trigger
-    //Upload image
-    //===============================================================================================================================
-        //upload image
-        function  upload_image(){
-            var url         = homeurl + '/do_upload';
-            var btn         = $('button[name=btn_upload]');
-            var formData    = new FormData($("#frm_data_entry")[0]);
-
-            
-                //formData.append('action', action);
-            $.ajax({
-                url : url,  // Controller URL
-                type : 'POST',
-                data : formData,
-                async : false,
-                cache : false,
-                contentType : false,
-                processData : false,
-                dataType : 'JSON',
-                beforeSend : (function (data){
-                     $(".outside_button *").css('pointer-events','none');
-                     btn.html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Processing...');
-                     btn.attr('disabled','disabled');
-
-                     $('img[id=header\\[company_logo\\]]').attr('src',"data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
-
-                })
-            }).done(function (data) {
-                
-               
-                if(data.success === true){
-
-                    var file = data.data.file[0];
-                    
-
-                    setTimeout(function(){
-                    
-                        btn.html('Upload Image');
-                        btn.removeAttr('disabled');
-                        $(".outside_button *").css('pointer-events','auto');
-                        $('input[name=file\\[doc_content\\]]').val(file.file);
-                        $('img[id=header\\[company_logo\\]]').attr('src',"data:image/jpeg;base64, "+file.file);
-                        $('input[name=header\\[doc_image\\]]').val(file.file_attr.name);
-                        
-                        //$(form+' img#patientimg').attr('src',"data:image/jpeg;base64, "+data.header.file);
-                    },2000)
-                }else{
-                    setTimeout(function(){
-
-                        var msg_html    = '';
-                        var arr         = [];
-                        for (var i = 0; i <= data.messages.length - 1; i++) {
-                            for (var element in data.messages[i]) {
-                                arr.push(data.messages[i][element]);
-                                msg_html += data.messages[i][element] + '\n';
-                            }//end for
-                        }//End for
-
-            
-                        $.notify(msg_html,{ 
-                            position:"top center",
-                            className:"error",
-                            arrowShow : true
-                        });
-                        btn.html('Upload Image');
-                        btn.removeAttr('disabled');
-                        
-                        $(".outside_button *").css('pointer-events','auto');
-                    },2000)
-                }
-                
-                
-                
-            }).fail(function(data){
-                
-                alert(JSON.stringify(data));
-                //setTimeout(function(){
-                        
-                    //$('#uploadErrorCont').html(data.responseText)
-                    btn.html('Upload Image');
-                    btn.removeAttr('disabled');
-                    $(".outside_button *").css('pointer-events','auto');
-                //},2000)
-            }).always(function(e){
-
+            $.notify(msg_html, {
+              position: "top center",
+              className: "error",
+              arrowShow: true,
             });
+            btn.html("Upload Image");
+            btn.removeAttr("disabled");
+
+            $(".outside_button *").css("pointer-events", "auto");
+          }, 2000);
         }
-        //End upload image
+      })
+      .fail(function (data) {
+        alert(JSON.stringify(data));
+        //setTimeout(function(){
 
-        //upload image multiple
-        function  upload_image_multiple(){
-            var url         = homeurl + '/do_upload_multiple';
-            var btn         = $('#company_file_placeholder');
-            var formData    = new FormData($("#frm_data_entry")[0]);
+        //$('#uploadErrorCont').html(data.responseText)
+        btn.html("Upload Image");
+        btn.removeAttr("disabled");
+        $(".outside_button *").css("pointer-events", "auto");
+        //},2000)
+      })
+      .always(function (e) {});
+  }
+  //End upload image
 
-            
-                //formData.append('action', action);
-            $.ajax({
-                url : url,  // Controller URL
-                type : 'POST',
-                data : formData,
-                async : false,
-                cache : false,
-                contentType : false,
-                processData : false,
-                dataType : 'JSON',
-                beforeSend : (function (data){
-                     $(".outside_button *").css('pointer-events','none');
-                     btn.html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>');
-                     btn.css('pointer-events','none');
-                })
-            }).done(function (data) {
-                
-               
-                if(data.success === true){
+  //upload image multiple
+  function upload_image_multiple() {
+    var url = homeurl + "/do_upload_multiple";
+    var btn = $("#company_file_placeholder");
+    var formData = new FormData($("#frm_data_entry")[0]);
 
-                    var files = data.data.file;
-                    var urlimg200x150 = 'https://dummyimage.com/200x150/dee2e6/6c757d.jpg';
-                    var html        = '';
-                    var html_form   = '';
+    //formData.append('action', action);
+    $.ajax({
+      url: url, // Controller URL
+      type: "POST",
+      data: formData,
+      async: false,
+      cache: false,
+      contentType: false,
+      processData: false,
+      dataType: "JSON",
+      beforeSend: function (data) {
+        $(".outside_button *").css("pointer-events", "none");
+        btn.html(
+          '<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>'
+        );
+        btn.css("pointer-events", "none");
+      },
+    })
+      .done(function (data) {
+        if (data.success === true) {
+          var files = data.data.file;
+          var urlimg200x150 =
+            "https://dummyimage.com/200x150/dee2e6/6c757d.jpg";
+          var html = "";
+          var html_form = "";
 
-                    setTimeout(function(){
-                    
-                        // btn.html('<i class="fa fa-upload"></i>');
-                        btn.css('pointer-events','auto');
-                        $(".outside_button *").css('pointer-events','auto');
-                        var total_files = catchIsNaN($('input[name=file\\[total_files\\]]').val());
-                        var total_size = catchIsNaN($('input[name=file\\[total_uploaded_file\\]]').val());
+          setTimeout(function () {
+            // btn.html('<i class="fa fa-upload"></i>');
+            btn.css("pointer-events", "auto");
+            $(".outside_button *").css("pointer-events", "auto");
+            var total_files = catchIsNaN(
+              $("input[name=file\\[total_files\\]]").val()
+            );
+            var total_size = catchIsNaN(
+              $("input[name=file\\[total_uploaded_file\\]]").val()
+            );
 
-                        
-                        var ctr = $('input[name=row\\[line\\]\\[\\]]:last').val() === undefined? 1 : parseInt($('input[name=row\\[line\\]\\[\\]]:last').val())+1;
-                        for(var key in files){
-                            var file = files[key];
-                            html += '<div class="col mb-3">';
-                                html += '<button aria-line="'+ctr+'" type="button" class="close remove" aria-label="Close">';
-                                    html += '<span aria-hidden="true" class="text-danger">&times;</span>';
-                                html += '</button>';
-                                html += '<img src="data:image/jpeg;base64,'+file.file+'" class="img-fluid rounded" style="width:200px;height:150px;">';
-                            
-                            html += '</div><!--./col-->';
+            var ctr =
+              $("input[name=row\\[line\\]\\[\\]]:last").val() === undefined
+                ? 1
+                : parseInt($("input[name=row\\[line\\]\\[\\]]:last").val()) + 1;
+            for (var key in files) {
+              var file = files[key];
+              html += '<div class="col mb-3">';
+              html +=
+                '<button aria-line="' +
+                ctr +
+                '" type="button" class="close remove" aria-label="Close">';
+              html +=
+                '<span aria-hidden="true" class="text-danger">&times;</span>';
+              html += "</button>";
+              html +=
+                '<img src="data:image/jpeg;base64,' +
+                file.file +
+                '" class="img-fluid rounded" style="width:200px;height:150px;">';
 
-                            html_form += '<div class="col mb-3 remove-'+ctr+' d-none">';
+              html += "</div><!--./col-->";
 
-                                html_form += '<input readonly name="row[line][]" value="'+ctr+'" class="form-control form-control-sm" />';
-                                html_form += '<input readonly name="row[doc_image][]" value="'+file.file_attr.name+'" class="form-control form-control-sm" />';
-                                html_form += '<input readonly name="row[file_size][]" value="'+file.file_attr.file_size+'" class="form-control form-control-sm" />'
-                                html_form += '<input readonly name="row[doc_content][]" value="'+file.file+'" class="form-control form-control-sm" />';
-                                
-                            html_form += '</div><!--./col-->';
+              html_form += '<div class="col mb-3 remove-' + ctr + ' d-none">';
 
-                            total_size += parseFloat(file.file_attr.file_size);
+              html_form +=
+                '<input readonly name="row[line][]" value="' +
+                ctr +
+                '" class="form-control form-control-sm" />';
+              html_form +=
+                '<input readonly name="row[doc_image][]" value="' +
+                file.file_attr.name +
+                '" class="form-control form-control-sm" />';
+              html_form +=
+                '<input readonly name="row[file_size][]" value="' +
+                file.file_attr.file_size +
+                '" class="form-control form-control-sm" />';
+              html_form +=
+                '<input readonly name="row[doc_content][]" value="' +
+                file.file +
+                '" class="form-control form-control-sm" />';
 
-                            total_files += 1;
-                            ctr += 1;
-                           //console.log(file['file_attr'].name) + '<br/>';
-                        }//end for
+              html_form += "</div><!--./col-->";
 
+              total_size += parseFloat(file.file_attr.file_size);
 
+              total_files += 1;
+              ctr += 1;
+              //console.log(file['file_attr'].name) + '<br/>';
+            } //end for
 
-                        
-                        
-                        $('#image_cont').append(html);
-                        $('#image_cont_form').append(html_form);
+            $("#image_cont").append(html);
+            $("#image_cont_form").append(html_form);
 
-                        total_size = 0;
-                        $('input[name=row\\[file_size\\]\\[\\]]').each(function(){
-                            total_size += catchIsNaN($(this).val());
-                        })
-
-                        $('input[name=file\\[total_uploaded_file\\]]').val(total_size.toFixed(2));
-
-                        $('input[name=file\\[total_files\\]]').val($('input[name=row\\[line\\]\\[\\]]').length);
-                        
-                        btn.html('Upload Image');
-                    },2000)
-                }else{
-                    setTimeout(function(){
-
-                        var msg_html    = '';
-                        var arr         = [];
-                        for (var i = 0; i <= data.messages.length - 1; i++) {
-                            for (var element in data.messages[i]) {
-                                arr.push(data.messages[i][element]);
-                                msg_html += data.messages[i][element] + '\n';
-                            }//end for
-                        }//End for
-
-            
-                        $.notify(msg_html,{ 
-                            position:"top center",
-                            className:"error",
-                            arrowShow : true
-                        });
-                        btn.html('Upload Image');
-                        btn.css('pointer-events','auto');
-                        $(".outside_button *").css('pointer-events','auto');
-                    },2000)
-                }
-                
-                
-            }).fail(function(data){
-                alert(JSON.stringify(data));
-                //setTimeout(function(){
-                        
-                    //$('#uploadErrorCont').html(data.responseText)
-                    btn.html('Upload Image');
-                    btn.css('pointer-events','auto');
-                    $(".outside_button *").css('pointer-events','auto');
-                //},2000)
-            }).always(function(e){
-
+            total_size = 0;
+            $("input[name=row\\[file_size\\]\\[\\]]").each(function () {
+              total_size += catchIsNaN($(this).val());
             });
+
+            $("input[name=file\\[total_uploaded_file\\]]").val(
+              total_size.toFixed(2)
+            );
+
+            $("input[name=file\\[total_files\\]]").val(
+              $("input[name=row\\[line\\]\\[\\]]").length
+            );
+
+            btn.html("Upload Image");
+          }, 2000);
+        } else {
+          setTimeout(function () {
+            var msg_html = "";
+            var arr = [];
+            for (var i = 0; i <= data.messages.length - 1; i++) {
+              for (var element in data.messages[i]) {
+                arr.push(data.messages[i][element]);
+                msg_html += data.messages[i][element] + "\n";
+              } //end for
+            } //End for
+
+            $.notify(msg_html, {
+              position: "top center",
+              className: "error",
+              arrowShow: true,
+            });
+            btn.html("Upload Image");
+            btn.css("pointer-events", "auto");
+            $(".outside_button *").css("pointer-events", "auto");
+          }, 2000);
         }
-        //End upload image
+      })
+      .fail(function (data) {
+        alert(JSON.stringify(data));
+        //setTimeout(function(){
 
-        
-    //===============================================================================================================================
-    //End upload image
+        //$('#uploadErrorCont').html(data.responseText)
+        btn.html("Upload Image");
+        btn.css("pointer-events", "auto");
+        $(".outside_button *").css("pointer-events", "auto");
+        //},2000)
+      })
+      .always(function (e) {});
+  }
+  //End upload image
 
-});//End document.ready
-
+  //===============================================================================================================================
+  //End upload image
+}); //End document.ready
