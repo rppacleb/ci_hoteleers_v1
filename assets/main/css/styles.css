@@ -14979,6 +14979,18 @@ input[type="color"]:focus,
 
 }
 
+.jd{
+  margin-top: 8px;
+}
+
+.pb-content {
+  margin-top: 7px
+}
+
+.c-pointer {
+  cursor: pointer;
+}
+
 .jqte_editor span,
 .jqte_editor p,
 .jqte_editor h1,

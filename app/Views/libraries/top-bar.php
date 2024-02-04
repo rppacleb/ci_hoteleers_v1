@@ -267,14 +267,29 @@
 
                         <div  class="collapse" id="side_account_management_collapse">
                             <a id="side_account_management_prospect" class="nav-link text-muted pl-5" href="<?php echo base_url('prospect/'); ?>">
-                                <small>
+                                <small class="d-flex justify-content-between mr-5">
                                     Prospect 
                                     <span class="font-9 notification ml-2 badge badge-pill badge-secondary badge_prospect font-weight-normal">0</span>
                                 </small>
                             </a>
-                            <a id="side_account_management_active" class="nav-link text-muted pl-5" href="<?php echo base_url('active/'); ?>"><small>Active <span class="font-9 notification ml-2 badge badge-pill badge-secondary badge_active font-weight-normal">0</span></small></a>
-                            <a id="side_account_management_inactive" class="nav-link text-muted pl-5" href="<?php echo base_url('inactive/'); ?>"><small>Inactive <span class="font-9 notification ml-2 badge badge-pill badge-secondary badge_inactive font-weight-normal">0</span></small></a>
-                            <a id="side_account_management_paused" class="nav-link text-muted pl-5" href="<?php echo base_url('paused/'); ?>"><small>Paused <span class="font-9 notification ml-2 badge badge-pill badge-secondary badge_paused font-weight-normal">0</span></small></a>
+                            <a id="side_account_management_active" class="nav-link text-muted pl-5" href="<?php echo base_url('active/'); ?>">
+                                <small class="d-flex justify-content-between mr-5">
+                                    Active 
+                                    <span class="font-9 notification ml-2 badge badge-pill badge-secondary badge_active font-weight-normal">0</span>
+                                </small>
+                            </a>
+                            <a id="side_account_management_inactive" class="nav-link text-muted pl-5" href="<?php echo base_url('inactive/'); ?>">
+                                <small class="d-flex justify-content-between mr-5">
+                                    Inactive 
+                                    <span class="font-9 notification ml-2 badge badge-pill badge-secondary badge_inactive font-weight-normal">0</span>
+                                </small>
+                            </a>
+                            <a id="side_account_management_paused" class="nav-link text-muted pl-5" href="<?php echo base_url('paused/'); ?>">
+                                <small class="d-flex justify-content-between mr-5">
+                                    Paused 
+                                    <span class="font-9 notification ml-2 badge badge-pill badge-secondary badge_paused font-weight-normal">0</span>
+                                </small>
+                            </a>
                         </div>
                         
                         <a id="side_partner_application" class="nav-link text-muted d-none" href="<?php echo base_url('partner_application/'); ?>"><small><i class="fa fa-cubes" aria-hidden="true"></i> Partner Applications</small></a>

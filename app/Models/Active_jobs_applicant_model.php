@@ -679,8 +679,12 @@ class Active_jobs_applicant_model extends Model {
             $filter_str1 .= "t8.designation regexp '(^|[[:space:]])".$value."([[:space:]]|$)' OR ";
             $filter_str1 .= "t8.short_description regexp '(^|[[:space:]])".$value."([[:space:]]|$)' OR ";
         }//end foreach
-        $filter_str1 = substr($filter_str1, 0,strlen($filter_str1) - 3);
-        $filter_str1 .= ")";
+        if (strlen($filter_str1) > 4) {
+            $filter_str1 = substr($filter_str1, 0,strlen($filter_str1) - 3);
+            $filter_str1 .= ")";
+        } else {
+            $filter_str1 = "";
+        };
         //end job title filter for leads
 
         //job description filter for leads
@@ -742,8 +746,7 @@ class Active_jobs_applicant_model extends Model {
                          );
         */
 
-
-
+        
         $qrystr     = "SELECT 'applicant' AS 'counter_type',
                                 COUNT(DISTINCT t0.user_id) AS 'counter'
                        FROM job_post_applicant t0
@@ -822,9 +825,8 @@ class Active_jobs_applicant_model extends Model {
                         AND t1.user_type = 'applicant'
                         AND (t1.name IS NOT NULL AND t1.name <> '')
                         AND (
-                                ".$filter_str1."
-                            OR  ".$filter_str2."
-                            OR  ".$filter_str3."
+                                ".($filter_str1 != '' ? $filter_str1." OR" : "")."
+                                 ".($filter_str2 != '' ? $filter_str2." OR" : "")." ".$filter_str3."
                         )
                        
 
@@ -861,6 +863,8 @@ class Active_jobs_applicant_model extends Model {
                 OR  ".$filter_str4."
             )
         */
+        
+        // echo $qrystr;
         $query                      = $this->db->query($qrystr);
         $response['num_rows']       = $query->getNumRows();
         $response['qrystr']       = $filter_str2;

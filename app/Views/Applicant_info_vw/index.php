@@ -201,12 +201,11 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
                         <div class="col-6 col-sm-6 col-md-4 col-lg-6 col-xl-6 align-self-center desktop-aivwemail">
                               <input readonly Placeholder="Email" name="header[email_add]" type="text" class="form-control-plaintext form-control-sm" maxlength="100">
                         </div><!--./col-->
-                        <div class="col-auto">
+                        <!-- <div class="col-auto">
                             <a title="Change email" href="#" id="change_email" class="show_on_view">
-                                <!-- <img width="30%" src="../../assets/img/main/change_email.svg"> -->
                                 <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size: 20px;"></i>
                             </a>
-                        </div>
+                        </div> -->
                     </div><!--./row-->
                    
 
@@ -225,7 +224,7 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
                             </select>
                         </div><!--./col-10-->
                         <div class="col-4 col-sm-4 col-md-4 col-lg-6 col-xl-6 align-self-center">
-                            <input class="form-control form-control-sm" type="text" name="header[contact_number]" maxlength="20"/>
+                            <input id="contact_number" class="form-control form-control-sm" type="text" name="header[contact_number]" maxlength="20"/>
                         </div><!--./col-10-->
                     </div><!--./form-group-->
 
@@ -292,8 +291,13 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
 
 
                     <div class="form-group row aivw-internship">
-                        <label class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-3 col-form-label text-right align-self-center">Internship</label>
-                        <div class="col-1 align-self-center">
+                        <div class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-3 col-form-label text-right d-flex align-self-center justify-content-end gap-2">
+                            <div class="c-pointer" data-bs-toggle="tooltip" data-bs-placement="top" title="Enable this if you are applying as an Intern.">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            </div>
+                            <div>Internship</div>
+                        </div>
+                        <div class="col-2 align-self-center d-flex">
                             <input type="checkbox" class="w-auto" name="header[internship]"/>
                         </div><!--./col-10-->
                     </div><!--./form-group-->

@@ -113,6 +113,7 @@ $(document).ready(function () {
   $(document.body).on("click", "button.btn_signup_company", function (e) {
     $("#signup_init").remove();
     $(".signup_final").html(load_company_form());
+    $(".btn_signup_company").hide();
     $(".btn_signup_company").addClass(".btn_signup");
     $(".signup_final_button").removeClass("d-none");
     $(".btn_submit_company").removeClass("btn_submit");

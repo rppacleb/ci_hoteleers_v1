@@ -7,6 +7,7 @@ var action                      = <?php echo !isset($_GET['action'])? '""' : '"'
 var type                        = <?php echo '"'.$type.'"'; ?>;
 var country_dial_code           = <?php echo json_encode($country_dial_code["data"]); ?>;
 var employer                    = <?php echo '"'.$id.'"'; ?>;
+console.log(country_dial_code)
 </script>
 
 <link rel="stylesheet" href="<?php echo base_url('assets/admin_dashboard/vendor/datatables/dataTables.bootstrap4.min.css') ?>">

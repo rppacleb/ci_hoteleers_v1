@@ -65,6 +65,7 @@ $(document).ready(function () {
       },
     })
       .done(function (data) {
+        console.log(url);
         if (data.data !== null) {
           $("#" + container + "").empty();
           $("#" + loader + "").empty();

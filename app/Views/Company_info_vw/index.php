@@ -132,7 +132,7 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
 
                     <div class="form-group row">
                         <label class="col-3 col-form-label text-right">Tel. no. <span class="text-danger fw-bolder civw-asterisk">*</span></label>
-                        <div class="col-3">
+                        <div class="col-3 edit-tel-no">
                             <select class="custom-select custom-select-md" name="header[dial_code]">
                                 <option disabled selected>Select</option>
                             <?php
@@ -143,9 +143,10 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
                             ?>
                             </select>
                         </div><!--./col-10-->
-                        <div class="col-4">
+                        <div class="col-4 edit-tel-no">
                             <input class="form-control form-control-md" type="text" name="header[contact_number]" maxlength="20"/>
                         </div><!--./col-10-->
+                        <div class="col-7 view-tel-no d-flex align-items-center"></div>
                     </div><!--./form-group-->
 
                     
