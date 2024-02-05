@@ -1,1 +1,1 @@
-# Hoteleers V1.0.1
+# Hoteleers V1.0.2
