@@ -566,7 +566,7 @@ class All_jobs_applicant_model extends Model {
 
             $query      				= $this->db->query($qrystr,$in_cont);
             // Retrieve the last executed query
-            $last_query = $this->db->last_query();
+            $last_query = $this->db->getLastQuery();
 
             // Display the last executed query
             echo $last_query;
