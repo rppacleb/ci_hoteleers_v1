@@ -571,9 +571,9 @@ class All_jobs_applicant_model extends Model {
             // Display the last executed query
             echo $last_query;
             // $response['num_rows']   	= $query->getNumRows();
-	        if($query->getNumRows() > 0){
-	            $response['data']       = $query->getResultArray();   
-	        }//end if
+	        // if($query->getNumRows() > 0){
+	        //     $response['data']       = $query->getResultArray();   
+	        // }
 
             return $response;
     }//end function
