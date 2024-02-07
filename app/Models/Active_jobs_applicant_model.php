@@ -613,10 +613,12 @@ class Active_jobs_applicant_model extends Model {
             $response['qrystr']         = $filter_str1;
 
             $query      				= $this->db->query($qrystr,$in_cont);
-            $response['num_rows']   	= $query->getNumRows();
-	        if($query->getNumRows() > 0){
-	            $response['data']       = $query->getResultArray();   
-	        }//end if
+            $last_query = $this->db->getLastQuery();
+            echo $last_query;
+            // $response['num_rows']   	= $query->getNumRows();
+	        // if($query->getNumRows() > 0){
+	        //     $response['data']       = $query->getResultArray();   
+	        // }//end if
 
 
             //---------------------------------------get notification---------------------------------------
