@@ -246,8 +246,7 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-xl-2 col-lg-2 col-md-2 col-5 col-form-label text-right align-self-start">Job Expiration Date <span class="text-danger fw-bolder">*</span></label>
-                        <div class="col-xl-9 col-lg-9 col-md-9 col">
+                        <!-- <div class="col-xl-9 col-lg-9 col-md-9 col">
                             <div class="custom-control custom-radio">
                               <input type="radio" id="customRadio1" name="placeholder[customRadio]" class="custom-control-input" value="30">
                               <label class="custom-control-label" for="customRadio1">30 days</label>
@@ -268,14 +267,26 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
                               <label class="custom-control-label" for="customRadio4">120 days</label>
                             </div>
                         </div>
-                        
+                     -->
+                     <label class="col-xl-2 col-lg-2 col-md-2 col-5 col-form-label text-right align-self-start">Job Expiration <span class="text-danger fw-bolder">*</span></label>
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-xl-2 col-lg-2 col-md-2 col-5 col-form-label text-right align-self-center"></label>
+                        <label class="col-xl-2 col-lg-2 col-md-2 col-5 col-form-label text-right align-self-center">Start Date<span class="text-danger fw-bolder">*</span></label>
                         <div class="col-xl-2 col-lg-2 col-md-2 col-5 align-self-center pr-0">
                             <div class="input-group input-group-md date">
-                                <input class="form-control form-control-md pr-1" placeholder="MM / DD /YYYY" type="text" name="header[job_expiration_date]" readonly/>
+                                <input class="form-control form-control-md pr-1" placeholder="MM / DD /YYYY" type="text" name="header[job_start_date]"/>
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                </div><!--./input-group-append-->
+                            </div><!--./input-group input-group-sm-->
+                        </div><!--./col-10-->
+                    </div><!--./form-group-->
+                    <div class="form-group row pb-3">
+                        <label class="col-xl-2 col-lg-2 col-md-2 col-5 col-form-label text-right align-self-center">End Date<span class="text-danger fw-bolder">*</span></label>
+                        <div class="col-xl-2 col-lg-2 col-md-2 col-5 align-self-center pr-0">
+                            <div class="input-group input-group-md date">
+                                <input class="form-control form-control-md pr-1" placeholder="MM / DD /YYYY" type="text" name="header[job_expiration_date]"/>
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                 </div><!--./input-group-append-->

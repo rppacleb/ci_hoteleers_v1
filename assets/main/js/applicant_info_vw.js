@@ -1184,7 +1184,7 @@ $(document).ready(function () {
               ).multiselect("select", data.dial_code);
             } else {
               var d_code = map_dial_code(data.location);
-              if (d_code.dial_code !== undefined) {
+              if (d_code !== undefined) {
                 $(
                   "#frm_data_entry select[name=header\\[dial_code\\]]"
                 ).multiselect("select", d_code.dial_code);
@@ -3109,7 +3109,7 @@ $(document).ready(function () {
   }
 
   function load_filter_dropdowns() {
-    var url = baseurl + "/get/job_post/olocation";
+    var url = baseurl + "/get/job_post/olocation_user";
     var dropdown = $("select[name=header\\[location\\]]");
     load_dropdown(url, dropdown, "location");
     load_dropdowns2("location");

@@ -501,13 +501,13 @@ class Job_post_vw_model extends Model {
         $param['data']      = [];
 
         $this->db->transBegin();
-
        
         //add header
         $builder = $this->db->table($data['table_name']);
         $builder->insert($data['record_header']);
         $id = $this->db->insertID();
         //end add header
+
         
         //--------------------------------add template--------------------------------
         $builder = $this->db->table("ojob_post_template");
@@ -524,7 +524,6 @@ class Job_post_vw_model extends Model {
                             WHERE id = '".$template_id."'");
             //--------------------------------update template--------------------------------
         }//end if
-
 
         if ($this->db->transStatus() === FALSE) {
             $this->db->transRollback();

@@ -1302,7 +1302,7 @@ $(document).ready(function () {
   }
 
   function load_filter_dropdowns() {
-    var url = baseurl + "/get/job_post/olocation";
+    var url = baseurl + "/get/job_post/olocation_user";
     var dropdown = $("select[name=header\\[location\\]]");
     load_dropdown(url, dropdown, "location");
     load_dropdowns2(dropdown);

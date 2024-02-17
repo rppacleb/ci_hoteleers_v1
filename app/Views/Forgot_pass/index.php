@@ -15,9 +15,9 @@
       <div class="card w-100 shadow">
 
         <div class="card-body">
-          <h5 class="card-title text-link mb-5">Forgot Password</h5>
+          <h3 class="card-title text-link mb-4">Forgot Password</h3>
+          <h6 class="mb-4">Enter your email address below and we will send you a link to reset your password.</h6>
           <form id = "frm_forgot_password">
-
             <div class="row">
               <div class="col">
                   <div class="form-group">
@@ -25,11 +25,7 @@
                   </div><!--./form-group-->
               </div><!--./col-->
             </div><!--./row-->
-
-            
-
             <div class="row">
-              
               <div class="col text-left mb-5">
                   <small><a href="<?php echo base_url('login/'); ?>">Go to Login</a></small>
               </div><!--./col-->
