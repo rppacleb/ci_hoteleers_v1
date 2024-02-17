@@ -565,7 +565,12 @@ class All_jobs_applicant_model extends Model {
             }//end if
 
             $query      				= $this->db->query($qrystr,$in_cont);
-            $response['num_rows']   	= $query->getNumRows();
+            // Retrieve the last executed query
+            $last_query = $this->db->last_query();
+
+            // Display the last executed query
+            echo $last_query;
+            // $response['num_rows']   	= $query->getNumRows();
 	        if($query->getNumRows() > 0){
 	            $response['data']       = $query->getResultArray();   
 	        }//end if
