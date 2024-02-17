@@ -9,7 +9,7 @@ $(document).ready(function () {
     var btn = $(this);
     var type = $(this).attr("aria-type");
     var btn_text = "Sign up as a " + type;
-    var url = baseurl + "/signup/samplelang";
+    var url = baseurl + "/signup/validate_init";
     console.log($("#frm_signup"));
     $.ajax({
       url: url,
@@ -23,7 +23,7 @@ $(document).ready(function () {
     })
       .done(function (data) {
         console.log(data);
-        return;
+        // return;
         //alert(Object.keys(data.messages).length);
         if (data.success === true) {
           var msg_html = "";

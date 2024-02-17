@@ -102,8 +102,8 @@ class Employer_vw_model extends Model {
                             t3.last_name,
                             t3.designation,
                             t3.work_email,
-                            t3.dial_code,
-                            t3.contact_number,
+                            t0.dial_code,
+                            t0.contact_number,
                             t0.deactivated,
                             t0.paused,
 

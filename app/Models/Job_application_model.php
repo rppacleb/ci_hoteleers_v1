@@ -37,6 +37,7 @@ class Job_application_model extends Model {
                                     t1.doc_image,
                                     t0.job_title,
                                     t0.location,
+                                    t3.date_created as date_applied,
                                     CONCAT(t0.location) AS 'location_placeholder',
                                     DATE_FORMAT(STR_TO_DATE(t0.job_expiration_date,'%m/%d/%Y'), '%b %d, %Y') AS 'job_expiration_date',
                                     (CASE WHEN(TIMESTAMPDIFF(SECOND, STR_TO_DATE(t0.date_posted,'%m/%d/%Y %h:%i %p'), NOW()) <= 60) THEN

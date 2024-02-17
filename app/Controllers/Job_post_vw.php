@@ -409,6 +409,14 @@ class Job_post_vw extends BaseController{
 	            ]
             ],
 
+            "header.job_start_date" => [
+                "label" => "job start date", 
+                "rules" => "trim|required",
+                'errors' => [
+	                'required' => 'Please input job start date.',
+	            ]
+            ],
+
             "header.job_expiration_date" => [
                 "label" => "job expiration date", 
                 "rules" => "trim|required",
@@ -435,6 +443,7 @@ class Job_post_vw extends BaseController{
 			);
         }//end if
 
+		
         if ($this->validate($rules)){
 			try{
 				define('DS', DIRECTORY_SEPARATOR);
@@ -475,7 +484,6 @@ class Job_post_vw extends BaseController{
 		    	}//end if
 				//---------------------------------check access---------------------------------
 				
-				
 				//---------------------------------check if job expiration date exceeded contract date---------------------------------
 				//get employer default
 	  			$data_filter['employer']  		= $this->session->get('employer');
@@ -502,7 +510,6 @@ class Job_post_vw extends BaseController{
 					}//end if
 				}//end if
 				//---------------------------------check job expiration date if greater than 4---------------------------------
-				
 
 				//---------------------------------check if with applicant---------------------------------
 				$data["dup_table"] 		= "job_post_applicant";
@@ -533,7 +540,6 @@ class Job_post_vw extends BaseController{
 				}//end if
 				$data['record_header']['employer'] 				= $this->session->get('employer');
 				$data['record_header']['vacancies_placeholder'] = $data['record_header']['vacancies'];
-				
 
 				if($data['record_header']["id"] > 0){
 					if((int)$param['isActive']){
@@ -580,15 +586,17 @@ class Job_post_vw extends BaseController{
 					);
 					//---------------------------------update record---------------------------------
 				}else{
+					
 					//---------------------------------add record---------------------------------
 					$data['record_header']['created_by'] 			= $this->session->get('userid');
 					$res 		= $this->model->add_record($data);		
+					// $last_query = $this->db->getLastQuery();
+            		// echo json_encode($res);
+					// return;
 					if(!$res['success']){
 						throw new \Exception($res['message']);
 					}//end if
 					//end add record
-
-					
 
 					$data['response'] = array(
 						'id' => $res['data']['id']

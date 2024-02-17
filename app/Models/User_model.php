@@ -221,70 +221,76 @@ class User_model extends Model {
         $param['message']   = '';
         $param['data']      = [];
 
+        // return $data;
+
         $this->db->transBegin();
+        $this->db->query("INSERT INTO ousr_archive
+            SELECT * FROM ousr WHERE id = '".$data['record_header']['id']."'"
+        );
+
         $builder = $this->db->table($data['table_name']);
         $builder->where('id', $data['record_header']['id']);
         $builder->delete();
 
-        $builder = $this->db->table('oprofile');
-        $builder->where('id', $data['record_header']['id']);
-        $builder->delete();
+        // $builder = $this->db->table('oprofile');
+        // $builder->where('id', $data['record_header']['id']);
+        // $builder->delete();
 
-        $builder = $this->db->table('profile_affiliations');
-        $builder->where('id', $data['record_header']['id']);
-        $builder->delete();
+        // $builder = $this->db->table('profile_affiliations');
+        // $builder->where('id', $data['record_header']['id']);
+        // $builder->delete();
 
-        $builder = $this->db->table('profile_awards_achievements');
-        $builder->where('id', $data['record_header']['id']);
-        $builder->delete();
+        // $builder = $this->db->table('profile_awards_achievements');
+        // $builder->where('id', $data['record_header']['id']);
+        // $builder->delete();
 
-        $builder = $this->db->table('profile_certifications_licenses');
-        $builder->where('id', $data['record_header']['id']);
-        $builder->delete();
+        // $builder = $this->db->table('profile_certifications_licenses');
+        // $builder->where('id', $data['record_header']['id']);
+        // $builder->delete();
 
-        $builder = $this->db->table('profile_department');
-        $builder->where('id', $data['record_header']['id']);
-        $builder->delete();
+        // $builder = $this->db->table('profile_department');
+        // $builder->where('id', $data['record_header']['id']);
+        // $builder->delete();
 
-        $builder = $this->db->table('profile_education');
-        $builder->where('id', $data['record_header']['id']);
-        $builder->delete();
+        // $builder = $this->db->table('profile_education');
+        // $builder->where('id', $data['record_header']['id']);
+        // $builder->delete();
 
-        $builder = $this->db->table('profile_experience');
-        $builder->where('id', $data['record_header']['id']);
-        $builder->delete();
+        // $builder = $this->db->table('profile_experience');
+        // $builder->where('id', $data['record_header']['id']);
+        // $builder->delete();
 
-        $builder = $this->db->table('profile_industry');
-        $builder->where('id', $data['record_header']['id']);
-        $builder->delete();
+        // $builder = $this->db->table('profile_industry');
+        // $builder->where('id', $data['record_header']['id']);
+        // $builder->delete();
 
-        $builder = $this->db->table('profile_job_level');
-        $builder->where('id', $data['record_header']['id']);
-        $builder->delete();
+        // $builder = $this->db->table('profile_job_level');
+        // $builder->where('id', $data['record_header']['id']);
+        // $builder->delete();
 
-        $builder = $this->db->table('profile_job_type');
-        $builder->where('id', $data['record_header']['id']);
-        $builder->delete();
+        // $builder = $this->db->table('profile_job_type');
+        // $builder->where('id', $data['record_header']['id']);
+        // $builder->delete();
 
-        $builder = $this->db->table('profile_language');
-        $builder->where('id', $data['record_header']['id']);
-        $builder->delete();
+        // $builder = $this->db->table('profile_language');
+        // $builder->where('id', $data['record_header']['id']);
+        // $builder->delete();
 
-        $builder = $this->db->table('profile_projects');
-        $builder->where('id', $data['record_header']['id']);
-        $builder->delete();
+        // $builder = $this->db->table('profile_projects');
+        // $builder->where('id', $data['record_header']['id']);
+        // $builder->delete();
 
-        $builder = $this->db->table('profile_seminars_trainings');
-        $builder->where('id', $data['record_header']['id']);
-        $builder->delete();
+        // $builder = $this->db->table('profile_seminars_trainings');
+        // $builder->where('id', $data['record_header']['id']);
+        // $builder->delete();
 
-        $builder = $this->db->table('profile_skills');
-        $builder->where('id', $data['record_header']['id']);
-        $builder->delete();
+        // $builder = $this->db->table('profile_skills');
+        // $builder->where('id', $data['record_header']['id']);
+        // $builder->delete();
 
-        $builder = $this->db->table('usr_job_post_fav');
-        $builder->where('id', $data['record_header']['id']);
-        $builder->delete();
+        // $builder = $this->db->table('usr_job_post_fav');
+        // $builder->where('id', $data['record_header']['id']);
+        // $builder->delete();
 
         if ($this->db->transStatus() === FALSE) {
             $this->db->transRollback();

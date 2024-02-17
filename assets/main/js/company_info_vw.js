@@ -773,6 +773,7 @@ $(document).ready(function () {
     "change",
     "input[name=header\\[company_file\\]\\[\\]]",
     function () {
+      const maxSize = 5 * 1024 * 1024;
       var fileInput = $(this);
       var totalSize = 0;
       fileInput.each(function () {
@@ -780,15 +781,18 @@ $(document).ready(function () {
           totalSize += this.files[i].size / 1024 / 1024;
         } //end for
       });
+      console.log(maxSize);
 
-      if (totalSize > 40) {
-        var msg_html = "Max file size of 40MB exceeded!";
+      if (totalSize > maxSize) {
+        var msg_html = "Max file size of 5MB exceeded!";
         $.notify(msg_html, {
           position: "top center",
           className: "error",
           arrowShow: true,
         });
-      } //end if
+      } else {
+        $("button[name=btn_upload_multiple]").trigger("click");
+      }
     }
   );
   //validate file
@@ -827,13 +831,27 @@ $(document).ready(function () {
   $(document.body).on(
     "change",
     "input[name=header\\[userfile\\]\\[\\]]",
-    function (e) {
-      // alert($(this).val());
-      // alert('sfsad');
-      $("button[name=btn_upload]").trigger("click");
-      //var file_path = URL.createObjectURL(event.target.files[0]);
-      //alert(file_path)
-      //$('img[id=header\\[company_logo\\]]').attr('src',file_path);
+    function () {
+      const maxSize = 5 * 1024 * 1024;
+      var fileInput = $(this);
+      var totalSize = 0;
+      fileInput.each(function () {
+        for (var i = 0; i < this.files.length; i++) {
+          totalSize += this.files[i].size / 1024 / 1024;
+        } //end for
+      });
+      console.log(maxSize);
+
+      if (totalSize > maxSize) {
+        var msg_html = "Max file size of 5MB exceeded!";
+        $.notify(msg_html, {
+          position: "top center",
+          className: "error",
+          arrowShow: true,
+        });
+      } else {
+        $("button[name=btn_upload]").trigger("click");
+      }
     }
   );
 
@@ -842,8 +860,8 @@ $(document).ready(function () {
     "input[name=header\\[company_file\\]\\[\\]]",
     function (e) {
       // alert($(this).val());
-      // alert('sfsad');
-      $("button[name=btn_upload_multiple]").trigger("click");
+      // // alert('sfsad');
+      // $("button[name=btn_upload_multiple]").trigger("click");
       //var file_path = URL.createObjectURL(event.target.files[0]);
       //alert(file_path)
       //$('img[id=header\\[company_logo\\]]').attr('src',file_path);

@@ -543,6 +543,8 @@ $(document).ready(function () {
       })
         .done(function (data) {
           //alert(Object.keys(data.messages).length);
+          // console.log(data);
+          // return;
           if (data.success === true) {
             var msg_html = "";
             var arr = [];
