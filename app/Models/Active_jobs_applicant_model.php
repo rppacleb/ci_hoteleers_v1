@@ -153,7 +153,7 @@ class Active_jobs_applicant_model extends Model {
             }else if($request['view_type'] == "short_listed"){
                 //short listed
                 $qrystr     = "SELECT DISTINCT t1.id,
-                                        t0.date_created,
+                                        t8.date_created,
                                         t1.name,
                                         t2.doc_image,
                                         t2.location,
@@ -197,7 +197,7 @@ class Active_jobs_applicant_model extends Model {
             }else if($request['view_type'] == "interviews"){
                 //interviews
                 $qrystr     = "SELECT DISTINCT t1.id,
-                                        t0.date_created,
+                                        t8.date_created,
                                         IFNULL((SELECT status FROM job_post_for_interview
                                         WHERE user_id = t0.user_id ORDER BY date_created DESC LIMIT 1),'') as 'interview_status',
                                         t1.name,
@@ -242,7 +242,7 @@ class Active_jobs_applicant_model extends Model {
             }else if($request['view_type'] == "offered"){
                 //offered
                 $qrystr     = "SELECT DISTINCT t1.id,
-                                        t0.date_created,
+                                        t8.date_created,
                                         t1.name,
                                         t2.doc_image,
                                         t2.location,
@@ -283,7 +283,7 @@ class Active_jobs_applicant_model extends Model {
             }else if($request['view_type'] == "hired"){
                 //hired
                 $qrystr     = "SELECT DISTINCT t1.id,
-                                        t0.date_created,
+                                        t8.date_created,
                                         t1.name,
                                         t2.doc_image,
                                         t2.location,
@@ -327,6 +327,7 @@ class Active_jobs_applicant_model extends Model {
                 
                 //leads
                 $qrystr = "SELECT DISTINCT t1.id,
+                        t8.date_created,
                         t1.name,
                         t2.doc_image,
                         t2.location,
@@ -613,6 +614,8 @@ class Active_jobs_applicant_model extends Model {
             $response['qrystr']         = $filter_str1;
 
             $query      				= $this->db->query($qrystr,$in_cont);
+            // $last_query = $this->db->getLastQuery();
+            // echo $last_query;
             $response['num_rows']   	= $query->getNumRows();
 	        if($query->getNumRows() > 0){
 	            $response['data']       = $query->getResultArray();   

@@ -33,6 +33,7 @@ class All_jobs_applicant_model extends Model {
             
             if($request['view_type'] == "" || $request['view_type'] == "job_post"){
                 $qrystr     = "SELECT DISTINCT t1.id,
+                                        t0.date_created,
                                         t1.name,
                                         t2.doc_image,
                                         t2.location,
@@ -75,6 +76,7 @@ class All_jobs_applicant_model extends Model {
             }else if($request['view_type'] == "short_listed"){
                 //short listed
                 $qrystr     = "SELECT DISTINCT t1.id,
+                                        t8.date_created,
                                         t1.name,
                                         t2.doc_image,
                                         t2.location,
@@ -120,6 +122,7 @@ class All_jobs_applicant_model extends Model {
                 //interviews
                 $qrystr     = "SELECT DISTINCT t1.id,
                                         t1.name,
+                                        t8.date_created,
                                         t2.doc_image,
                                         t2.location,
                                         CONCAT(t2.locality, ' ',t2.country) AS 'location_placeholder',
@@ -164,6 +167,7 @@ class All_jobs_applicant_model extends Model {
             }else if($request['view_type'] == "offered"){
                 //offered
                 $qrystr     = "SELECT DISTINCT t1.id,
+                                        t8.date_created,
                                         t1.name,
                                         t2.doc_image,
                                         t2.location,
@@ -208,6 +212,7 @@ class All_jobs_applicant_model extends Model {
             }else if($request['view_type'] == "hired"){
                 //hired
                 $qrystr     = "SELECT DISTINCT t1.id,
+                                        t8.date_created,
                                         t1.name,
                                         t2.doc_image,
                                         t2.location,
@@ -253,6 +258,7 @@ class All_jobs_applicant_model extends Model {
             }else if($request['view_type'] == "leads"){
                 //leads
                 $qrystr     = "SELECT DISTINCT t1.id,
+                                        t8.date_created,
                                         t1.name,
                                         t2.doc_image,
                                         t2.location,
@@ -565,15 +571,13 @@ class All_jobs_applicant_model extends Model {
             }//end if
 
             $query      				= $this->db->query($qrystr,$in_cont);
-            // Retrieve the last executed query
-            $last_query = $this->db->last_query();
+            // $last_query = $this->db->getLastQuery();
+            // echo $last_query;
 
-            // Display the last executed query
-            echo $last_query;
-            // $response['num_rows']   	= $query->getNumRows();
+            $response['num_rows']   	= $query->getNumRows();
 	        if($query->getNumRows() > 0){
 	            $response['data']       = $query->getResultArray();   
-	        }//end if
+	        }
 
             return $response;
     }//end function
