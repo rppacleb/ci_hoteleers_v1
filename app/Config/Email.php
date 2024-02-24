@@ -48,7 +48,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPHost = 'smtp.mailtrap.io';
+    public $SMTPHost = 'live.smtp.mailtrap.io';
 
     /**
      * SMTP Username
@@ -56,7 +56,7 @@ class Email extends BaseConfig
      * @var string
      */
     //public $SMTPUser = '59776819d56376'; //nix
-    public $SMTPUser = '2984bc2132e483'; //sir arman
+    public $SMTPUser = 'api'; //sir arman
 
     /**
      * SMTP Password
@@ -64,14 +64,14 @@ class Email extends BaseConfig
      * @var string
      */
     //public $SMTPPass = '0896477b816e91'; //nix
-    public $SMTPPass = '08f33f28366e7b'; //sir arman
+    public $SMTPPass = 'bcf5421ff93abc4b0c929eae02083b24'; //sir arman
 
     /**
      * SMTP Port
      *
      * @var int
      */
-    public $SMTPPort = 2525;
+    public $SMTPPort = 587;
 
     /**
      * SMTP Timeout (in seconds)
