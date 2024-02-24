@@ -148,6 +148,19 @@ $(document).ready(function () {
   //=====================================================================================================================
   //pagination button
 
+  $(document.body).on("click", "div.btn-show-hide", function (e) {
+    const btn = $(this).attr("id").split("card-")[1];
+    const tsh = $(`#tsh-${btn}`);
+    const cb = $(`#cb-${btn}`);
+    if (tsh.text() === "Show") {
+      cb.removeClass("d-none");
+    } else {
+      cb.addClass("d-none");
+    }
+
+    tsh.text(tsh.text() === "Show" ? "Hide" : "Show");
+  });
+
   //approve
   $(document.body).on("click", "button.btn_submit", function (e) {
     var view_url = homeurl + "/view/";

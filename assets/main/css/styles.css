@@ -15009,6 +15009,11 @@ img {
   object-fit: cover !important; 
 }
 
+.outside_button {
+  background-color: #fff;
+  border-radius: 0 0 12px 12px;
+}
+
 
 /*---------------------close button---------------------*/
 .close > span{
@@ -15016,3 +15021,4 @@ img {
 }
 /*---------------------close button---------------------*/
 /* For styling checked and disabled Checkbox - END*/
+

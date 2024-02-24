@@ -395,19 +395,26 @@ class Signup extends BaseController{
 			       	//send email
 					$email = \Config\Services::email();
 					//$email->setFrom('phoenixlangaman05@gmail.com', 'Phoenix Langaman');
-					$email->setFrom($this->lib->system_email, $this->lib->system_email_name);
-					$email->setTo($data['record_header']['username']);
-					$email->setSubject($this->lib->signup_subject);
+
+					try {
+						$email->setFrom($this->lib->system_email, $this->lib->system_email_name);
+						$email->setTo($data['record_header']['username']);
+						$email->setSubject($this->lib->signup_subject);
+
+						$email_param 		= array();
+						$email_param["url"] = base_url().'/signup/activate_account?id='.$res['data']['id'];
+						$email->setMessage($this->lib->signup_email_template($email_param));
+						$email->setMailType('html');
 
 
-					$email_param 		= array();
-					$email_param["url"] = base_url().'/signup/activate_account?id='.$res['data']['id'];
-					$email->setMessage($this->lib->signup_email_template($email_param));
-
-
-					if(!$email->send()){
-						throw new \Exception("Email Failed.");
-					}//end if
+						if(!$email->send()){
+							throw new \Exception("Email Failed.");
+						}//end if
+					} catch (\Exception $e) {
+						// Log the error
+						$error = $email->printDebugger(['headers']);
+						throw new \Exception('Email sending failed: ' . $error);
+					}
 					//end send email
 
 				}//end if

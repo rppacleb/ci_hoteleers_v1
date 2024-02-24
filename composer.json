@@ -14,7 +14,10 @@
         "laminas/laminas-escaper": "^2.8",
         "psr/log": "^1.1",
         "phpoffice/phpspreadsheet": "^1.23",
-        "dompdf/dompdf": "^1.2"
+        "dompdf/dompdf": "^1.2",
+        "railsware/mailtrap-php": "^1.7",
+        "symfony/http-client": "^6.0",
+        "nyholm/psr7": "^1.6"
     },
     "require-dev": {
         "codeigniter/coding-standard": "^1.1",
@@ -46,5 +49,10 @@
         "forum": "http://forum.codeigniter.com/",
         "source": "https://github.com/codeigniter4/CodeIgniter4",
         "slack": "https://codeigniterchat.slack.com"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     }
 }

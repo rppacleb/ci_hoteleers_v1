@@ -59,7 +59,7 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
 	</div>
 </div>
 
-<div class="row mobile-aivwprofrow desktop-lock">
+<div class="row mobile-aivwprofrow desktop-lock align-items-center sticky-top">
     <div class="col-1 mobile-aivwspacer"></div>
 
     <div class="col-4 mb-5">
@@ -69,8 +69,8 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
         </h4>
     </div><!--./col-->
 
-    <div class="col">
-        <div class="outside_button text-right">
+    <div class="col d-flex justify-content-end">
+        <div class="outside_button text-right p-3">
             <?php if($type == 'edit'){?>
                 <a href="<?php echo base_url('applicant_info/view/'.$id.'') ?>" class="text-primary mr-4">Cancel</a> 
             <?php }?>
@@ -121,8 +121,6 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
         <p id="header[date_created]"></p>
 	</div>
 	<div class="col">
-
-
 		<form id="frm_data_entry">
             <div class="card mb-3">
                 <div class="card-header">
@@ -347,28 +345,6 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
 
             <div class="card mb-3">
                 <div class="card-header">
-                    <h4>Skills</h4>
-                </div><!--./card-header-->
-
-                <div class="card-body">
-                    
-                    
-                    <div id="skills_content">
-                        
-                    </div><!--./experience_content-->
-
-                    
-                    <div class="btn btn-group aivw-addBtn">
-                        <button name="btn_add_skills" class="btn btn-sm btn-secondary" type="button">Add Skills</button>
-                    </div>
-
-
-                </div><!--./card-body-->
-            </div><!--./card-->
-
-
-            <div class="card mb-3">
-                <div class="card-header">
                     <h4>Education</h4>
                 </div><!--./card-header-->
 
@@ -390,11 +366,12 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
             
 
             <div class="card mb-3">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center c-pointer btn-show-hide" id="card-language">
                     <h4>Language</h4>
-                </div><!--./card-header-->
+                    <div class="title-show-hide" id="tsh-language">Show</div>
+                </div>
 
-                <div class="card-body">
+                <div class="card-body d-none" id="cb-language">
                     
                     
                     <div id="language_content">
@@ -410,12 +387,36 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
                 </div><!--./card-body-->
             </div><!--./card-->
 
-            <div class="card mb-3">
-                <div class="card-header">
-                    <h4>Certifications and Licenses</h4>
-                </div><!--./card-header-->
 
-                <div class="card-body">
+            <div class="card mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center c-pointer btn-show-hide" id="card-skills">
+                    <h4>Skills</h4>
+                    <div class="title-show-hide" id="tsh-skills">Show</div>
+                </div>
+
+                <div class="card-body d-none" id="cb-skills">
+                    
+                    
+                    <div id="skills_content">
+                        
+                    </div><!--./experience_content-->
+
+                    
+                    <div class="btn btn-group aivw-addBtn">
+                        <button name="btn_add_skills" class="btn btn-sm btn-secondary" type="button">Add Skills</button>
+                    </div>
+
+
+                </div><!--./card-body-->
+            </div><!--./card-->
+
+            <div class="card mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center c-pointer btn-show-hide" id="card-cal">
+                    <h4>Certifications and Licenses</h4>
+                    <div class="title-show-hide" id="tsh-cal">Show</div>
+                </div>
+
+                <div class="card-body d-none" id="cb-cal">
                     
                     
                     <div id="certification_content">
@@ -433,11 +434,12 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
 
 
             <div class="card mb-3">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center c-pointer btn-show-hide" id="card-projects">
                     <h4>Projects</h4>
-                </div><!--./card-header-->
+                    <div class="title-show-hide" id="tsh-projects">Show</div>
+                </div>
 
-                <div class="card-body">
+                <div class="card-body d-none" id="cb-projects">
                     
                     
                     <div id="projects_content">
@@ -454,11 +456,12 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
             </div><!--./card-->
 
             <div class="card mb-3">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center c-pointer btn-show-hide" id="card-sat">
                     <h4>Seminars & Trainings</h4>
-                </div><!--./card-header-->
+                    <div class="title-show-hide" id="tsh-sat">Show</div>
+                </div>
 
-                <div class="card-body">
+                <div class="card-body d-none" id="cb-sat">
                     
                     
                     <div id="seminar_training_content">
@@ -474,11 +477,14 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
                 </div><!--./card-body-->
             </div><!--./card-->
 
+
             <div class="card mb-3">
-                <div class="card-header">
-                    <h4>Awards & Achievements</h4>
-                </div><!--./card-header-->
-                <div class="card-body">
+                <div class="card-header d-flex justify-content-between align-items-center c-pointer btn-show-hide" id="card-aaa">
+                    <h4>Awards and Achievements</h4>
+                    <div class="title-show-hide" id="tsh-aaa">Show</div>
+                </div>
+
+                <div class="card-body d-none" id="cb-aaa">
                     <div id="awards_achievements_content">
                     </div><!--./experience_content-->
                     <div class="btn btn-group aivw-addBtn">
@@ -488,10 +494,12 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
             </div><!--./card-->
 
             <div class="card mb-3">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center c-pointer btn-show-hide" id="card-affiliations">
                     <h4>Affiliations</h4>
-                </div><!--./card-header-->
-                <div class="card-body">
+                    <div class="title-show-hide" id="tsh-affiliations">Show</div>
+                </div>
+
+                <div class="card-body d-none" id="cb-affiliations">
                     <div id="affiliations_content">
                     </div><!--./experience_content-->
                     <div class="btn btn-group aivw-addBtn">
@@ -501,10 +509,12 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
             </div><!--./card-->
 
             <div class="card mb-3">
-                <div class="card-header">
+                <div class="card-header d-flex justify-content-between align-items-center c-pointer btn-show-hide" id="card-jp">
                     <h4>Job Preferences</h4>
-                </div><!--./card-header-->
-                <div class="card-body">
+                    <div class="title-show-hide" id="tsh-jp">Show</div>
+                </div>
+
+                <div class="card-body d-none" id="cb-jp">
                     <div class="row">
                         <div class="col">
                             Industry
@@ -647,30 +657,6 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
         
 	</div><!--./col-->
 	
-</div><!--./row-->
-
-
-
-
-<div class="row desktop-lock">
-    <div class="col">
-        <div class="outside_button text-right">
-            <?php if($type == 'edit'){?>
-                <a href="<?php echo base_url('applicant_info/view/'.$id.'') ?>" class="text-primary mr-4">Cancel</a> 
-            <?php }?>
-           
-
-            <?php if($type == 'view'){
-                    if(in_array('edit' ,$access)){
-            ?>
-
-                <a href="<?php echo base_url('applicant_info/edit/'.$id.'') ?>" class="btn btn-sm btn-pill-sm-no-brdr btn-primary btn_edit">Edit</a>
-            <?php   }
-                }
-            ?>
-            <button class="btn-pill-sm-no-brdr btn-primary text-white btn_add btn-sm btn_submit" type="button" aria-type="Company">Save</button>
-        </div><!--./text-right-->
-    </div><!--./col-->
 </div><!--./row-->
 
 

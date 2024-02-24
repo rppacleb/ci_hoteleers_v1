@@ -30,6 +30,7 @@ class Login_model extends Model {
         $response['data']      = [];
 		$qrystr = "SELECT t0.*,
                     t2.doc_image,
+                    t2.first_name,
                     t0.employer,
                     t1.company_name,
                     t1.doc_image AS 'employer_doc_image',

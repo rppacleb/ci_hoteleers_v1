@@ -675,6 +675,7 @@ class Home extends BaseController{
 
 
 				$this->session->set('name', $data['record_user']['name']);
+				$this->session->set('first_name', $data['record_header']['first_name']);
 
 			    $validator['success'] 		= true;
 				// $validator['messages'][] 	= array("success" => "Successfully completed");

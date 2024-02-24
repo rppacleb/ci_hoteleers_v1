@@ -173,6 +173,7 @@ class Login extends BaseController{
 			       	$this->session->set('usertype', $res['data']->user_type);
 			       	$this->session->set('name', $res['data']->name);
 			       	$this->session->set('employer', $res['data']->employer);
+			       	$this->session->set('first_name', $res['data']->first_name);
 			       	//$this->session->sess_expiration = '14400'
 
 			       	$data['record_header']['id'] = $res['data']->id;
