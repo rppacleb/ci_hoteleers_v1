@@ -94,10 +94,8 @@ class Forgot_pass extends BaseController{
 
 				//send email
 				$email = \Config\Services::email();
-				$email->setFrom($res['data']->username, $res['data']->name);
+				$email->setFrom($this->lib->system_email, $this->lib->system_email_name);
 				$email->setTo($res['data']->username);
-				//$email->setCC('another@another-example.com');
-				//$email->setBCC('them@their-example.com');
 				$email->setSubject('Forgot Password');
 				$email->setMessage("New Password : ".$data['record_header']["password"]."");
 				if(!$email->send()){
