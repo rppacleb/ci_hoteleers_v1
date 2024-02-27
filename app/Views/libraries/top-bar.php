@@ -317,7 +317,7 @@
 
                         <a id="side_create_jp" class="nav-link text-muted fs15" href="<?php echo base_url('job_post/add/0?isActive=1'); ?>"><small class="sidemenu-links"><i class="fa fa-pencil" aria-hidden="true"></i><span>Create Job Post</span></small></a>
 
-                        <a id="side_drafts_template" class="nav-link text-muted fs15" href="<?php echo base_url('job_post'); ?>"><small class="sidemenu-links"><i class="fa fa-sticky-note" aria-hidden="true"></i><span>Drafts and Templates</span></small></a>
+                        <a id="side_drafts_template" class="nav-link text-muted fs15" href="<?php echo base_url('job_post'); ?>"><small class="sidemenu-links"><i class="fa fa-sticky-note" aria-hidden="true"></i><span>Drafts</span></small></a>
 
                         <a id="side_talent_database" class="nav-link text-muted fs15" href="<?php echo base_url('applicant_search/private'); ?>"><small class="sidemenu-links"><i class="fa fa-database" aria-hidden="true"></i><span>Talent Database</span></small></a>
 

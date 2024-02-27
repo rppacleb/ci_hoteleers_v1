@@ -197,10 +197,10 @@ $(document).ready(function () {
               value.id +
               '" class="mr-2 btn btn-pill-sm btn-pill-sm-outline-light text-danger remove"><i class="fa fa-times"></i></button>';
             if (!parseInt(value.inactive)) {
-              html +=
-                '<button type="button" title="Copy" id="' +
-                value.id +
-                '" class="mr-2 btn btn-pill-sm btn-pill-sm-outline-light text-muted btn_view"><i class="fa fa-copy"></i></button>';
+              // html +=
+              //   '<button type="button" title="Copy" id="' +
+              //   value.id +
+              //   '" class="mr-2 btn btn-pill-sm btn-pill-sm-outline-light text-muted btn_view"><i class="fa fa-copy"></i></button>';
             } else {
               html +=
                 '<a href="' +

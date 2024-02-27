@@ -14,7 +14,7 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
 <?php require_once('app/Views/libraries/top-bar.php'); ?>
 <div class="row mb-5">
 	<div class="col">
-		<h4>Drafts and Templates</h4>
+		<h4>Drafts</h4>
 		<span class="text-muted">Unpinned drafts will expire after 7 days</span>
 	</div><!--./col-->
 	<div class="col">

@@ -44,6 +44,7 @@ $(document).ready(function () {
     } else if (selectedValue == "hired") {
       $("#step5").addClass("active");
       $("#step5").prevAll().addClass("complete").removeClass("active");
+      $(".step").addClass("pe-none");
     } else {
       $("#step1").addClass("active");
     }

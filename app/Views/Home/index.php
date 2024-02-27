@@ -246,13 +246,14 @@
         <div class="modal-body" id="submitted_modal_body">
         	<div class="row">
         		<div class="col text-center">
-        			<h2 class="modal-title text-link">Would you like to...</h2>
+        			<h2 class="modal-title text-link">Welcome to Hoteleers</h2>
+        			<h6 class="modal-title">Now, let's complete setting up your profile!</h2>
         		</div>
         	</div>
         	<br/>
         	<div class="row">
         		<div class="col text-center">
-        			<a href="job_search/private" class="btn btn-primary mr-5">Search for job</a> or <a href="applicant_info/edit/<?php echo $user_id?>" class="ml-5 btn btn-secondary">Update profile</a>
+        			<a href="applicant_info/edit/<?php echo $user_id?>" class="btn btn-primary rounded">Update profile</a>
         		</div>
         	</div>
         </div>

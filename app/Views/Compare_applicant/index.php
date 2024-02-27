@@ -57,10 +57,10 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
 		<div class="input-group mb-3">
 		  <input readonly name="header[applicant1]" type="text" class="form-control d-none" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
 
-		  <input name="header[applicant1_text]" type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
-		  <div class="input-group-append">
+		  <input disabled name="header[applicant1_text]" type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
+		  <div class="input-group-append d-none">
 		    <button class="btn btn-primary btn_find1" type="button">Find</button>
-		  </div><!--./input-group-append-->
+		  </div>
 		</div><!--./input-group-->
 	</div><!--./col-->
 

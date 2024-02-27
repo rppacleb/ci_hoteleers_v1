@@ -20,6 +20,11 @@ $(document).ready(function () {
   var date = addDays(date1, 119);
   var today = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
   var end_date = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  $("input[name=header\\[job_start_date\\]]").datetimepicker({
+    format: "M/D/YYYY",
+    minDate: today,
+    maxDate: end_date,
+  });
   $("input[name=header\\[job_expiration_date\\]]").datetimepicker({
     format: "M/D/YYYY",
     minDate: today,

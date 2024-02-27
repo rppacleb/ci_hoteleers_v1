@@ -151,7 +151,7 @@ var mod_type                    = <?php echo !isset($_GET['mod_type'])? '""' : '
                    
 
 
-                    <div class="form-group row">
+                    <!-- <div class="form-group row">
                         <label class="col-3 col-form-label text-right align-self-center">Mobile Number<span class="text-danger fw-bolder tdvw-asterisk">*</span></label>
                         <div class="col-2 align-self-center">
                             <select class="custom-select custom-select-sm" name="header[dial_code]">
@@ -162,11 +162,11 @@ var mod_type                    = <?php echo !isset($_GET['mod_type'])? '""' : '
                               }//end for
                             ?>
                             </select>
-                        </div><!--./col-10-->
+                        </div>
                         <div class="col align-self-center">
                             <input class="form-control form-control-sm" type="text" name="header[contact_number]" maxlength="20"/>
-                        </div><!--./col-10-->
-                    </div><!--./form-group-->
+                        </div>
+                    </div> -->
 
                     
                    <div class="form-group row ">

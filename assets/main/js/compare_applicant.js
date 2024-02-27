@@ -1934,6 +1934,7 @@ $(document).ready(function () {
 
             var full_name = data.first_name + " " + data.last_name;
             $(frm1 + " h6[id=header\\[company_name\\]]").html(full_name);
+            $("input[name=header\\[applicant1_text\\]]").val(full_name);
             $(frm1 + " p[id=header\\[date_created\\]]").html(
               '<small class="text-muted">Joined ' +
                 data.joined_date +
