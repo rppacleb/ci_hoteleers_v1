@@ -23,7 +23,7 @@ class App extends BaseConfig
      *
      * @var string
      */
-    public $baseURL = 'https://staging.hoteleers.com';
+    public $baseURL = 'https://hoteleers.com';
 
     /**
      * --------------------------------------------------------------------------

@@ -36,7 +36,7 @@ class Database extends Config
         'hostname' => 'localhost',
         'username' => 'stagingdbhoteleers',
         'password' => '0SLn2cLSmyvekTsQ',
-        'database' => 'stagingdbhoteleers',
+        'database' => 'dbhoteleers',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
