@@ -563,6 +563,7 @@ class Schedule_vw extends BaseController{
 						$email_param['notes_to_interviewee'] 	= $data['record_header']['notes_to_interviewee'];
 
 						$email->setMessage($this->lib->edited_job_interview_template($email_param));
+						$email->setMailType('html');
 						//$email->setMessage($message);
 						if(!$email->send()){
 							$validator['messages'][] = "Email Failed!";
@@ -800,6 +801,7 @@ class Schedule_vw extends BaseController{
 
 
 					$email->setMessage($this->lib->job_interview_template($email_param));
+					$email->setMailType('html');
 					if(!$email->send()){
 						$validator['messages'][] = "Email Failed!";
 					}//end if

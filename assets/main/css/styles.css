@@ -14991,6 +14991,22 @@ input[type="color"]:focus,
   cursor: pointer;
 }
 
+#dropdown_notification {
+  height: 300px !important;
+  max-height: 300px !important;
+  overflow: auto;
+}
+
+.jd-textarea > p {
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+  color: #212529 !important;
+}
+
+.qualification-textarea > p {
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+  color: #212529 !important;
+}
+
 .jqte_editor span,
 .jqte_editor p,
 .jqte_editor h1,
@@ -15001,7 +15017,7 @@ input[type="color"]:focus,
 .jqte_editor li,
 .jqte_editor div{
   font-size: 15px !important;
-  font-family: sans-serif !important;
+  font-family: 'Be Vietnam Pro', sans-serif !important;
 }
 /*---------------------standardized font---------------------*/
 

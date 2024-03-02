@@ -161,7 +161,7 @@ class Pcl_lib
 								 </tr>
 								 <tr>
 								   <td style="font-size: 14px; line-height: 170%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
-									 Best regards, <br><strong>Hoteleers</strong>
+									 To your success, <br><strong>Hoteleers</strong>
 								   </td>
 								 </tr>
 							   </tbody>
@@ -187,291 +187,855 @@ class Pcl_lib
 
 
    public function job_interview_template($param){
-   		$br 	= '<br/>';
-   		$html 	= '';
-   		$html 	.= 'Good day '.$param['name'].',';
-   		$html 	.= $br.$br;
-   		$html 	.= 'You have an interview scheduled with '.$param['company_name'].' with details below:';
-   		$html 	.= $br.$br;
+   		$html = '<!DOCTYPE html>
+		   <html xmlns="http://www.w3.org/1999/xhtml">
+		   
+		   <head>
+			 <title></title>
+			 <!--[if !mso]><!-- -->
+			 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+			 <!--<![endif]-->
+			 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+			 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+			 <style type="text/css">
+			   #outlook a {
+				 padding: 0;
+			   }
+		   
+			   .ReadMsgBody {
+				 width: 100%;
+			   }
+		   
+			   .ExternalClass {
+				 width: 100%;
+			   }
+		   
+			   .ExternalClass * {
+				 line-height: 100%;
+			   }
+		   
+			   body {
+				 margin: 0;
+				 padding: 0;
+				 -webkit-text-size-adjust: 100%;
+				 -ms-text-size-adjust: 100%;
+			   }
+		   
+			   table,
+			   td {
+				 border-collapse: collapse;
+				 mso-table-lspace: 0pt;
+				 mso-table-rspace: 0pt;
+			   }
+		   
+			 </style>
+			 <!--[if !mso]><!-->
+			 <style type="text/css">
+			   @media only screen and (max-width:480px) {
+				 @-ms-viewport {
+				   width: 320px;
+				 }
+				 @viewport {
+				   width: 320px;
+				 }
+			   }
+			 </style>
+			 <!--<![endif]-->
+			 <!--[if mso]><xml>  <o:OfficeDocumentSettings>    <o:AllowPNG/>    <o:PixelsPerInch>96</o:PixelsPerInch>  </o:OfficeDocumentSettings></xml><![endif]-->
+			 <!--[if lte mso 11]><style type="text/css">  .outlook-group-fix {    width:100% !important;  }</style><![endif]-->
+			 <!--[if !mso]><!-->
+			 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" type="text/css">
+			 <style type="text/css">
+			   @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+			 </style>
+			 <!--<![endif]-->
+			 <style type="text/css">
+			   @media only screen and (max-width:595px) {
+				 .container {
+				   width: 100% !important;
+				 }
+				 .button {
+				   display: block !important;
+				   width: auto !important;
+				 }
+			   }
+			 </style>
+		   </head>
+		   
+		   <body style="font-family: Inter, sans-serif; background: #E5E5E5;">
+			 <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#F6FAFB">
+			   <tbody>
+				 <tr>
+				   <td valign="top" align="center">
+					 <table class="container" width="700" cellspacing="0" cellpadding="0" border="0">
+					   <tbody>
+						 <tr>
+						   <td style="padding:48px 0 30px 0; text-align: center; font-size: 14px; color: #f4623a;">
+							 Hoteleers
+						   </td>
+						 </tr>
+						 <tr>
+						   <td class="main-content" style="padding: 48px 30px 40px; color: #000000;" bgcolor="#ffffff">
+							 <table width="100%" cellspacing="0" cellpadding="0" border="0">
+							   <tbody>
+								 <tr>
+								   <td style="padding: 0 0 24px 0; font-size: 18px; line-height: 150%; font-weight: bold; color: #000000; letter-spacing: 0.01em;">
+									 Good day, '.$param["name"].'!
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 10px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+									 You have an interview schedule with '.$param["job_title"].'.
+								</td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 16px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+									 Please see details below for more information:
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 10px 0;">
+									   Interview Date
+								   </td>
+								   <td style="padding: 0 0 10px 0;">
+									   <b>'.$param["interview_date"].'</b>
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 10px 0;">
+									   Start Time
+								   </td>
+								   <td style="padding: 0 0 10px 0;">
+									   <b>'.$param['start_time'].' - '.$param['end_time'].'</b>
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 10px 0;">
+									   Role / Position
+								   </td>
+								   <td style="padding: 0 0 10px 0;">
+									   <b>'.$param["applying_for"].'</b>
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 10px 0;">
+									   Applicant Name
+								   </td>
+								   <td style="padding: 0 0 10px 0;">
+									   <b>'.$param["applicant_name"].'</b>
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 10px 0;">
+									   Recruiter Email
+								   </td>
+								   <td style="padding: 0 0 10px 0;">
+									   <b>'.$param["rec_email_address"].'</b>
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 10px 0;">
+									   Interviewer Name
+								   </td>
+								   <td style="padding: 0 0 10px 0;">
+									   <b>'.$param["interviewer_name"].'</b>
+								   </td>
+								 </tr>';
 
-   		//content
-   		$html 	.= '<table>';
-   			$html 	.= '<tr>';
-   				$html 	.= '<td><b>Interview Date</b></td>';
-   				$html 	.= '<td>'.$param['interview_date'].'</td>';
-   			$html 	.= '</tr>';
-   			$html 	.= '<tr>';
-   				$html 	.= '<td><b>Start Time</b></td>';
-   				$html 	.= '<td>'.$param['start_time'].' - '.$param['end_time'].'</td>';
-   			$html 	.= '</tr>';
-   			$html 	.= '<tr>';
-   				$html 	.= '<td><b>Applicant Name</b></td>';
-   				$html 	.= '<td>'.$param['applicant_name'].'</td>';
-   			$html 	.= '</tr>';
-   			$html 	.= '<tr>';
-   				$html 	.= '<td><b>Recruiter Email Address</b></td>';
-   				$html 	.= '<td>'.$param['rec_email_address'].'</td>';
-   			$html 	.= '</tr>';
-   			$html 	.= '<tr>';
-   				$html 	.= '<td><b>Applying for</b></td>';
-   				$html 	.= '<td>'.$param['applying_for'].'</td>';
-   			$html 	.= '</tr>';
-   			$html 	.= '<tr>';
-   				$html 	.= '<td><b>Interviewer Name / Position</b></td>';
-   				$html 	.= '<td>'.$param['interviewer_name'].'</td>';
-   			$html 	.= '</tr>';
+								 if($param['interview_address'] == "virtual"){
+									$html 	.= '<tr>
+									<td style="padding: 0 0 10px 0;">
+										Interview Link
+									</td>
+									<td style="padding: 0 0 10px 0;">
+										<b>'.$param["virtual_link"].'</b>
+									</td>
+								  </tr>';
+								}else{
+								 if($param['interview_address'] == "face_to_face"){
+									 $html 	.= '<tr>
+									 <td style="padding: 0 0 10px 0;">
+										 Interview Location
+									 </td>
+									 <td style="padding: 0 0 10px 0;">
+										 <b>'.$param["interview_location"].'</b>
+									 </td>
+								   </tr>';
+								 }//end if
+							 }//end if
+								
+							if($param['notes_to_interviewee'] !== ""){
+								$html 	.= '<tr>
+								<td style="padding: 0 0 10px 0;">
+									Notes to applicant
+								</td>
+								<td style="padding: 0 0 10px 0;">
+									<b>'.$param["notes_to_interviewee"].'</b>
+								</td>
+							  </tr>';
+							}//end if
 
-   			
-	   			
-   			
-
-   			if($param['interview_address'] == "virtual"){
-   				$html 	.= '<tr>';
-	   				$html 	.= '<td><b>Virtual Interview Link</b></td>';
-	   				$html 	.= '<td>'.$param['virtual_link'].'</td>';
-	   			$html 	.= '</tr>';
-   			}else{
-				if($param['interview_address'] == "face_to_face"){
-					$html 	.= '<tr>';
-						$html 	.= '<td><b>Interview Address</b></td>';
-						$html 	.= '<td>'.$param['interview_location'].'</td>';
-					$html 	.= '</tr>';
-				}//end if
-			}//end if
-   			
-   			if($param['notes_to_interviewee'] !== ""){
-	   			$html 	.= '<tr>';
-	   				$html 	.= '<td><b>Notes to Interviewee</b></td>';
-	   				$html 	.= '<td>'.$param['notes_to_interviewee'].'</td>';
-	   			$html 	.= '</tr>';
-	   		}//end if
-   		$html 	.= '</table>';
-   		//end content
-   		$html 	.= $br.$br;
-
-   		$html 	.= 'Good luck!';
-   		$html 	.= $br.$br;
-   		$html 	.= 'Our Interview Tips:';
-   		$html 	.= $br;
-   		$html 	.= '<ul>';
-   			$html 	.= '<li>Research the company and the job in advance</li>';
-   			$html 	.= '<li>Practice telling your story</li>';
-   			$html 	.= '<li>Read the headlines on the day of the interview</li>';
-   			$html 	.= '<li>Dress for success and to impress</li>';
-   			$html 	.= '<li>Dress for success and to impress</li>';
-   			$html 	.= '<li>Arrive early but don’t check in until it’s time</li>';
-			$html 	.= '<li>Be aware of your body language </li>';
-			$html 	.= '<li>Ask questions that matter</li>';
-			$html 	.= '<li>Only say good stuff about a former employer</li>';
-			$html 	.= '<li>Mobile phone on silent mode and never visible</li>';
-			$html 	.= '<li>Be authentic, connect with the interviewer as a person</li>';
-			$html 	.= '<li>Know your Why’s</li>';
-
-   		$html 	.= '</ul>';
-
-
-   		$html 	.= $br.$br;
-   		$html 	.= '<a href="'.$param["url"].'">[Log in]</a> to your Hoteleers account.';
-   		$html 	.= $br.$br;
-   		$html 	.= 'To your success,';
-   		$html 	.= $br.$br;
-   		$html 	.= 'Hoteleers Team';
+							$html .= '<tr>
+								   <td style="padding: 16px 0 16px;">
+									 <span style="display: block; width: 117px; border-bottom: 1px solid #8B949F;"></span>
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 10px 0;">
+									   Our Interview Tips:
+									   <ul>
+										   <li>Research the company and the job in advance</li>
+										   <li>Practice telling your story</li>
+										   <li>Read the headlines on the day of the interview</li>
+										   <li>Dress for success and to impress</li>
+										   <li>Arrive early but don`t check in until it`s time</li>
+										   <li>Be aware of your body language</li>
+										   <li>Ask questions that matter</li>
+										   <li>Only say good stuff about a former employer</li>
+										   <li>Mobile phone on silent mode and never visible</li>
+										   <li>Be authentic, connect with the interviewer as a person</li>
+										   <li>Know your Why`s</li>
+									   </ul>
+								   </td>
+								 </tr>
+								 <tr>
+								   <td>Good Luck!!</td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 16px 0 16px;">
+									 <span style="display: block; width: 117px; border-bottom: 1px solid #8B949F;"></span>
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="font-size: 14px; line-height: 170%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+									 To your success, <br><strong>Hoteleers</strong>
+								   </td>
+								 </tr>
+							   </tbody>
+							 </table>
+						   </td>
+						 </tr>
+						 <tr>
+						   <td style="padding: 24px 0 48px; font-size: 0px;">
+						   </td>
+						 </tr>
+					   </tbody>
+					 </table>
+				   </td>
+				 </tr>
+			   </tbody>
+			 </table>
+		   </body>
+		   </html>';
 
    		return $html;
    }//end function
 
 
    public function edited_job_interview_template($param){
-   		$br 	= '<br/>';
-   		$html 	= '';
-   		$html 	.= 'Good day '.$param['name'].',';
-   		$html 	.= $br.$br;
-   		$html 	.= 'Your interview scheduled with '.$param['company_name'].' has been changed with new details below:';
-   		$html 	.= $br.$br;
+	$html = '<!DOCTYPE html>
+		<html xmlns="http://www.w3.org/1999/xhtml">
+		
+		<head>
+		<title></title>
+		<!--[if !mso]><!-- -->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!--<![endif]-->
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<style type="text/css">
+			#outlook a {
+			padding: 0;
+			}
+		
+			.ReadMsgBody {
+			width: 100%;
+			}
+		
+			.ExternalClass {
+			width: 100%;
+			}
+		
+			.ExternalClass * {
+			line-height: 100%;
+			}
+		
+			body {
+			margin: 0;
+			padding: 0;
+			-webkit-text-size-adjust: 100%;
+			-ms-text-size-adjust: 100%;
+			}
+		
+			table,
+			td {
+			border-collapse: collapse;
+			mso-table-lspace: 0pt;
+			mso-table-rspace: 0pt;
+			}
+		
+		</style>
+		<!--[if !mso]><!-->
+		<style type="text/css">
+			@media only screen and (max-width:480px) {
+			@-ms-viewport {
+				width: 320px;
+			}
+			@viewport {
+				width: 320px;
+			}
+			}
+		</style>
+		<!--<![endif]-->
+		<!--[if mso]><xml>  <o:OfficeDocumentSettings>    <o:AllowPNG/>    <o:PixelsPerInch>96</o:PixelsPerInch>  </o:OfficeDocumentSettings></xml><![endif]-->
+		<!--[if lte mso 11]><style type="text/css">  .outlook-group-fix {    width:100% !important;  }</style><![endif]-->
+		<!--[if !mso]><!-->
+		<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" type="text/css">
+		<style type="text/css">
+			@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+		</style>
+		<!--<![endif]-->
+		<style type="text/css">
+			@media only screen and (max-width:595px) {
+			.container {
+				width: 100% !important;
+			}
+			.button {
+				display: block !important;
+				width: auto !important;
+			}
+			}
+		</style>
+		</head>
+		
+		<body style="font-family: Inter, sans-serif; background: #E5E5E5;">
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#F6FAFB">
+			<tbody>
+			<tr>
+				<td valign="top" align="center">
+				<table class="container" width="700" cellspacing="0" cellpadding="0" border="0">
+					<tbody>
+					<tr>
+						<td style="padding:48px 0 30px 0; text-align: center; font-size: 14px; color: #f4623a;">
+						Hoteleers
+						</td>
+					</tr>
+					<tr>
+						<td class="main-content" style="padding: 48px 30px 40px; color: #000000;" bgcolor="#ffffff">
+						<table width="100%" cellspacing="0" cellpadding="0" border="0">
+							<tbody>
+							<tr>
+								<td style="padding: 0 0 24px 0; font-size: 18px; line-height: 150%; font-weight: bold; color: #000000; letter-spacing: 0.01em;">
+								Good day, '.$param["name"].'!
+								</td>
+							</tr>
+							<tr>
+								<td style="padding: 0 0 10px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+								You have an interview scheduled with '.$param["job_title"].' has been changed with new details.
+							</td>
+							</tr>
+							<tr>
+								<td style="padding: 0 0 16px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+								Please see details below for more information:
+								</td>
+							</tr>
+							<tr>
+								<td style="padding: 0 0 10px 0;">
+									Interview Date
+								</td>
+								<td style="padding: 0 0 10px 0;">
+									<b>'.$param["interview_date"].'</b>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding: 0 0 10px 0;">
+									Start Time
+								</td>
+								<td style="padding: 0 0 10px 0;">
+									<b>'.$param['start_time'].' - '.$param['end_time'].'</b>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding: 0 0 10px 0;">
+									Role / Position
+								</td>
+								<td style="padding: 0 0 10px 0;">
+									<b>'.$param["applying_for"].'</b>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding: 0 0 10px 0;">
+									Applicant Name
+								</td>
+								<td style="padding: 0 0 10px 0;">
+									<b>'.$param["applicant_name"].'</b>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding: 0 0 10px 0;">
+									Recruiter Email
+								</td>
+								<td style="padding: 0 0 10px 0;">
+									<b>'.$param["rec_email_address"].'</b>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding: 0 0 10px 0;">
+									Interviewer Name
+								</td>
+								<td style="padding: 0 0 10px 0;">
+									<b>'.$param["interviewer_name"].'</b>
+								</td>
+							</tr>';
 
-   		//content
-   		$html 	.= '<table>';
-   			$html 	.= '<tr>';
-   				$html 	.= '<td><b>Interview Date</b></td>';
-   				$html 	.= '<td>'.$param['interview_date'].'</td>';
-   			$html 	.= '</tr>';
-   			$html 	.= '<tr>';
-   				$html 	.= '<td><b>Start Time</b></td>';
-   				$html 	.= '<td>'.$param['start_time'].' - '.$param['end_time'].'</td>';
-   			$html 	.= '</tr>';
-   			$html 	.= '<tr>';
-   				$html 	.= '<td><b>Applicant Name</b></td>';
-   				$html 	.= '<td>'.$param['applicant_name'].'</td>';
-   			$html 	.= '</tr>';
-   			$html 	.= '<tr>';
-   				$html 	.= '<td><b>Recruiter Email Address</b></td>';
-   				$html 	.= '<td>'.$param['rec_email_address'].'</td>';
-   			$html 	.= '</tr>';
-   			$html 	.= '<tr>';
-   				$html 	.= '<td><b>Applying for</b></td>';
-   				$html 	.= '<td>'.$param['applying_for'].'</td>';
-   			$html 	.= '</tr>';
-   			$html 	.= '<tr>';
-   				$html 	.= '<td><b>Interviewer Name / Position</b></td>';
-   				$html 	.= '<td>'.$param['interviewer_name'].'</td>';
-   			$html 	.= '</tr>';
+							if($param['interview_address'] == "virtual"){
+								$html 	.= '<tr>
+								<td style="padding: 0 0 10px 0;">
+									Interview Link
+								</td>
+								<td style="padding: 0 0 10px 0;">
+									<b>'.$param["virtual_link"].'</b>
+								</td>
+							</tr>';
+							}else{
+							if($param['interview_address'] == "face_to_face"){
+								$html 	.= '<tr>
+								<td style="padding: 0 0 10px 0;">
+									Interview Location
+								</td>
+								<td style="padding: 0 0 10px 0;">
+									<b>'.$param["interview_location"].'</b>
+								</td>
+								</tr>';
+							}//end if
+						}//end if
+							
+						if($param['notes_to_interviewee'] !== ""){
+							$html 	.= '<tr>
+							<td style="padding: 0 0 10px 0;">
+								Notes to applicant
+							</td>
+							<td style="padding: 0 0 10px 0;">
+								<b>'.$param["notes_to_interviewee"].'</b>
+							</td>
+						</tr>';
+						}//end if
 
-   			
-	   			$html 	.= '<tr>';
-	   				$html 	.= '<td><b>Interview Address</b></td>';
-	   				if($param['interview_address'] == "face_to_face"){
-	   					$html 	.= '<td>'.$param['interview_location'].'</td>';
-	   				}else{
-	   					$html 	.= '<td>'.$param['interview_address'].'</td>';
-	   				}//end if
-	   			$html 	.= '</tr>';
-   			
+						$html .= '<tr>
+								<td style="padding: 16px 0 16px;">
+								<span style="display: block; width: 117px; border-bottom: 1px solid #8B949F;"></span>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding: 0 0 10px 0;">
+									Our Interview Tips:
+									<ul>
+										<li>Research the company and the job in advance</li>
+										<li>Practice telling your story</li>
+										<li>Read the headlines on the day of the interview</li>
+										<li>Dress for success and to impress</li>
+										<li>Arrive early but don`t check in until it`s time</li>
+										<li>Be aware of your body language</li>
+										<li>Ask questions that matter</li>
+										<li>Only say good stuff about a former employer</li>
+										<li>Mobile phone on silent mode and never visible</li>
+										<li>Be authentic, connect with the interviewer as a person</li>
+										<li>Know your Why`s</li>
+									</ul>
+								</td>
+							</tr>
+							<tr>
+								<td>Good Luck!!</td>
+							</tr>
+							<tr>
+								<td style="padding: 16px 0 16px;">
+								<span style="display: block; width: 117px; border-bottom: 1px solid #8B949F;"></span>
+								</td>
+							</tr>
+							<tr>
+								<td style="font-size: 14px; line-height: 170%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+								To your success, <br><strong>Hoteleers</strong>
+								</td>
+							</tr>
+							</tbody>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td style="padding: 24px 0 48px; font-size: 0px;">
+						</td>
+					</tr>
+					</tbody>
+				</table>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		</body>
+		</html>';
 
-   			if($param['interview_address'] == "virtual"){
-   				$html 	.= '<tr>';
-	   				$html 	.= '<td><b>Virtual Interview Link</b></td>';
-	   				$html 	.= '<td>'.$param['virtual_link'].'</td>';
-	   			$html 	.= '</tr>';
-   			}//end if
-   			
-   			if($param['notes_to_interviewee'] !== ""){
-	   			$html 	.= '<tr>';
-	   				$html 	.= '<td><b>Notes to Interviewee</b></td>';
-	   				$html 	.= '<td>'.$param['notes_to_interviewee'].'</td>';
-	   			$html 	.= '</tr>';
-	   		}//end if
-   		$html 	.= '</table>';
-   		//end content
-   		$html 	.= $br.$br;
-
-   		$html 	.= 'Good luck!';
-   		$html 	.= $br.$br;
-   		$html 	.= 'Our Interview Tips:';
-   		$html 	.= $br;
-   		$html 	.= '<ul>';
-   			$html 	.= '<li>Research the company and the job in advance</li>';
-   			$html 	.= '<li>Practice telling your story</li>';
-   			$html 	.= '<li>Read the headlines on the day of the interview</li>';
-   			$html 	.= '<li>Dress for success and to impress</li>';
-   			$html 	.= '<li>Dress for success and to impress</li>';
-   			$html 	.= '<li>Arrive early but don’t check in until it’s time</li>';
-			$html 	.= '<li>Be aware of your body language </li>';
-			$html 	.= '<li>Ask questions that matter</li>';
-			$html 	.= '<li>Only say good stuff about a former employer</li>';
-			$html 	.= '<li>Mobile phone on silent mode and never visible</li>';
-			$html 	.= '<li>Be authentic, connect with the interviewer as a person</li>';
-			$html 	.= '<li>Know your Why’s</li>';
-
-   		$html 	.= '</ul>';
-
-
-   		$html 	.= $br.$br;
-   		$html 	.= '<a href="'.$param["url"].'">[Log in]</a> to your Hoteleers account.';
-   		$html 	.= $br.$br;
-   		$html 	.= 'To your success,';
-   		$html 	.= $br.$br;
-   		$html 	.= 'Hoteleers Team';
    		return $html;
    }//end function
 
 
 
    public function notification_employer_template($param){
-   		$br 	= '<br/>';
-   		$html 	= '';
-   		$html 	.= 'Congratulations!';
-   		$html 	.= $br.$br;
-   		$html 	.= '<b>'.$param['name'].'</b> is almost ready to start enjoying Hoteleers!';
-   		$html 	.= $br.$br;
-   		$html 	.= 'Let’s help you get set up.';
-   		$html 	.= $br.$br;
-   		$html 	.= 'Please fill out the list of users and we’ll create an account for each of them.';
-   		$html 	.= $br.$br;
-   		$html 	.= 'Note that there is no limit on the number of users that we can create for you.';
-   		$html 	.= $br.$br;
-
-
-   		//content
-   		$html 	.= '<table>';
-   			$html 	.= '<tr>';
-   				$html 	.= '<td>Prefix (Mr/Ms)</td>';
-   				$html 	.= '<td>Last Name</td>';
-   				$html 	.= '<td>First Name</td>';
-   				$html 	.= '<td>Title/ Designation</td>';
-   				$html 	.= '<td>Email Address</td>';
-   				$html 	.= '<td>Tel #</td>';
-   			$html 	.= '</tr>';
-   			$html 	.= '<tr>';
-   				$html 	.= '<td></td>';
-   				$html 	.= '<td></td>';
-   				$html 	.= '<td></td>';
-   				$html 	.= '<td></td>';
-   				$html 	.= '<td></td>';
-   				$html 	.= '<td></td>';
-   			$html 	.= '</tr>';
-   			$html 	.= '<tr>';
-   				$html 	.= '<td></td>';
-   				$html 	.= '<td></td>';
-   				$html 	.= '<td></td>';
-   				$html 	.= '<td></td>';
-   				$html 	.= '<td></td>';
-   				$html 	.= '<td></td>';
-   			$html 	.= '</tr>';
-   			$html 	.= '<tr>';
-   				$html 	.= '<td></td>';
-   				$html 	.= '<td></td>';
-   				$html 	.= '<td></td>';
-   				$html 	.= '<td></td>';
-   				$html 	.= '<td></td>';
-   				$html 	.= '<td></td>';
-   			$html 	.= '</tr>';
-   			
-   		$html 	.= '</table>';
-   		//end content
-   		$html 	.= $br.$br;
-
-   		$html 	.= 'Email list to sales@hoteleers.com';
-   		$html 	.= $br.$br;
-   		$html 	.= 'Once you receive your access, you can immediately:';
-   		$html 	.= $br;
-   		$html 	.= '<ul>';
-   			$html 	.= '<li>Update your company profile </li>';
-   			$html 	.= '<li>Feature your awesome photos for applicants to see</li>';
-   		$html 	.= '</ul>';
-   		$html 	.= $br.$br;
-   		$html 	.= 'To your success,';
-   		$html 	.= $br.$br;
-   		$html 	.= 'Hoteleers Team';
-   		$html 	.= $br;
-   		$html 	.= 'sales@hoteleers.com';
+   		$html = '<!DOCTYPE html>
+		   <html xmlns="http://www.w3.org/1999/xhtml">
+		   
+		   <head>
+			 <title></title>
+			 <!--[if !mso]><!-- -->
+			 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+			 <!--<![endif]-->
+			 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+			 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+			 <style type="text/css">
+			   #outlook a {
+				 padding: 0;
+			   }
+		   
+			   .ReadMsgBody {
+				 width: 100%;
+			   }
+		   
+			   .ExternalClass {
+				 width: 100%;
+			   }
+		   
+			   .ExternalClass * {
+				 line-height: 100%;
+			   }
+		   
+			   body {
+				 margin: 0;
+				 padding: 0;
+				 -webkit-text-size-adjust: 100%;
+				 -ms-text-size-adjust: 100%;
+			   }
+		   
+			   table,
+			   td {
+				 border-collapse: collapse;
+				 mso-table-lspace: 0pt;
+				 mso-table-rspace: 0pt;
+			   }
+		   
+			 </style>
+			 <!--[if !mso]><!-->
+			 <style type="text/css">
+			   @media only screen and (max-width:480px) {
+				 @-ms-viewport {
+				   width: 320px;
+				 }
+				 @viewport {
+				   width: 320px;
+				 }
+			   }
+			 </style>
+			 <!--<![endif]-->
+			 <!--[if mso]><xml>  <o:OfficeDocumentSettings>    <o:AllowPNG/>    <o:PixelsPerInch>96</o:PixelsPerInch>  </o:OfficeDocumentSettings></xml><![endif]-->
+			 <!--[if lte mso 11]><style type="text/css">  .outlook-group-fix {    width:100% !important;  }</style><![endif]-->
+			 <!--[if !mso]><!-->
+			 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" type="text/css">
+			 <style type="text/css">
+			   @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+			 </style>
+			 <!--<![endif]-->
+			 <style type="text/css">
+			   @media only screen and (max-width:595px) {
+				 .container {
+				   width: 100% !important;
+				 }
+				 .button {
+				   display: block !important;
+				   width: auto !important;
+				 }
+			   }
+			 </style>
+		   </head>
+		   
+		   <body style="font-family: Inter, sans-serif; background: #E5E5E5;">
+			 <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#F6FAFB">
+			   <tbody>
+				 <tr>
+				   <td valign="top" align="center">
+					 <table class="container" width="800" cellspacing="0" cellpadding="0" border="0">
+					   <tbody>
+						 <tr>
+						   <td style="padding:48px 0 30px 0; text-align: center; font-size: 14px; color: #f4623a;">
+							 Hoteleers
+						   </td>
+						 </tr>
+						 <tr>
+						   <td class="main-content" style="padding: 48px 30px 40px; color: #000000;" bgcolor="#ffffff">
+							 <table width="100%" cellspacing="0" cellpadding="0" border="0">
+							   <tbody>
+								 <tr>
+								   <td style="padding: 0 0 24px 0; font-size: 18px; line-height: 150%; font-weight: bold; color: #000000; letter-spacing: 0.01em;">
+									 Congratulations
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 10px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+								   '.$param['name'].' is almost ready to start enjoying Hotleers!
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 16px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+									 Please fill out the list of users and we`ll create an account for each of them.
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 16px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+									 Note that there is no limit on the number of users that we can create for you.
+								   </td>
+								 </tr>
+								 <tr>
+								   <td>
+									   <table class="container" width="800" cellspacing="0" cellpadding="0" border="0"> 
+										   <tbody>
+								 <tr>
+								   <td style="border: 1px solid #000; width: 16.666%;">
+									   Prefix (Mr/Ms)
+								   </td>
+								   <td style="border: 1px solid #000; width: 16.666%;">
+									   Last Name
+								   </td>
+								   <td style="border: 1px solid #000; width: 16.666%;">
+									   First Name
+								   </td>
+								   <td style="border: 1px solid #000; width: 16.666%;">
+									   Title / Designation
+								   </td>
+								   <td style="border: 1px solid #000; width: 16.666%;">
+									   Email Address
+								   </td>
+								   <td style="border: 1px solid #000; width: 16.666%;">
+									   Tel # (Optional)
+								   </td>
+								 </tr>
+								 <tr>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			 </tr>
+								 <tr>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			 </tr>
+								 <tr>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			   <td style="border: 1px solid #000; width: 16.666%; height: 50px;"></td>
+			 </tr>
+										   </tbody>
+									   </table>
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 32px 0 0;">
+									   Email list to sales@hoteleers.com
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 16px 0 0;">
+									   Once you recieve your access, you can immediately:
+								   <ul>
+									   <li>Update your company profile</li>
+									   <li>Feature your awesome photos for applicants to see</li>
+									   <li>Start posting job vacancies</li>
+								   </ul>
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 16px 0 16px;">
+									 <span style="display: block; width: 117px; border-bottom: 1px solid #8B949F;"></span>
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="font-size: 14px; line-height: 170%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+									 To your success, <br><strong>Hoteleers</strong>
+								   </td>
+								 </tr>
+							   </tbody>
+							 </table>
+						   </td>
+						 </tr>
+						 <tr>
+						   <td style="padding: 24px 0 48px; font-size: 0px;">
+						   </td>
+						 </tr>
+					   </tbody>
+					 </table>
+				   </td>
+				 </tr>
+			   </tbody>
+			 </table>
+		   </body>
+		   </html>
+		   ';
    		return $html;
    }//end function
 
 
    public function change_password_template($param){
-   		$br 	= '<br/>';
-   		$html 	= '';
-   		
-   		$html 	.= 'Hi <b>'.$param['name'].'</b>';
-   		$html 	.= $br.$br.$br;
-   		$html 	.= 'Congratulations!';
-   		$html 	.= $br.$br;
-   		$html 	.= 'Your temporary password is '.$param["new_password"].'';
-   		$html 	.= $br.$br;
-   		$html 	.= '<a href="'.$param["url"].'">[Log in]</a> to your Hoteleers account.';
-   		$html 	.= $br.$br.$br;
-   		$html 	.= 'Once you receive your access, you can immediately:';
-   		$html 	.= $br;
-   		$html 	.= '<ul>';
-   			$html 	.= '<li>Update your company profile </li>';
-   			$html 	.= '<li>Feature your awesome photos for applicants to see</li>';
-   		$html 	.= '</ul>';
-   		$html 	.= $br.$br.$br;
-   		$html 	.= 'To your success,';
-   		$html 	.= $br.$br;
-   		$html 	.= 'Hoteleers Team';
-   		$html 	.= $br;
-   		$html 	.= 'sales@hoteleers.com';
+   		$html = '<!DOCTYPE html>
+		   <html xmlns="http://www.w3.org/1999/xhtml">
+		   
+		   <head>
+			 <title></title>
+			 <!--[if !mso]><!-- -->
+			 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+			 <!--<![endif]-->
+			 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+			 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+			 <style type="text/css">
+			   #outlook a {
+				 padding: 0;
+			   }
+		   
+			   .ReadMsgBody {
+				 width: 100%;
+			   }
+		   
+			   .ExternalClass {
+				 width: 100%;
+			   }
+		   
+			   .ExternalClass * {
+				 line-height: 100%;
+			   }
+		   
+			   body {
+				 margin: 0;
+				 padding: 0;
+				 -webkit-text-size-adjust: 100%;
+				 -ms-text-size-adjust: 100%;
+			   }
+		   
+			   table,
+			   td {
+				 border-collapse: collapse;
+				 mso-table-lspace: 0pt;
+				 mso-table-rspace: 0pt;
+			   }
+		   
+			 </style>
+			 <!--[if !mso]><!-->
+			 <style type="text/css">
+			   @media only screen and (max-width:480px) {
+				 @-ms-viewport {
+				   width: 320px;
+				 }
+				 @viewport {
+				   width: 320px;
+				 }
+			   }
+			 </style>
+			 <!--<![endif]-->
+			 <!--[if mso]><xml>  <o:OfficeDocumentSettings>    <o:AllowPNG/>    <o:PixelsPerInch>96</o:PixelsPerInch>  </o:OfficeDocumentSettings></xml><![endif]-->
+			 <!--[if lte mso 11]><style type="text/css">  .outlook-group-fix {    width:100% !important;  }</style><![endif]-->
+			 <!--[if !mso]><!-->
+			 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" type="text/css">
+			 <style type="text/css">
+			   @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+			 </style>
+			 <!--<![endif]-->
+			 <style type="text/css">
+			   @media only screen and (max-width:595px) {
+				 .container {
+				   width: 100% !important;
+				 }
+				 .button {
+				   display: block !important;
+				   width: auto !important;
+				 }
+			   }
+			 </style>
+		   </head>
+		   
+		   <body style="font-family: Inter, sans-serif; background: #E5E5E5;">
+			 <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#F6FAFB">
+			   <tbody>
+				 <tr>
+				   <td valign="top" align="center">
+					 <table class="container" width="600" cellspacing="0" cellpadding="0" border="0">
+					   <tbody>
+						 <tr>
+						   <td style="padding:48px 0 30px 0; text-align: center; font-size: 14px; color: #f4623a;">
+							 Hoteleers
+						   </td>
+						 </tr>
+						 <tr>
+						   <td class="main-content" style="padding: 48px 30px 40px; color: #000000;" bgcolor="#ffffff">
+							 <table width="100%" cellspacing="0" cellpadding="0" border="0">
+							   <tbody>
+								 <tr>
+								   <td style="padding: 0 0 24px 0; font-size: 18px; line-height: 150%; font-weight: bold; color: #000000; letter-spacing: 0.01em;">
+									 Hi, '.$param["name"].'!
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 10px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+								   Resetting password successful. Your new password is '.$param["new_password"].'
+		   .                        </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 24px 0;">
+									 <a class="button" href="'.$param["url"].'" title="Reset Password" style="width: 100%; background: #f4623a; text-decoration: none; display: inline-block; padding: 10px 0; color: #fff; font-size: 14px; line-height: 21px; text-align: center; font-weight: bold; border-radius: 7px;">Login now</a>
+								   </td>
+								 </tr>
+								 <tr>
+								   <td>
+									   Once you receive your access, you can immediately:
+								   </td>
+								 </tr>
+								 <tr>
+								   <td>
+									   <ul>
+										   <li>Update your company profile</li>
+										   <li>Feature your awesome photos for applicants to see</li>
+									   </ul>
+								   </td>
+								 </tr>
+								 <tr>
+								 <tr>
+								   <td style="padding: 16px 0 16px;">
+									 <span style="display: block; width: 117px; border-bottom: 1px solid #8B949F;"></span>
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="font-size: 14px; line-height: 170%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+									 To your success, <br><strong>Hoteleers</strong>
+								   </td>
+								 </tr>
+							   </tbody>
+							 </table>
+						   </td>
+						 </tr>
+						 <tr>
+						   <td style="padding: 24px 0 48px; font-size: 0px;">
+						   </td>
+						 </tr>
+					   </tbody>
+					 </table>
+				   </td>
+				 </tr>
+			   </tbody>
+			 </table>
+		   </body>
+		   </html>';
    		return $html;
    }//end function
 
@@ -532,43 +1096,314 @@ class Pcl_lib
 
 
    public function cancelled_job_interview_template($param){
-   		$br 	= '<br/>';
-   		$html 	= '';
-   		$html 	.= 'Good day '.$param['name'].',';
-   		$html 	.= $br.$br;
-   		$html 	.= 'Your interview scheduled with '.$param['company_name'].' has been cancelled';
-   		$html 	.= $br.$br;
-   		$html 	.= 'We recommend you send the interviewer a short email if you haven’t communicated yet';
-   		$html 	.= $br.$br;
-   		$html 	.= 'If the application moves forward, then all is great!';
-   		$html 	.= $br.$br;
-   		$html 	.= 'Otherwise, we have lots of good stuff you may want to check out <a href="'.$param['job_board_url'].'">here</a>';
-   		$html 	.= $br.$br;
-   		$html 	.= 'You only need one good offer, so let’s find it!';
-   		$html 	.= $br.$br;
-   		$html 	.= '<a href="'.$param["url"].'">[Log in]</a> to your Hoteleers account.';
-   		$html 	.= $br.$br;
-   		$html 	.= 'To your success,';
-   		$html 	.= $br.$br;
-   		$html 	.= 'Hoteleers Team';
+   		$html = '<!DOCTYPE html>
+		   <html xmlns="http://www.w3.org/1999/xhtml">
+		   
+		   <head>
+			 <title></title>
+			 <!--[if !mso]><!-- -->
+			 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+			 <!--<![endif]-->
+			 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+			 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+			 <style type="text/css">
+			   #outlook a {
+				 padding: 0;
+			   }
+		   
+			   .ReadMsgBody {
+				 width: 100%;
+			   }
+		   
+			   .ExternalClass {
+				 width: 100%;
+			   }
+		   
+			   .ExternalClass * {
+				 line-height: 100%;
+			   }
+		   
+			   body {
+				 margin: 0;
+				 padding: 0;
+				 -webkit-text-size-adjust: 100%;
+				 -ms-text-size-adjust: 100%;
+			   }
+		   
+			   table,
+			   td {
+				 border-collapse: collapse;
+				 mso-table-lspace: 0pt;
+				 mso-table-rspace: 0pt;
+			   }
+		   
+			 </style>
+			 <!--[if !mso]><!-->
+			 <style type="text/css">
+			   @media only screen and (max-width:480px) {
+				 @-ms-viewport {
+				   width: 320px;
+				 }
+				 @viewport {
+				   width: 320px;
+				 }
+			   }
+			 </style>
+			 <!--<![endif]-->
+			 <!--[if mso]><xml>  <o:OfficeDocumentSettings>    <o:AllowPNG/>    <o:PixelsPerInch>96</o:PixelsPerInch>  </o:OfficeDocumentSettings></xml><![endif]-->
+			 <!--[if lte mso 11]><style type="text/css">  .outlook-group-fix {    width:100% !important;  }</style><![endif]-->
+			 <!--[if !mso]><!-->
+			 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" type="text/css">
+			 <style type="text/css">
+			   @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+			 </style>
+			 <!--<![endif]-->
+			 <style type="text/css">
+			   @media only screen and (max-width:595px) {
+				 .container {
+				   width: 100% !important;
+				 }
+				 .button {
+				   display: block !important;
+				   width: auto !important;
+				 }
+			   }
+			 </style>
+		   </head>
+		   
+		   <body style="font-family: Inter, sans-serif; background: #E5E5E5;">
+			 <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#F6FAFB">
+			   <tbody>
+				 <tr>
+				   <td valign="top" align="center">
+					 <table class="container" width="600" cellspacing="0" cellpadding="0" border="0">
+					   <tbody>
+						 <tr>
+						   <td style="padding:48px 0 30px 0; text-align: center; font-size: 14px; color: #f4623a;">
+							 Hoteleers
+						   </td>
+						 </tr>
+						 <tr>
+						   <td class="main-content" style="padding: 48px 30px 40px; color: #000000;" bgcolor="#ffffff">
+							 <table width="100%" cellspacing="0" cellpadding="0" border="0">
+							   <tbody>
+								 <tr>
+								   <td style="padding: 0 0 24px 0; font-size: 18px; line-height: 150%; font-weight: bold; color: #000000; letter-spacing: 0.01em;">
+									 Hi, '.$param["name"].'!
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 10px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+									 Your interview scheduled with '.$param['company_name'].' has been cancelled.
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 16px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+									 We recommend you send the interviewer a short email if you haven`t communicated yet
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 16px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+									 If the application moves forward, then all is great!. Otherwise, we have lots of good stuff you may want to check out:
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 8px;">
+									 <a style="display: flex; justify-content: space-between; align-items: center; padding: 28px 24px; border-radius: 4px; background-color: #FFF9F9; text-decoration: none;" href="'.$param["job_board_url"].'">
+									   <span style="width: 90%; font-size: 14px; line-height: 150%; font-weight: bold; color: #f4623a; letter-spacing: 0.01em;">Job List</span>
+									   <span style="width: 10%; float: right;color: #f4623a">
+										 <strong>→</strong>
+									   </span>
+									 </a>
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 60px;">
+									 <a style="display: flex; padding: 28px 24px; border-radius: 4px; background-color: #FFF9F9; text-decoration: none;" href="'.$param["url"].'">
+									   <span style="width: 90%; font-size: 14px; line-height: 150%; font-weight: bold; color: #f4623a; letter-spacing: 0.01em;">Login</span>
+									   <span style="width: 10%; float: right;color: #f4623a">
+										 <strong>→</strong>
+									   </span>
+									 </a>
+								   </td>
+								 </tr>
+								 <tr>
+								   <tr>
+								   <td style="padding: 0 0 16px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+									 You only need one good offer, so let`s find it!
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="padding: 0 0 16px;">
+									 <span style="display: block; width: 117px; border-bottom: 1px solid #8B949F;"></span>
+								   </td>
+								 </tr>
+								 <tr>
+								   <td style="font-size: 14px; line-height: 170%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+									 To your success, <br><strong>Hoteleers</strong>
+								   </td>
+								 </tr>
+							   </tbody>
+							 </table>
+						   </td>
+						 </tr>
+						 <tr>
+						   <td style="padding: 24px 0 48px; font-size: 0px;">
+						   </td>
+						 </tr>
+					   </tbody>
+					 </table>
+				   </td>
+				 </tr>
+			   </tbody>
+			 </table>
+		   </body>
+		   </html>
+		   ';
    		return $html;
    }//end function
 
 
    public function invitation_apply($param){
-		$html 	= '';
-		$br 	= '<br/>';
-		$html 	.= 'Good day '.$param["name"].',';
-		$html 	.= $br.$br;
-		$html 	.= 'You have been invited to apply for the '.$param["job_title"].' position with '.$param["company_name"].'';
-		$html 	.= $br.$br;
-		$html 	.= '<a href="'.$param["url"].'">[Log in]</a> to your Hoteleers account to apply';
-		$html 	.= $br.$br;
-		$html 	.= 'Good luck!';
-		$html 	.= $br.$br;
-		$html 	.= 'To your success,';
-		$html 	.= $br.$br;
-		$html 	.= 'Hoteleers Team';
+		$html = '<!DOCTYPE html>
+		<html xmlns="http://www.w3.org/1999/xhtml">
+		
+		<head>
+		  <title></title>
+		  <!--[if !mso]><!-- -->
+		  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		  <!--<![endif]-->
+		  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		  <style type="text/css">
+			#outlook a {
+			  padding: 0;
+			}
+		
+			.ReadMsgBody {
+			  width: 100%;
+			}
+		
+			.ExternalClass {
+			  width: 100%;
+			}
+		
+			.ExternalClass * {
+			  line-height: 100%;
+			}
+		
+			body {
+			  margin: 0;
+			  padding: 0;
+			  -webkit-text-size-adjust: 100%;
+			  -ms-text-size-adjust: 100%;
+			}
+		
+			table,
+			td {
+			  border-collapse: collapse;
+			  mso-table-lspace: 0pt;
+			  mso-table-rspace: 0pt;
+			}
+		
+		  </style>
+		  <!--[if !mso]><!-->
+		  <style type="text/css">
+			@media only screen and (max-width:480px) {
+			  @-ms-viewport {
+				width: 320px;
+			  }
+			  @viewport {
+				width: 320px;
+			  }
+			}
+		  </style>
+		  <!--<![endif]-->
+		  <!--[if mso]><xml>  <o:OfficeDocumentSettings>    <o:AllowPNG/>    <o:PixelsPerInch>96</o:PixelsPerInch>  </o:OfficeDocumentSettings></xml><![endif]-->
+		  <!--[if lte mso 11]><style type="text/css">  .outlook-group-fix {    width:100% !important;  }</style><![endif]-->
+		  <!--[if !mso]><!-->
+		  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" type="text/css">
+		  <style type="text/css">
+			@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+		  </style>
+		  <!--<![endif]-->
+		  <style type="text/css">
+			@media only screen and (max-width:595px) {
+			  .container {
+				width: 100% !important;
+			  }
+			  .button {
+				display: block !important;
+				width: auto !important;
+			  }
+			}
+		  </style>
+		</head>
+		
+		<body style="font-family: "Inter", sans-serif; background: #E5E5E5;">
+		  <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#F6FAFB">
+			<tbody>
+			  <tr>
+				<td valign="top" align="center">
+				  <table class="container" width="600" cellspacing="0" cellpadding="0" border="0">
+					<tbody>
+					  <tr>
+						<td style="padding:48px 0 30px 0; text-align: center; font-size: 14px; color: #f4623a;">
+						  Hoteleers
+						</td>
+					  </tr>
+					  <tr>
+						<td class="main-content" style="padding: 48px 30px 40px; color: #000000;" bgcolor="#ffffff">
+						  <table width="100%" cellspacing="0" cellpadding="0" border="0">
+							<tbody>
+							  <tr>
+								<td style="padding: 0 0 24px 0; font-size: 18px; line-height: 150%; font-weight: bold; color: #000000; letter-spacing: 0.01em;">
+								  Good day, '.$param["name"].'!
+								</td>
+							  </tr>
+							  <tr>
+								<td style="padding: 0 0 10px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+								  You have been invited to apply for the '.$param["job_title"].' position with '.$param["company_name"].'
+		.                        </td>
+							  </tr>
+							  <tr>
+								<td style="padding: 0 0 16px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+								  Please click the button below to accept the invitation:
+								</td>
+							  </tr>
+							  <tr>
+								<td style="padding: 0 0 24px 0;">
+								  <a class="button" href="'.$param["url"].'" title="Reset Password" style="width: 100%; background: #f4623a; text-decoration: none; display: inline-block; padding: 10px 0; color: #fff; font-size: 14px; line-height: 21px; text-align: center; font-weight: bold; border-radius: 7px;">Accept Invitation</a>
+								</td>
+							  </tr>
+							  <tr>
+							  <tr>
+								<td style="padding: 0 0 16px;">
+								  <span style="display: block; width: 117px; border-bottom: 1px solid #8B949F;"></span>
+								</td>
+							  </tr>
+							  <tr>
+								<td style="font-size: 14px; line-height: 170%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+								  To your success, <br><strong>Hoteleers</strong>
+								</td>
+							  </tr>
+							</tbody>
+						  </table>
+						</td>
+					  </tr>
+					  <tr>
+						<td style="padding: 24px 0 48px; font-size: 0px;">
+						</td>
+					  </tr>
+					</tbody>
+				  </table>
+				</td>
+			  </tr>
+			</tbody>
+		  </table>
+		</body>
+		</html>
+		';
 
 		return $html;
 	}//end

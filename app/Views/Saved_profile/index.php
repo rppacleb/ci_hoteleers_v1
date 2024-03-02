@@ -57,7 +57,7 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
                       <div class="card" style="border: 1px solid rgba(0, 0, 0, 0);">
                         <div class="card-body" style="padding: 0rem 1rem;">
                           <div class="row">
-                            <div class="col-1 text-muted-header text-center" style="min-width:1in;">
+                            <div class="col-2 text-muted-header text-center" style="min-width:1in;">
                             APPLICANT
                             </div><!--./col-->
                             <div class="col-1 text-muted-header sp-labelspacer">

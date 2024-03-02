@@ -385,7 +385,7 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
 
 <div class="row mb-5">
     <div class="col">
-        <h4>Hired Jobs</h4>
+        <h4>Fulfilled Posts</h4>
     </div>
 </div>
 
@@ -560,7 +560,7 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
 
 <div class="row mb-5">
     <div class="col">
-        <h4>Deactivated Jobs</h4>
+        <h4>Unfulfilled Posts</h4>
     </div>
 </div>
 

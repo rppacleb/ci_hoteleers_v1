@@ -181,12 +181,22 @@ $(document).ready(function () {
               '<div class="col align-self-center text-break" style="min-width:1in;">';
             //html += value.job_title;
 
-            html +=
-              '<a style="text-decoration:none;" href="' +
-              view_url +
-              '" class="text-link">' +
-              job_title_placeholder +
-              "</a>";
+            let link = type === "active" ? view_url : "#";
+
+            if (type === "active") {
+              html +=
+                '<a style="text-decoration:none;" href="' +
+                link +
+                '" class="text-link">' +
+                job_title_placeholder +
+                "</a>";
+            } else {
+              html +=
+                '<div style="text-decoration:none;" class="text-link">' +
+                job_title_placeholder +
+                "</div>";
+            }
+
             html += "</div><!--./col-->";
             html += '<div class="col align-self-center text-muted text-left">';
             html += value.job_expiration_date;

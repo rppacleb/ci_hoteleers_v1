@@ -347,17 +347,8 @@ $job_post_id = !isset($_GET['job_post'])? "" : $_GET['job_post'];
 
                     <div class="form-group row">
                         <label class="col-3 col-form-label text-right align-self-center">Mobile Number</label>
-                        <div class="col-2 align-self-center">
-                            <select class="custom-select custom-select-sm" name="header[dial_code]">
-                            <?php
-                              for($key = 0;$key < count($country_dial_code["data"]);$key++){
-
-                                echo '<option value="'.$country_dial_code["data"][$key]['dial_code'].'">'.$country_dial_code["data"][$key]['code'].' '.$country_dial_code["data"][$key]['dial_code'].'</option>';
-                              }//end for
-                            ?>
-                            </select>
-                        </div><!--./col-10-->
-                        <div class="col align-self-center">
+                        <div class="col d-flex align-items-center">
+                            <div name="header[dial_code]"></div>
                             <input class="form-control form-control-sm" type="text" name="header[contact_number]" maxlength="20"/>
                         </div><!--./col-10-->
                     </div><!--./form-group-->

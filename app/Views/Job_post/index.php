@@ -15,7 +15,7 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
 <div class="row mb-5">
 	<div class="col">
 		<h4>Drafts</h4>
-		<span class="text-muted">Unpinned drafts will expire after 7 days</span>
+		<!-- <span class="text-muted">Unpinned drafts will expire after 7 days</span> -->
 	</div><!--./col-->
 	<div class="col">
 		<div class="text-right">
@@ -39,22 +39,22 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
 	</div><!--./col-->
 </div><!--./row-->
 
-<div class="row">
+<div class="row mt-2">
 <!--
 	<div class="col">
 		<h5>Search Result(s)</h5>
 	</div>./col
 -->
-	<div class="col-3 mb-2">
+	<!-- <div class="col-3 mb-2">
 		<div class="input-group input-group-md">
 			<select name="header[sort]" class="custom-select custom-select-md" placeholder="Search" aria-label="Search">
 				<option value = "">Show All</option>
 				<option value = "0">Show Published</option>
 				<option value = "1">Show Unpublished</option>
 				
-			</select><!--./select-->
-		</div><!--./input-group-->
-	</div><!--./col-->
+			</select>
+		</div>
+	</div> -->
 	
 </div><!--./row-->
 

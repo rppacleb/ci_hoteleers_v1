@@ -429,6 +429,7 @@ class Talent_database_vw extends BaseController{
 					$email_param["company_name"] = $email_data["data"][0]['company_name'];
 					$email_param["url"] = base_url('/login');
 					$email->setMessage($this->lib->invitation_apply($email_param));
+					$email->setMailType('html');
 
 					if(!$email->send()){
 						$validator['messages'][] = "Email Failed!";

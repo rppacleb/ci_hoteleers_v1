@@ -416,6 +416,7 @@ class User_vw extends BaseController{
 					$email_param['url'] 					= base_url('login');
 
 					$email->setMessage($this->lib->change_password_template($email_param));
+					$email->setMailType('html');
 
 
 					if(!$email->send()){

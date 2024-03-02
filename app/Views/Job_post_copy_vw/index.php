@@ -175,7 +175,7 @@ $isActive = !isset($_GET['isActive'])? 0 : $_GET['isActive'];
 
                     <div class="form-group row">
                         <label class="col-xl-2 col-lg-2 col-md-2 col-5 col-form-label text-right">Job Description <span class="text-danger fw-bolder">*</span></label>
-                        <div class="col-xl-9 col-lg-9 col-md-9 col" name="placeholder[job_description]">
+                        <div class="col-xl-9 col-lg-9 col-md-9 col jd-textarea" name="placeholder[job_description]">
                             <textarea rows="5" class="form-control form-control-md texteditor" name="header[job_description]" maxlength="100000" /></textarea>
                             
                         </div><!--./col-10-->
@@ -183,7 +183,7 @@ $isActive = !isset($_GET['isActive'])? 0 : $_GET['isActive'];
 
                     <div class="form-group row">
                         <label class="col-xl-2 col-lg-2 col-md-2 col-5 col-form-label text-right">Qualifications <span class="text-danger fw-bolder">*</span></label>
-                        <div class="col-xl-9 col-lg-9 col-md-9 col" name="placeholder[qualification]">
+                        <div class="col-xl-9 col-lg-9 col-md-9 col qualification-textarea" name="placeholder[qualification]">
                             <textarea rows="5" class="form-control form-control-md texteditor" name="header[qualification]" maxlength="100000" /></textarea>
                         </div><!--./col-10-->
                     </div><!--./form-group-->
@@ -254,7 +254,7 @@ $isActive = !isset($_GET['isActive'])? 0 : $_GET['isActive'];
 
 
                     <div class="form-group row">
-                        <label class="col-xl-2 col-lg-2 col-md-2 col-5 col-form-label text-right align-self-start">Job Expiration Date <span class="text-danger fw-bolder">*</span></label>
+                        <label class="col-xl-2 col-lg-2 col-md-2 col-5 col-form-label text-right align-self-start">Job Expiration</label>
                         <!-- <div class="col-xl-9 col-lg-9 col-md-9 col">
                             <div class="custom-control custom-radio">
                               <input type="radio" id="customRadio1" name="placeholder[customRadio]" class="custom-control-input" value="30">
@@ -282,7 +282,7 @@ $isActive = !isset($_GET['isActive'])? 0 : $_GET['isActive'];
                         <label class="col-xl-2 col-lg-2 col-md-2 col-5 col-form-label text-right align-self-center">Start Date<span class="text-danger fw-bolder">*</span></label>
                         <div class="col-xl-2 col-lg-2 col-md-2 col-5 align-self-center pr-0" style="min-width: 10rem; max-width: 10rem">
                             <div class="input-group input-group-md date">
-                                <input class="form-control form-control-md pr-1" placeholder="MM / DD /YYYY" type="text" name="header[job_start_date]"/>
+                                <input class="form-control form-control-md pr-1" type="text" name="header[job_start_date]"/>
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                 </div><!--./input-group-append-->
@@ -290,10 +290,10 @@ $isActive = !isset($_GET['isActive'])? 0 : $_GET['isActive'];
                         </div><!--./col-10-->
                     </div><!--./form-group-->
                     <div class="form-group row">
-                        <label class="col-xl-2 col-lg-2 col-md-2 col-5 col-form-label text-right align-self-center"></label>
+                        <label class="col-xl-2 col-lg-2 col-md-2 col-5 col-form-label text-right align-self-center">End Date<span class="text-danger fw-bolder">*</span></label>
                         <div class="col-xl-2 col-lg-2 col-md-2 col-5 pr-0" style="min-width: 10rem; max-width: 10rem">
                             <div class="input-group input-group-md date">
-                                <input class="form-control form-control-md pr-1" placeholder="MM / DD /YYYY"  type="text" name="header[job_expiration_date]"/>
+                                <input class="form-control form-control-md pr-1" value="3/3/2023" type="text" name="header[job_expiration_date]"/>
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                 </div><!--./input-group-append-->

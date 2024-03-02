@@ -327,7 +327,7 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
                 <a href="<?php echo base_url('job_post/edit/'.$id.'') ?>" class="btn mr-4 btn-pill-sm btn_edit btn_orange">Edit</a>
             <?php } ?>
             <?php if($type == 'add'){?>
-                <button class="btn d-none mr-4 btn-pill-sm btn-pill-sm-outline-light-2x text-primary btn_draft" type="button">Save as Draft</button>
+                <button class="btn mr-4 btn-pill-sm btn-pill-sm-outline-light-2x text-primary btn_draft" type="button">Save as Draft</button>
             <?php } ?>
 
         </div>

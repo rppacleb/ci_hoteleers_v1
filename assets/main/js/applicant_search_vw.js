@@ -1078,7 +1078,7 @@ $(document).ready(function () {
               $("#frm_data_entry input[name=header\\[email_add\\]]").val(
                 data.email_add
               );
-              $("#frm_data_entry select[name=header\\[dial_code\\]]").val(
+              $("#frm_data_entry div[name=header\\[dial_code\\]]").text(
                 data.dial_code
               );
               $("#frm_data_entry input[name=header\\[contact_number\\]]").val(

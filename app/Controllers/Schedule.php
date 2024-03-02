@@ -385,6 +385,8 @@ class Schedule extends BaseController{
 				$email_param['company_name'] 			= $status['data'][0]['company_name'];
 
 				$email->setMessage($this->lib->cancelled_job_interview_template($email_param));
+				$email->setMailType('html');
+
 				if(!$email->send()){
 					$validator['messages'][] = "Email Failed.";
 				}//end if

@@ -1022,6 +1022,15 @@ $(document).ready(function () {
               data.education_text
             );
 
+            let job_expiration_date = formatDate(data.job_expiration_date, "");
+            let job_start_date = formatDate(data.job_start_date, "");
+            setTimeout(() => {
+              $("input[name=header\\[job_start_date\\]]").val(job_start_date);
+              $("input[name=header\\[job_expiration_date\\]]").val(
+                job_expiration_date
+              );
+            }, 500);
+
             if (param.mode !== "copy") {
               $(
                 "#frm_data_entry input[name=placeholder\\[customRadio\\]][value=" +
@@ -1053,12 +1062,18 @@ $(document).ready(function () {
             );
 
             if (param.mode == "view") {
-              $(
-                "#frm_data_entry div[name=placeholder\\[job_description\\]]"
-              ).html(data.job_description);
-              $(
-                "#frm_data_entry div[name=placeholder\\[qualification\\]]"
-              ).html(data.qualification);
+              $("#frm_data_entry div[name=placeholder\\[job_description\\]]")
+                .html(data.job_description)
+                .css({
+                  "font-family": "'Be Vietnam Pro', sans-serif",
+                  color: "#212529",
+                });
+              $("#frm_data_entry div[name=placeholder\\[qualification\\]]")
+                .html(data.qualification)
+                .css({
+                  "font-family": "'Be Vietnam Pro', sans-serif",
+                  color: "#212529 !important",
+                });
             } else {
               $(
                 "#frm_data_entry textarea[name=header\\[job_description\\]]"
@@ -1096,9 +1111,6 @@ $(document).ready(function () {
             } //end if
 
             if (param.mode !== "copy") {
-              $(
-                "#frm_data_entry input[name=header\\[job_expiration_date\\]]"
-              ).val(data.job_expiration_date);
               $("#frm_data_entry input[name=header\\[vacancies\\]]").val(
                 data.vacancies
               );
@@ -1126,6 +1138,7 @@ $(document).ready(function () {
             if (param.mode == "view") {
               $(".texteditor").jqte();
               $(".jqte").css({
+                "font-family": `'Be Vietnam Pro', sans-serif`,
                 margin: "0",
                 border: "none",
               });

@@ -688,6 +688,7 @@ class Active_jobs_applicant_model extends Model {
         } else {
             $filter_str1 = "";
         };
+
         //end job title filter for leads
 
         //job description filter for leads
@@ -702,8 +703,12 @@ class Active_jobs_applicant_model extends Model {
             $filter_str2 .= "t8.designation regexp '(^|[[:space:]])".$value."([[:space:]]|$)' OR ";
             $filter_str2 .= "t8.short_description regexp '(^|[[:space:]])".$value."([[:space:]]|$)' OR ";
         }//end foreach
-        $filter_str2 = substr($filter_str2, 0,strlen($filter_str2) - 3);
-        $filter_str2 .= ")";
+        if (strlen($filter_str2) > 4) {
+            $filter_str2 = substr($filter_str2, 0,strlen($filter_str2) - 3);
+            $filter_str2 .= ")";
+        } else {
+            $filter_str2 = "";
+        };
         //end job description filter for leads
 
 
@@ -718,8 +723,12 @@ class Active_jobs_applicant_model extends Model {
             $filter_str3 .= "t8.designation regexp '(^|[[:space:]])".$value."([[:space:]]|$)' OR ";
             $filter_str3 .= "t8.short_description regexp '(^|[[:space:]])".$value."([[:space:]]|$)' OR ";
         }//end foreach
-        $filter_str3 = substr($filter_str3, 0,strlen($filter_str3) - 3);
-        $filter_str3 .= ")";
+        if (strlen($filter_str3) > 4) {
+            $filter_str3 = substr($filter_str3, 0,strlen($filter_str3) - 3);
+            $filter_str3 .= ")";
+        } else {
+            $filter_str3 = "";
+        };
         //end qualifications filter for leads
 
 
@@ -828,14 +837,14 @@ class Active_jobs_applicant_model extends Model {
                         AND t1.user_type = 'applicant'
                         AND (t1.name IS NOT NULL AND t1.name <> '')
                         AND (
-                                ".($filter_str1 != '' ? $filter_str1." OR" : "")."
-                                 ".($filter_str2 != '' ? $filter_str2." OR" : "")." ".$filter_str3."
+                                ".($filter_str1 != '' ? $filter_str1 : "")."
+                                 ".($filter_str2 != '' ? "OR ".$filter_str2 : "")." 
+                                 ".($filter_str3 != '' ? "OR ".$filter_str3 : "")." 
                         )
                        
 
                        
                        ";
-
 
         /*Leads
         
@@ -869,6 +878,9 @@ class Active_jobs_applicant_model extends Model {
         
         // echo $qrystr;
         $query                      = $this->db->query($qrystr);
+        // $last_query = $this->db->getLastQuery();
+        // echo $last_query;
+        // return;
         $response['num_rows']       = $query->getNumRows();
         $response['qrystr']       = $filter_str2;
         if($query->getNumRows() > 0){

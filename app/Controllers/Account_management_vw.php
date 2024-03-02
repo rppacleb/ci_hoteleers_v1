@@ -311,6 +311,7 @@ class Account_management_vw extends BaseController{
 					
 
 					$email->setMessage($this->lib->notification_employer_template($email_param));
+					$email->setMailType('html');
 
 					if(!$email->send()){
 						throw new \Exception("Email Failed.");
