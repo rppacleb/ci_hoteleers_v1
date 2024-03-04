@@ -34,9 +34,9 @@ class Database extends Config
     public $default = [
         'DSN'      => '',
         'hostname' => 'localhost',
-        'username' => 'root',
-        'password' => '',
-        'database' => 'stagingdbhoteleers',
+        'username' => 'stagingdbhoteleers',
+        'password' => '0SLn2cLSmyvekTsQ',
+        'database' => 'dbhoteleers',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
