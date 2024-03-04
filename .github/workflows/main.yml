@@ -4,7 +4,7 @@ name: Deploy
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [main]
+    branches: [hoteleers-release-staging]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -23,7 +23,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd /var/www/ci_hoteleers_v1_prod/
-            git pull origin main
+            cd /var/www/ci_hoteleers_v1/
+            git pull origin hoteleers-release-staging
             git status
             npm install --only=prod
