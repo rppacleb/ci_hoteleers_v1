@@ -108,9 +108,7 @@
                             </a>
 
                             <div id="dropdown_notification" class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="dropdownMenuButton" style="min-width:3in;">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptatibus cumque iste minus soluta reprehenderit labore in! Similique rem fugit fugiat, animi suscipit sequi repellat dolores deleniti expedita nulla. Unde.
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptatibus cumque iste minus soluta reprehenderit labore in! Similique rem fugit fugiat, animi suscipit sequi repellat dolores deleniti expedita nulla. Unde.
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit voluptatibus cumque iste minus soluta reprehenderit labore in! Similique rem fugit fugiat, animi suscipit sequi repellat dolores deleniti expedita nulla. Unde.
+                                
                             </div>
 
                         </li>
