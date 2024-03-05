@@ -46,9 +46,9 @@ $(document).ready(function () {
           '" target="_blank" class="dropdown-item notif-item" data-toggle="modal" data-target="#notification_modal" data-id="' +
           data.id +
           '" data-message="' +
-          btoa(data.message) +
+          btoa(unescape(encodeURIComponent(data.message))) +
           '" data-employer="' +
-          btoa(data.employer) +
+          btoa(unescape(encodeURIComponent(data.employer))) +
           '" data-type="' +
           data.record_type +
           '" data-status="' +
@@ -119,9 +119,9 @@ $(document).ready(function () {
             '" target="_blank" class="dropdown-item notif-item" data-toggle="modal" data-target="#notification_modal" data-id="' +
             data.id +
             '" data-message="' +
-            btoa(data.message) +
+            btoa(unescape(encodeURIComponent(data.message))) +
             '" data-employer="' +
-            btoa(data.employer) +
+            btoa(unescape(encodeURIComponent(data.employer))) +
             '" data-type="' +
             data.record_type +
             '" data-status="' +
