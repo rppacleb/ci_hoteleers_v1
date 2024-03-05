@@ -139,6 +139,8 @@ $(document).ready(function () {
         html += '<div class="dropdown-divider"></div>';
       } //end for
 
+      console.log(html);
+
       $("#dropdown_notification").html(html);
     });
   }, 10000);
