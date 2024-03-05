@@ -14991,11 +14991,11 @@ input[type="color"]:focus,
   cursor: pointer;
 }
 
-/* #dropdown_notification {
+#dropdown_notification {
   height: 300px !important;
   max-height: 300px !important;
   overflow: auto;
-} */
+}
 
 .jd-textarea > p {
   font-family: 'Be Vietnam Pro', sans-serif !important;
