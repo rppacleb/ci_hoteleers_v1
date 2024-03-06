@@ -58,7 +58,8 @@
 			
 			var firstName = '<?php echo session()->get('first_name'); ?>';
 			var userid = '<?php echo session()->get('userid'); ?>';
-			console.log(firstName, userid);
+			var usertype = '<?php echo session()->get('usertype'); ?>';
+			console.log(firstName, userid, usertype);
 			
 			if (userid !== '') {
 				if (firstName === '') {
