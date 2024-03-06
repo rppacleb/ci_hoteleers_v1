@@ -62,11 +62,11 @@
 			console.log(firstName, userid, usertype);
 			
 			if (userid !== '') {
-				if (firstName === '') {
+				if (firstName === '' && usertype === 'applicant') {
 					if (env === 'dev' && window.location.pathname !== '/__projects/ci_hoteleers_v1/home') {
-						// window.location.href = '/__projects/ci_hoteleers_v1/home'
+						window.location.href = '/__projects/ci_hoteleers_v1/home'
 					} else if (env !== 'dev' && window.location.pathname !== '/home') {
-						// window.location.href = '/home'
+						window.location.href = '/home'
 					}
 				}
 			}
