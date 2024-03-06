@@ -75,45 +75,33 @@ class Forgot_pass extends BaseController{
 				//$validator['messages'] = "Success!";
 
 				//check user existence
+				$email_name = "";
 				$res 		= $this->model->check_existence($data);
 				if(!$res['success']){
 					throw new \Exception($res['message']);
-				}//end if
-				//end check user existence
+				}else{
+					$email_name = $res["data"]->name;
+				}
 
-				
-
-
-
-				//update password
-				$data['record_header'] = array(
-					"id" 		=> $res['data']->id,
-					"password" 	=> $this->lib->random_password()
-				);
-
+				$email_param = array();
+				$email_param['name'] = $email_name;
+				$email_param['url_reset'] = base_url('new_pass?id='.$res['data']->id.'');
 
 				//send email
 				$email = \Config\Services::email();
 				$email->setFrom($this->lib->system_email, $this->lib->system_email_name);
 				$email->setTo($res['data']->username);
 				$email->setSubject('Forgot Password');
-				$email->setMessage("New Password : ".$data['record_header']["password"]."");
+				$email->setMessage($this->lib->forgot_password_template($email_param));
+				$email->setMailType('html');
+
 				if(!$email->send()){
 					throw new \Exception("Email Failed!");
-				}//end if
-
-				$res_update 		= $this->model->update_record($data);				
-				if(!$res_update['success']){
-					throw new \Exception($res_update['message']);
-				}//end if
-				//end update password
+				}
 
 				
-				//end send email
-
-				
-			    $validator['success'] 		= true;
-				$validator['messages'][] 	= array("success" => "New password has been sent to ".$res['data']->username."!");
+			  $validator['success'] 		= true;
+				$validator['messages'][] 	= array("success" => "Reset password instruction has been sent to ".$res['data']->username."!");
 				
 				
 			}catch (\Exception $e) {
