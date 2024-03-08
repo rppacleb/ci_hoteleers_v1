@@ -378,14 +378,14 @@ class Schedule_vw extends BaseController{
             ]
         ];
 
-        if($param['header']['interview_type'] == 'face_to_face'){
-			$rules['header.location'] = array(
-				"label" => "location", 
-	        	"rules" => "trim|required",
-	        	'errors' => array(
-	                'required' => 'Please input location.',
-	            )
-			);
+			if($param['header']['interview_type'] == 'face_to_face'){
+					$rules['header.location'] = array(
+						"label" => "location", 
+						"rules" => "trim|required",
+						'errors' => array(
+									'required' => 'Please input location.',
+							)
+					);
         }else if($param['header']['interview_type'] == 'virtual'){
         	$rules['header.virtual_interview_link'] = array(
 				"label" => "virtual interviewer link", 

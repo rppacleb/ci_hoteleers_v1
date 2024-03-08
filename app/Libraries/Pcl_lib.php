@@ -1590,7 +1590,7 @@ class Pcl_lib
 		  </style>
 		</head>
 		
-		<body style="font-family: "Inter", sans-serif; background: #E5E5E5;">
+		<body style="font-family: Inter, sans-serif; background: #E5E5E5;">
 		  <table width="100%" cellspacing="0" cellpadding="0" border="0" align="center" bgcolor="#F6FAFB">
 			<tbody>
 			  <tr>
@@ -1618,12 +1618,18 @@ class Pcl_lib
 							  </tr>
 							  <tr>
 								<td style="padding: 0 0 16px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
-								  Please click the button below to accept the invitation:
+								  Login to your Hoteleers account to apply :
 								</td>
 							  </tr>
 							  <tr>
 								<td style="padding: 0 0 24px 0;">
-								  <a class="button" href="'.$param["url"].'" title="Reset Password" style="width: 100%; background: #f4623a; text-decoration: none; display: inline-block; padding: 10px 0; color: #fff; font-size: 14px; line-height: 21px; text-align: center; font-weight: bold; border-radius: 7px;">Accept Invitation</a>
+								  <a class="button" href="'.$param["url"].'" title="Reset Password" style="width: 100%; background: #f4623a; text-decoration: none; display: inline-block; padding: 10px 0; color: #fff; font-size: 14px; line-height: 21px; text-align: center; font-weight: bold; border-radius: 7px;">Login now</a>
+								</td>
+							  </tr>
+                
+							  <tr>
+								<td style="padding: 0 0 16px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
+								  Good luck!
 								</td>
 							  </tr>
 							  <tr>
