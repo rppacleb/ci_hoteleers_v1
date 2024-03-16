@@ -1,15 +1,15 @@
 <?php require_once('app/Views/libraries/header.php'); ?>
 
-
 <link rel="stylesheet" href="<?php echo base_url('assets/admin_dashboard/vendor/datatables/dataTables.bootstrap4.min.css') ?>">
 <!-- template -->
 <link rel="stylesheet" href="<?php echo base_url('../../assets/main/css/styles.css') ?>">
 
 
+
 <?php require_once('app/Views/libraries/top-bar.php'); ?>
 <div class="row mb-5">
 	<div class="col-xl-6 col-lg-6">
-		<h4>Banner Setup</h4>
+		<h4>App Settings</h4>
 	</div><!--./col-->
 </div>
 <!--./row-->
@@ -17,7 +17,7 @@
 
 
 
-<div class="row">
+<div class="row d-none">
 	<div class="col">
 		<small class="text-muted"><b>BANNER A</b></small>
 	</div><!--./col-->
@@ -26,7 +26,7 @@
 	</div><!--./col-->
 </div><!--./row-->
 
-<div class="row">
+<div class="row d-none">
 	<div class="col">
 		<img id="header[banner_a]" style="width:100%;height:400px;" class="img-fluid img-thumbnail rounded" src="files/images/default/banner_image.png" />
 
@@ -39,7 +39,7 @@
 	</div><!--./col-->
 </div><!--./row-->
 <form id="frm_data_entry">
-	<div class="row">
+	<div class="row d-none">
 			<div class="col">
 				<div class="form-group row d-none">
                     <label class="col-3 col-form-label">Id</label>
@@ -136,8 +136,7 @@
 
 			</div><!--./col-->
 	</div><!--./row-->
-	<hr/>
-	<div class="row">
+	<div class="row d-none">
 		<div class="col">
 			<div class="row">
 				<div class="col">
@@ -251,41 +250,41 @@
 		</div><!--./col-->
 	</div><!--./row-->
 
-	<div class="row mt-5 mb-5 d-none">
+	<div class="row mt-5 mb-5">
 		<div class="col-xl-6 col-lg-6 col-auto">
 			<h4>About Us</h4>
 		</div><!--./col-->
 	</div>
 
 	
-	<div class="row d-none">
+	<div class="row">
 		<div class="col-xl-12 col-lg-12 col-auto">
 			<textarea class="form-control form-control-md jp-textarea texteditor" name="header[about_us_desc]" maxlength="15000"></textarea>
 		</div>
 	</div><!--./form-group-->
 
 
-	<div class="row mt-5 mb-5 d-none">
+	<div class="row mt-5 mb-5">
 		<div class="col-xl-6 col-lg-6 col-auto">
 			<h4>Terms of Use</h4>
 		</div><!--./col-->
 	</div>
 
 	
-	<div class="row d-none">
+	<div class="row">
 		<div class="col-xl-12 col-lg-12 col-auto">
 			<textarea class="form-control form-control-md jp-textarea texteditor" name="header[terms_of_use]" maxlength="15000"></textarea>
 		</div>
 	</div><!--./form-group-->
 
-	<div class="row mt-5 mb-5 d-none">
+	<div class="row mt-5 mb-5">
 		<div class="col-xl-6 col-lg-6 col-auto">
 			<h4>Privacy Policy</h4>
 		</div><!--./col-->
 	</div>
 
 	
-	<div class="row d-none">
+	<div class="row">
 		<div class="col-xl-12 col-lg-12 col-auto">
 			<textarea class="form-control form-control-md jp-textarea texteditor" name="header[privacy_policy]" maxlength="15000"></textarea>
 		</div>
@@ -293,13 +292,13 @@
 	
 
 	
-	<div class="row mt-5 mb-5 d-none">
+	<div class="row mt-5 mb-5">
 		<div class="col-xl-6 col-lg-6">
 			<h4>Contact Us</h4>
 		</div><!--./col-->
 	</div>
 
-	<div class="row d-none">
+	<div class="row">
 		<div class="col">
 			<div class="form-group">
 				<label class="col-form-label text-link">Content 1</label>
@@ -336,11 +335,11 @@
 			<div class="outside_button text-right">
 
 				<?php if ($type == 'edit') { ?>
-					<a href="<?php echo base_url('homepage_banner') ?>" class="text-danger mr-4">Cancel</a>
+					<a href="<?php echo base_url('app_settings') ?>" class="text-danger mr-4">Cancel</a>
 				<?php } ?>
 
 				<?php if ($type != 'edit') { ?>
-					<a href="<?php echo base_url('homepage_banner?edit=T') ?>" class="btn-pill-sm-no-brdr btn-primary text-white btn-sm">Edit</a>
+					<a href="<?php echo base_url('app_settings?edit=T') ?>" class="btn-pill-sm-no-brdr btn-primary text-white btn-sm">Edit</a>
 				<?php } ?>
 				<button class="btn-pill-sm-no-brdr btn-primary text-white btn-sm btn_submit">Save</button>
 			</div>
@@ -383,6 +382,6 @@
 <script src="<?php echo base_url('assets/autocomplete/js/jquery.autocomplete.js') ?>"></script>
 <!--Autocomplete-->
 
-<script src="<?php echo base_url('assets/main/js/homepage_banner.js?v='). date('Ymdi') ?>"></script>
+<script src="<?php echo base_url('assets/main/js/app_settings.js?v='). date('Ymdi') ?>"></script>
 
 

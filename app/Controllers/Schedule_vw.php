@@ -344,8 +344,6 @@ class Schedule_vw extends BaseController{
     	$validator 			= [];
     	$data 				= array();
     	$param 				= $this->request->getVar();
-
-    	
     	
     	$rules = [
             "header.interview_date" => [
@@ -397,13 +395,8 @@ class Schedule_vw extends BaseController{
         }//end if
 
         if ($this->validate($rules)){
+			
 			try{
-
-				
-
-
-				
-				
 				$data['response'] 				= array();
 				$data['table_name'] 			= 'job_post_for_interview';
 				$data['record_header'] 			= $param['header'];
@@ -434,7 +427,7 @@ class Schedule_vw extends BaseController{
 		    		throw new \Exception("You do not have permission to perform this action.");
 		    	}//end if
 				//end check access
-
+				
 		    	
 
 				if($data['record_header']['interview_start_time'] !== "" && $data['record_header']['interview_start_time'] !== ""){
@@ -442,7 +435,6 @@ class Schedule_vw extends BaseController{
 						throw new \Exception("Start time must not beyond end or equal to end time.");
 					}//end if
 				}//end if
-
 
 				$data["dup_table"] 	= "job_post_move_to";
 				$data["dup_filter"] = "t0.id='".$data['record_header']['job_post_id']."' 
@@ -466,7 +458,7 @@ class Schedule_vw extends BaseController{
 				
 				
 				$data['record_header']['created_by'] = $this->session->get('userid');
-
+				
 				$data['dup_table'] 		= 'job_post_for_interview';
 				$data['dup_filter'] 	= "t0.id = ".$data['record_header']['id']." AND t0.status = 'pending'";
 				$status 				= $this->model->check_status($data);
@@ -574,7 +566,7 @@ class Schedule_vw extends BaseController{
 					//--------------------------------------------------------------------------------------------------
 					//end update record
 				}else{
-
+					
 					//check duplicate
 					/*
 					$data["dup_table"] 	= "job_post_for_interview";
@@ -603,6 +595,7 @@ class Schedule_vw extends BaseController{
 					//insert notification
 					//for update
 					//--------------------------------------------------------------------------------------------------
+					
 					$message 					= "";
 					$notes_to_interviewee 		= "";
 					if($data['record_header']['notes_to_interviewee'] !== ""){
@@ -628,7 +621,7 @@ class Schedule_vw extends BaseController{
 											Link : ".$data['record_header']['virtual_interview_link']."\n
 											Please check your email for more details\n";
 					}//end if
-
+					
 					//--------------------------------get data for email--------------------------------
 					$email_param = array();
 					$email_param['url'] 					= base_url('login/');
@@ -724,6 +717,8 @@ class Schedule_vw extends BaseController{
 						"created_by" => $this->session->get('userid')
 					);
 
+					
+
 					/*$data['for_update'][] = "INSERT INTO onotification(
 													record_type,
 													record_id,
@@ -743,7 +738,6 @@ class Schedule_vw extends BaseController{
 					//end for update
 					//end insert notification
 
-
 					//add record
 					//--------------------------------------------------------------------------------------------------
 					$res 		= $this->model->add_record($data);		
@@ -751,6 +745,7 @@ class Schedule_vw extends BaseController{
 						throw new \Exception($res['message']);
 					}//end if
 					//end add record
+
 
 					
 
@@ -768,6 +763,7 @@ class Schedule_vw extends BaseController{
 					//End Audit Trail
 					//--------------------------------------------------------------------------------------------------
 					//end add record
+					
 
 					//send email
 					$message 					= "";
@@ -790,18 +786,15 @@ class Schedule_vw extends BaseController{
 
 					$message .= $notes_to_interviewee;
 					
+					
 					$email = \Config\Services::email();
 					$email->setFrom($this->lib->system_email, $this->lib->system_email_name);
 					$email->setTo($param['placeholder']['applicant_email']);
 					//$email->setSubject($param['placeholder']['company_name']);
 					$email->setSubject($this->lib->job_interview_subject);
-
-					
-
-
-
 					$email->setMessage($this->lib->job_interview_template($email_param));
 					$email->setMailType('html');
+					
 					if(!$email->send()){
 						$validator['messages'][] = "Email Failed!";
 					}//end if

@@ -285,7 +285,7 @@ class Pcl_lib
 								 </tr>
 								 <tr>
 								   <td style="padding: 0 0 10px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
-									 You have an interview schedule with '.$param["job_title"].'.
+									 You have an interview schedule with '.$param["applying_for"].'.
 								</td>
 								 </tr>
 								 <tr>
@@ -531,7 +531,7 @@ class Pcl_lib
 							</tr>
 							<tr>
 								<td style="padding: 0 0 10px 0; font-size: 14px; line-height: 150%; font-weight: 400; color: #000000; letter-spacing: 0.01em;">
-								You have an interview scheduled with '.$param["job_title"].' has been changed with new details.
+								You have an interview scheduled with '.$param["applying_for"].' has been changed with new details.
 							</td>
 							</tr>
 							<tr>

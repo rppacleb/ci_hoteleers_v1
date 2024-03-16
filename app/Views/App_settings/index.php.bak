@@ -1,0 +1,191 @@
+<?php require_once('app/Views/libraries/header.php'); ?>
+
+
+<link rel="stylesheet" href="<?php echo base_url('assets/admin_dashboard/vendor/datatables/dataTables.bootstrap4.min.css') ?>">
+<!-- template -->
+<link rel="stylesheet" href="<?php echo base_url('../../assets/main/css/styles.css') ?>">
+
+
+<?php require_once('app/Views/libraries/top-bar.php'); ?>
+<div class="row">
+	<div class="col">
+		<h4 class="mb-5">Banner Setup</h4>
+	</div><!--./col-->
+	
+
+	<div class="col">
+        <div class="outside_button text-right">
+            <a href="<?php echo base_url('homepage_banner') ?>" class="text-primary mr-4">Cancel</a> 
+            <a href="<?php echo base_url('homepage_banner?edit=T') ?>" class="btn mr-4 btn-pill-sm btn-pill-sm-outline-light text-primary btn_edit">Edit</a>
+
+            <button class="btn-pill-sm-no-brdr btn-primary text-white btn-sm btn_submit">Submit</button>
+        </div><!--./text-right-->
+    </div>
+
+
+	
+</div><!--./row-->
+
+
+
+
+<div class="row">
+	<div class="col">
+		<small class="text-muted"><b>BANNER A</b></small>
+	</div><!--./col-->
+	<div class="col">
+		<small class="text-muted"><b>BANNER B</b></small>
+	</div><!--./col-->
+</div><!--./row-->
+
+<div class="row">
+	<div class="col">
+		<img id="header[banner_a]" style="width:100%;height:200px;" class="img-fluid img-thumbnail rounded" src="https://dummyimage.com/1650x780/dee2e6/6c757d.jpg" />
+
+		<p class="text-muted"><small>Max size 1650x768 JPG and PNG format only</small></p>
+
+	</div><!--./col-->
+	<div class="col">
+		<img id="header[banner_b]" style="width:100%;height:200px;" class="img-fluid img-thumbnail rounded" src="https://dummyimage.com/1650x780/dee2e6/6c757d.jpg" />
+		<p class="text-muted"><small>Max size 1650x768 JPG and PNG format only</small></p>
+	</div><!--./col-->
+</div><!--./row-->
+
+<br/>
+<form id="frm_data_entry">
+	<div class="row">
+			<div class="col">
+				<div class="form-group row d-none">
+                    <label class="col-3 col-form-label">Id</label>
+                    <div class="col">
+                      <input aria-type="<?php echo $type?>" readonly class="form-control form-control-sm mb-2" type="text" name="header[id]" value="<?php echo !isset($banner_id)? 0 :  $banner_id;?>" />
+                    </div>
+                </div>
+
+				<div class="form-group row to_hide">
+		             
+		              <div class="col">
+		                <input type='file' name='header[userfile_a][]' size='20' />
+		                
+		                    <button name='btn_upload_a' type='button' class='btn btn-primary btn-sm'>Upload</button>
+		                    <button name='btn_remove_a' type='button' class='btn btn-danger btn-sm'>Remove</button>
+		                    
+		              </div>
+		        </div><!--./row-->
+
+		        <div class="form-group row d-none">
+		            <label class="col-3 col-form-label">Doc Content</label>
+		            <div class="col">
+		                <input readonly class="form-control form-control-sm" type="text" name="file[doc_content_a]"/>
+		            </div><!--./col-10-->
+		        </div><!--./form-group-->
+
+		        <div class="form-group row d-none">
+		            <label class="col-3 col-form-label">Doc Image</label>
+		            <div class="col">
+		                <input readonly class="form-control form-control-sm" type="text" name="header[doc_image_a]"/>
+		            </div><!--./col-10-->
+		        </div><!--./form-group-->
+
+		        <div class="form-group row d-none">
+		            <label class="col-3 col-form-label">Old Image</label>
+		            <div class="col">
+		                <input readonly class="form-control form-control-sm" type="text" name="file[old_doc_image_a]"/>
+		            </div><!--./col-10-->
+		        </div><!--./form-group-->
+
+		        <div class="form-group">
+		            <label class="col-form-label fw-bolder text-link">Title</label>
+		            <input class="form-control form-control-sm" type="text" name="header[title_a]"/>
+		        </div><!--./form-group-->	
+
+		        <div class="form-group">
+		            <label class="col-form-label fw-bolder text-link">Description</label>
+		            <textarea rows="5" class="form-control form-control-sm" name="header[description_a]"></textarea>
+		        </div><!--./form-group-->
+
+			</div><!--./col-->
+
+			<div class="col">
+				<div class="form-group row to_hide">
+		             
+		              <div class="col">
+		                <input type='file' name='header[userfile_b][]' size='20' />
+		                
+		                    <button name='btn_upload_b' type='button' class='btn btn-primary btn-sm'>Upload</button>
+		                    <button name='btn_remove_b' type='button' class='btn btn-danger btn-sm'>Remove</button>
+		                    
+		              </div>
+		        </div><!--./row-->
+
+		        <div class="form-group row d-none">
+		            <label class="col-3 col-form-label">Doc Content</label>
+		            <div class="col">
+		                <input readonly class="form-control form-control-sm" type="text" name="file[doc_content_b]"/>
+		            </div><!--./col-10-->
+		        </div><!--./form-group-->
+
+		        <div class="form-group row d-none">
+		            <label class="col-3 col-form-label">Doc Image</label>
+		            <div class="col">
+		                <input readonly class="form-control form-control-sm" type="text" name="header[doc_image_b]"/>
+		            </div><!--./col-10-->
+		        </div><!--./form-group-->
+
+		        <div class="form-group row d-none">
+		            <label class="col-3 col-form-label">Old Image</label>
+		            <div class="col">
+		                <input readonly class="form-control form-control-sm" type="text" name="file[old_doc_image_b]"/>
+		            </div><!--./col-10-->
+		        </div><!--./form-group-->
+
+		        <div class="form-group">
+		            <label class="col-form-label fw-bolder text-link">Title</label>
+		            <input class="form-control form-control-sm" type="text" name="header[title_b]"/>
+		        </div><!--./form-group-->
+		        <div class="form-group">
+		            <label class="col-form-label fw-bolder text-link">Description</label>
+		            <textarea rows="5" class="form-control form-control-sm" name="header[description_b]"></textarea>
+		        </div><!--./form-group-->
+
+			</div><!--./col-->
+	</div><!--./row-->
+	
+	
+</form><!--./form-->
+
+<!--CONTENT END TAG-->			
+		</div><!--./col content-->
+	</div><!--./row-->
+</div><!--./container-fluid-->
+<!--CONTENT END TAG-->	
+
+<?php require_once('app/Views/libraries/copyright.php'); ?>
+  
+
+<!-- Footer Menu -->
+<?php require_once('app/Views/libraries/footer-menu.php'); ?>
+<?php require_once('app/Views/libraries/footer.php'); ?>
+<!-- Footer Menu -->
+
+
+
+<!-- datatables -->
+<script src="<?php echo base_url('assets/admin_dashboard/vendor/datatables/jquery.dataTables.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/admin_dashboard/vendor/datatables/dataTables.bootstrap4.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/admin_dashboard/vendor/datatables/datatables.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/admin_dashboard/vendor/datatables/dataTables.buttons.min.js') ?>"></script>
+<!-- datatables -->
+
+
+
+
+
+<!--Autocomplete-->
+<script src="<?php echo base_url('assets/autocomplete/js/jquery.mockjax.js') ?>"></script>
+<script src="<?php echo base_url('assets/autocomplete/js/jquery.autocomplete.js') ?>"></script>
+<!--Autocomplete-->
+
+<script src="<?php echo base_url('assets/main/js/homepage_banner.js?v='). date('Ymdi') ?>"></script>
+
+

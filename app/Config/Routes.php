@@ -365,6 +365,7 @@ $routes->add('job_post/load_data/(:any)', 'Job_post_vw::load_data/$1');
 $routes->add('job_post/do_upload', 'Job_post_vw::do_upload');
 $routes->add('job_post/do_upload_multiple', 'Job_post_vw::do_upload_multiple');
 $routes->add('job_post/submit_data', 'Job_post_vw::submit_data');
+$routes->add('job_post/submit_draft_data', 'Job_post_vw::submit_draft_data');
 $routes->add('job_post/delete_data/', 'Job_post::delete_data/');
 $routes->add('job_post/check_account_status/', 'Job_post_vw::check_account_status');
 

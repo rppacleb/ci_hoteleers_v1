@@ -539,7 +539,7 @@ $(document).ready(function () {
     var type_text = "";
 
     var url = homeurl;
-    url = homeurl + "/submit_data";
+    url = homeurl + "/submit_draft_data";
     var url_view = homeurl + "/view";
 
     var frm_id = "";
@@ -551,13 +551,12 @@ $(document).ready(function () {
     data.header.username = $(this).attr("aria-username");
 
     btn_text = "Save as Draft";
-
     $("input[name=header\\[inactive\\]]").val(1);
     if (confirm("Are you sure you want to save this record?")) {
       $.ajax({
         url: url,
         type: "POST",
-        data: $("#frm_data_entry").serialize(),
+        data: $("#frm_data_entry").serialize() + "&isActive=" + 0,
         dataType: "JSON",
         beforeSend: function () {
           $(".outside_button *").css("pointer-events", "none");
@@ -567,6 +566,8 @@ $(document).ready(function () {
       })
         .done(function (data) {
           //alert(Object.keys(data.messages).length);
+          // console.log(data);
+          // return;
           if (data.success === true) {
             var msg_html = "";
             var arr = [];
