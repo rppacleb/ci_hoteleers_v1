@@ -644,6 +644,240 @@ class Job_post_vw extends BaseController{
 	
     }//end function
 
+	
+    //TODO
+    public function submit_draft_data(){
+    	$validator 			= [];
+    	$data 				= array();
+    	$param 				= $this->request->getVar();
+    	
+    	$rules = [
+            "header.job_title" => [
+                "label" => "job title", 
+                "rules" => "trim|required|max_length[200]",
+                'errors' => [
+	                'required' => 'Please input job title.',
+	            ]
+            ]
+        ];
+
+        if(trim($param['header']['salary_to']) !== "" || trim($param['header']['salary_from']) !== ""){
+        	$rules['header.salary_from'] = array(
+				"label" => "salary from", 
+                "rules" => "numeric"
+			);
+
+			$rules['header.salary_to'] = array(
+				"label" => "salary to", 
+                "rules" => "numeric|greater_than_equal_to[".$param['header']['salary_from']."]",
+                "errors" => [
+                	'greater_than_equal_to' => 'Invalid salary range!'
+                ]
+			);
+        }//end if
+
+		
+        if ($this->validate($rules)){
+			try{
+				define('DS', DIRECTORY_SEPARATOR);
+				$data['response'] 				= array();
+				if((int)$param['isActive']){
+					$data['table_name'] 			= 'ojob_post';
+				}else{
+					$data['table_name'] 			= 'ojob_post_template';
+				}//end if
+				
+				$data['record_header'] 			= $param['header'];
+				$data['record_lines'] 			= array();
+				$data['audit'] 					= array();
+				$data['audit_lines'] 			= array();
+
+				if(isset($param['placeholder']['customRadio'])){
+					$data['record_header']['job_expiration_days'] = $param['placeholder']['customRadio'];
+				}//end if
+				//---------------------------------check access---------------------------------
+				$type = "";
+				if($data['record_header']["id"] > 0){
+					$type = "edit";
+				}else{
+					$type = "add";
+				}//end if
+				$permission_param 	= array(
+		    		"permission_user_type" 		=> $this->session->get('usertype'),
+					"permission_record_type" 	=> $this->record_type
+		    	);
+				$this->permission 		= $this->model->get_permission($permission_param);
+				if($this->permission["data"] !== null){
+		    		$access = json_decode($this->permission["data"][0]["permission"]);
+					if(!in_array($type ,$access )){
+						throw new \Exception("You do not have permission to perform this action.");
+					}//end if
+		    	}else{
+		    		throw new \Exception("You do not have permission to perform this action.");
+		    	}//end if
+				//---------------------------------check access---------------------------------
+				
+				//---------------------------------check if job expiration date exceeded contract date---------------------------------
+				//get employer default
+	  			$data_filter['employer'] = $this->session->get('employer');
+	  			$res 	= $this->model->get_employer_defaults($data_filter);
+	  			if($res['num_rows'] > 0){
+	  				if(strtotime($data['record_header']['job_expiration_date']) > strtotime($res['data'][0]["end_date"])){
+						throw new \Exception("Job expiration date(".$data['record_header']['job_expiration_date'].") cannot exceed the contract date(".$res['data'][0]["end_date"].").");
+					}//end if
+	  			}//end if
+	  			//end get employer default	
+	  			//throw new \Exception("Error Processing Request2", 1);
+				//---------------------------------check if job expiration date exceeded contract date---------------------------------
+
+				//---------------------------------check job expiration date if greater than 4---------------------------------
+				// $difference 	= 0;
+				// $today 			= date('n/j/Y');
+				// if(strtotime($data['record_header']['job_expiration_date']) < strtotime($today)){
+				// 	throw new \Exception("Back date is not allowed.");
+				// }
+				// $difference     = $this->lib->date_diff($today,$data['record_header']['job_expiration_date']);
+				// if($difference["month"] >= 4){
+				// 	if($difference["day"] > 0){
+				// 		throw new \Exception("Max validty for job expiration is 4 months.");
+				// 	}
+				// }
+				//---------------------------------check job expiration date if greater than 4---------------------------------
+
+				//---------------------------------check if with applicant---------------------------------
+				$data["dup_table"] 		= "job_post_applicant";
+				$data["dup_filter"] 	= "id = '".$data['record_header']['id']."'";
+				$res 				= $this->model->check_applicant($data);
+				
+				if($res['data'][0]['result'] > 0){
+					//throw new \Exception("This job post has ".$res['data'][0]['result']." applicant(s), editing is not allowed.");
+				}//end if
+				//---------------------------------check if with applicant---------------------------------
+
+				//---------------------------------check if paused---------------------------------
+				$data["user_id"] 		= $this->session->get('userid');
+				$res 				= $this->model->check_employer_status($data);
+				if((int)$res['data'][0]['paused']){
+					// throw new \Exception("This employer contract has been paused!");
+					throw new \Exception("The account is temporarily on hold.\nPlease contact sales@hoteleers.com for details.");
+				}//end if
+				//---------------------------------check if paused---------------------------------
+			
+
+				if(isset($data['record_header']['perks_and_benefits'])){
+					$perks_and_benefits = json_encode($data['record_header']['perks_and_benefits']);
+					unset($data['record_header']['perks_and_benefits']);
+					$data['record_header']['perks_and_benefits'] = $perks_and_benefits;
+				}else{
+					$data['record_header']['perks_and_benefits'] = '[""]';
+				}//end if
+				$data['record_header']['employer'] 				= $this->session->get('employer');
+				$data['record_header']['vacancies_placeholder'] = $data['record_header']['vacancies'];
+
+				if($data['record_header']["id"] > 0){
+					if((int)$param['isActive']){
+						//---------------------------------check if already 48 hours posted to disable editing and deleting---------------------------------
+						$res = $this->model->get_current_job_post($data);
+						if(!$res["success"]){
+							throw new \Exception($res["message"]);
+						}//end if
+						
+						if($res["data"][0]['date_posted_diff'] > 2){
+							throw new \Exception('This job post has been published for more than 48 hours! Deleting/editing is not allowed.');
+						}//end if
+						//---------------------------------check if already 48 hours posted to disable editing and deleting---------------------------------
+					}//end if
+					
+
+					
+					//---------------------------------update record---------------------------------
+
+					//---------------------------------Set Audit Trail---------------------------------
+					$header_keys 	= array_keys($data['record_header']);
+					$audit_res 			= $this->audit_trail->get_current_header_record($data['record_header']['id'],$data['table_name']);
+					
+					for ($i = 0; $i <= count($header_keys) - 1; $i++) {
+						if($data['record_header'][$header_keys[$i]] != $audit_res[0][$header_keys[$i]]){
+							$data['audit'][] = array(
+								'user_id' 	  				=> $this->session->get('userid'),
+								'action' 					=> 'updated',
+								'record_id' 				=> $data['record_header']['id'],
+								'record_type' 				=> $this->record_type,
+								'record_field' 				=> $header_keys[$i],
+								'record_field_old_value' 	=> $audit_res[0][$header_keys[$i]],
+								'record_field_new_value' 	=> $data['record_header'][$header_keys[$i]]
+							);
+						}//End if
+					}//End for
+					//---------------------------------Set Audit Trail---------------------------------
+					$res 		= $this->model->update_record($data);		
+					if(!$res['success']){
+						throw new \Exception($res['message']);
+					}//end if
+					$data['response'] = array(
+						'id' => $res['data']['id']
+					);
+					//---------------------------------update record---------------------------------
+				}else{
+					
+					// return json_encode($data);
+					//---------------------------------add record---------------------------------
+					$data['record_header']['created_by'] 			= $this->session->get('userid');
+					$res 		= $this->model->add_record($data);		
+					// $last_query = $this->db->getLastQuery();
+            		// echo json_encode($res);
+					// return;
+					if(!$res['success']){
+						throw new \Exception($res['message']);
+					}//end if
+					//end add record
+
+					$data['response'] = array(
+						'id' => $res['data']['id']
+					);
+
+					//---------------------------------Audit Trail---------------------------------
+					$data['audit'][] = array(
+						'record_id' 		=> $res['data']['id'],
+						'user_id' 	  		=> $this->session->get('userid'),
+						'action' 			=> 'created',
+						'record_type' 		=> $this->record_type
+					);
+					//---------------------------------Audit Trail---------------------------------
+					//---------------------------------add record---------------------------------
+				}//end if
+		
+				
+				//---------------------------------Insert Audit Trail header---------------------------------
+				if(count($data['audit']) > 0){
+					$audit_res 			= $this->audit_trail->add($data);
+					if(!$audit_res){
+						throw new \Exception("Error on creating audit trail.");
+					}//End if
+				}//End if
+				$data['audit']   = array();
+				//---------------------------------Insert Audit Trail header---------------------------------
+
+
+			    $validator['success'] 		= true;
+				$validator['messages'][] 	= array("success" => "Successfully completed.");
+			    $validator['data'] 			= $data['response'];  	
+			
+				
+			}catch (\Exception $e) {
+				$validator['success'] 		= false;
+				$validator['messages'][] 	= array("exception" => $e->getMessage());
+				
+			}//End try	
+			
+		}else{
+			$validator['success'] 		= false;
+			$validator['messages'][] 	= $this->validation->getErrors();
+		}//end if
+		echo json_encode($validator);
+	
+    }//end function
+
 	public function check_account_status(){
 		$validator['success'] 		= true;
 

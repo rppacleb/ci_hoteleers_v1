@@ -297,6 +297,7 @@
                         
                         <a id="side_employers" class="nav-link text-muted d-none" href="<?php echo base_url('employer/'); ?>"><small><i class="fa fa-user-circle" aria-hidden="true"></i> Employers</small></a>
                         <a id="side_homepage_banner" class="nav-link text-muted" href="<?php echo base_url('homepage_banner/'); ?>"><small><i class="fa fa-image" aria-hidden="true"></i> Homepage Banner</small></a>
+                        <a id="side_app_settings" class="nav-link text-muted" href="<?php echo base_url('app_settings/'); ?>"><small><i class="fa fa-cog" aria-hidden="true"></i> App Settings</small></a>
 
                         <a id="side_manage_dropdown" class="nav-link text-muted" href="<?php echo base_url('manage_dropdown/'); ?>"><small><i class="fa fa-list" aria-hidden="true"></i> Manage dropdown lists</small></a>
                         <!--<a class="nav-link text-muted" href="#" data-toggle="collapse" data-target="#collapseOne"><small><i class="fa fa-cogs" aria-hidden="true"></i> Administration</small></a>

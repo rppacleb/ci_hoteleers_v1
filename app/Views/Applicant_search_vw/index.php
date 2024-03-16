@@ -688,7 +688,7 @@ $job_post_id = !isset($_GET['job_post'])? "" : $_GET['job_post'];
            
 
           
-            <button class="btn-pill-sm-no-brdr btn-primary text-white btn_add btn-sm btn_submit" type="button" aria-type="Company">Submit</button>
+            <!-- <button class="btn-pill-sm-no-brdr btn-primary text-white btn_add btn-sm btn_submit" type="button" aria-type="Company">Submit</button> -->
         </div><!--./text-right-->
     </div><!--./col-->
 </div><!--./row-->

@@ -1,8 +1,8 @@
 $(document).ready(function () {
   //highlight
-  $("#side_homepage_banner").removeClass("text-muted");
-  $("#side_homepage_banner").addClass("active");
-  $("#side_homepage_banner").css({
+  $("#side_app_settings").removeClass("text-muted");
+  $("#side_app_settings").addClass("active");
+  $("#side_app_settings").css({
     opacity: 0.8,
     "background-color": "rgb(0, 41, 170)",
   });
@@ -52,7 +52,7 @@ $(document).ready(function () {
   //=====================================================================================================================
   //submit
   $(document.body).on("click", "button.btn_submit", function (e) {
-    var view_url = homeurl;
+    var view_url = "app_settings";
 
     var id = $(this).attr("aria-id");
     var btn = $(this);

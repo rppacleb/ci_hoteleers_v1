@@ -266,13 +266,12 @@ class Insight_model extends Model {
                             FROM ojob_post t0
                             INNER JOIN oemployer t1
                             ON t0.employer = t1.id
-                            WHERE (t0.inactive = true
+                            WHERE (
+                            t0.inactive = true
                             OR t0.status = 'closed'
-                            OR t0.vacancies <= 0
                             OR DATE_ADD((STR_TO_DATE(t0.job_expiration_date,'%m/%d/%Y')), INTERVAL 30 DAY) <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y'),'%m/%d/%Y')
                             OR (STR_TO_DATE(remove_on,'%m/%d/%Y %h:%i %p') <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p'),'%m/%d/%Y %h:%i %p'))
-
-                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t0.id) > 0
+                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t0.id) > 0 AND t0.vacancies <= 0
                             ";
             }else if($type == 'deactivated'){
                 $qrystr     = "SELECT t1.doc_image,
@@ -303,11 +302,9 @@ class Insight_model extends Model {
                             ON t0.employer = t1.id
                             WHERE (t0.inactive = true
                             OR t0.status = 'closed'
-                            OR t0.vacancies <= 0
                             OR DATE_ADD((STR_TO_DATE(t0.job_expiration_date,'%m/%d/%Y')), INTERVAL 30 DAY) <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y'),'%m/%d/%Y')
                             OR (STR_TO_DATE(remove_on,'%m/%d/%Y %h:%i %p') <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p'),'%m/%d/%Y %h:%i %p'))
-
-                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t0.id) <= 0
+                            ) AND t0.vacancies != 0
                             ";
             }//end if
             
@@ -332,7 +329,7 @@ class Insight_model extends Model {
                 //$qrystr .= " LIMIT ".$perPage." OFFSET ".$offset."";
             }//end if
 
-            $qrystr .= " LIMIT 3";
+            // $qrystr .= " LIMIT 3";
 
             $query      				= $this->db->query($qrystr);
             $response['num_rows']   	= $query->getNumRows();
@@ -453,10 +450,9 @@ class Insight_model extends Model {
                         AND t2.employer = '".$request['employer_id']."'
                        AND (t2.inactive = true
                             OR t2.status = 'closed'
-                            OR t2.vacancies <= 0
                             OR DATE_ADD((STR_TO_DATE(t2.job_expiration_date,'%m/%d/%Y')), INTERVAL 30 DAY) <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y'),'%m/%d/%Y')
                             OR (STR_TO_DATE(remove_on,'%m/%d/%Y %h:%i %p') <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p'),'%m/%d/%Y %h:%i %p'))
-                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t2.id) > 0
+                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t2.id) > 0 AND t2.vacancies <= 0
                         GROUP BY 'applicant'
                        UNION ALL
                        SELECT 'job_post' AS 'counter_type',
@@ -465,10 +461,9 @@ class Insight_model extends Model {
                        WHERE t0.employer = '".$request['employer_id']."' 
                        AND (t0.inactive = true
                             OR t0.status = 'closed'
-                            OR t0.vacancies <= 0
                             OR DATE_ADD((STR_TO_DATE(t0.job_expiration_date,'%m/%d/%Y')), INTERVAL 30 DAY) <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y'),'%m/%d/%Y')
                             OR (STR_TO_DATE(remove_on,'%m/%d/%Y %h:%i %p') <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p'),'%m/%d/%Y %h:%i %p'))
-                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t0.id) > 0
+                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t0.id) > 0 AND t0.vacancies <= 0
 
                        UNION ALL
                        SELECT 'short_listed' AS 'counter_type',
@@ -485,10 +480,9 @@ class Insight_model extends Model {
                        AND t0.status = 'short listed'
                        AND (t2.inactive = true
                             OR t2.status = 'closed'
-                            OR t2.vacancies <= 0
                             OR DATE_ADD((STR_TO_DATE(t2.job_expiration_date,'%m/%d/%Y')), INTERVAL 30 DAY) <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y'),'%m/%d/%Y')
                             OR (STR_TO_DATE(remove_on,'%m/%d/%Y %h:%i %p') <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p'),'%m/%d/%Y %h:%i %p'))
-                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t2.id) > 0
+                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t2.id) > 0 AND t2.vacancies <= 0
                         GROUP BY 'short_listed'
                        UNION ALL
                        SELECT 'for_interview' AS 'counter_type',
@@ -505,10 +499,9 @@ class Insight_model extends Model {
                        AND t0.status = 'for interview'
                         AND (t2.inactive = true
                             OR t2.status = 'closed'
-                            OR t2.vacancies <= 0
                             OR DATE_ADD((STR_TO_DATE(t2.job_expiration_date,'%m/%d/%Y')), INTERVAL 30 DAY) <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y'),'%m/%d/%Y')
                             OR (STR_TO_DATE(remove_on,'%m/%d/%Y %h:%i %p') <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p'),'%m/%d/%Y %h:%i %p'))
-                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t2.id) > 0
+                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t2.id) > 0 AND t2.vacancies <= 0
                         GROUP BY 'for_interview'
                        UNION ALL
                        SELECT 'offered' AS 'counter_type',
@@ -525,10 +518,9 @@ class Insight_model extends Model {
                        AND t0.status = 'offered'
                         AND (t2.inactive = true
                             OR t2.status = 'closed'
-                            OR t2.vacancies <= 0
                             OR DATE_ADD((STR_TO_DATE(t2.job_expiration_date,'%m/%d/%Y')), INTERVAL 30 DAY) <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y'),'%m/%d/%Y')
                             OR (STR_TO_DATE(remove_on,'%m/%d/%Y %h:%i %p') <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p'),'%m/%d/%Y %h:%i %p'))
-                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t2.id) > 0
+                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t2.id) > 0 AND t2.vacancies <= 0
 
                         GROUP BY 'offered'
 
@@ -547,11 +539,9 @@ class Insight_model extends Model {
                         AND t2.employer = '".$request['employer_id']."' 
                        AND (t2.inactive = true
                             OR t2.status = 'closed'
-                            OR t2.vacancies <= 0
                             OR DATE_ADD((STR_TO_DATE(t2.job_expiration_date,'%m/%d/%Y')), INTERVAL 30 DAY) <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y'),'%m/%d/%Y')
                             OR (STR_TO_DATE(remove_on,'%m/%d/%Y %h:%i %p') <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p'),'%m/%d/%Y %h:%i %p'))
-
-                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t2.id) <= 0
+                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t2.id) <= 0 AND t2.vacancies != 0
                         GROUP BY 'applicant'
                        UNION ALL
                        SELECT 'job_post' AS 'counter_type',
@@ -560,11 +550,10 @@ class Insight_model extends Model {
                        WHERE t0.employer = '".$request['employer_id']."' 
                        AND (t0.inactive = true
                             OR t0.status = 'closed'
-                            OR t0.vacancies <= 0
                             OR DATE_ADD((STR_TO_DATE(t0.job_expiration_date,'%m/%d/%Y')), INTERVAL 30 DAY) <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y'),'%m/%d/%Y')
                             OR (STR_TO_DATE(remove_on,'%m/%d/%Y %h:%i %p') <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p'),'%m/%d/%Y %h:%i %p'))
 
-                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t0.id) <= 0
+                            ) AND t0.vacancies != 0
                         GROUP BY 'job_post'
                        UNION ALL
                        SELECT 'short_listed' AS 'counter_type',
@@ -582,11 +571,9 @@ class Insight_model extends Model {
                        
                        AND (t2.inactive = true
                             OR t2.status = 'closed'
-                            OR t2.vacancies <= 0
                             OR DATE_ADD((STR_TO_DATE(t2.job_expiration_date,'%m/%d/%Y')), INTERVAL 30 DAY) <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y'),'%m/%d/%Y')
                             OR (STR_TO_DATE(remove_on,'%m/%d/%Y %h:%i %p') <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p'),'%m/%d/%Y %h:%i %p'))
-
-                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t2.id) <= 0
+                            ) AND t2.vacancies != 0
                         GROUP BY 'short_listed'
                        UNION ALL
                        SELECT 'for_interview' AS 'counter_type',
@@ -604,11 +591,10 @@ class Insight_model extends Model {
                        
                         AND (t2.inactive = true
                             OR t2.status = 'closed'
-                            OR t2.vacancies <= 0
                             OR DATE_ADD((STR_TO_DATE(t2.job_expiration_date,'%m/%d/%Y')), INTERVAL 30 DAY) <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y'),'%m/%d/%Y')
                             OR (STR_TO_DATE(remove_on,'%m/%d/%Y %h:%i %p') <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p'),'%m/%d/%Y %h:%i %p'))
 
-                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t2.id) <= 0
+                            ) AND t2.vacancies != 0
                         GROUP BY 'for_interview'
                        UNION ALL
                        SELECT 'offered' AS 'counter_type',
@@ -626,11 +612,10 @@ class Insight_model extends Model {
                        
                         AND (t2.inactive = true
                             OR t2.status = 'closed'
-                            OR t2.vacancies <= 0
                             OR DATE_ADD((STR_TO_DATE(t2.job_expiration_date,'%m/%d/%Y')), INTERVAL 30 DAY) <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y'),'%m/%d/%Y')
                             OR (STR_TO_DATE(remove_on,'%m/%d/%Y %h:%i %p') <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p'),'%m/%d/%Y %h:%i %p'))
 
-                            ) AND (SELECT COUNT(DISTINCT(user_id)) FROM job_post_applicant WHERE id = t2.id) <= 0
+                            ) AND t2.vacancies != 0
 
                         GROUP BY 'offered'
 
@@ -639,6 +624,9 @@ class Insight_model extends Model {
         
         $query                      = $this->db->query($qrystr);
         $response['num_rows']       = $query->getNumRows();
+        // $last_query = $this->db->getLastQuery();
+        // echo $last_query;
+        // echo json_encode($request);
         if($query->getNumRows() > 0){
             $response['data']       = $query->getResultArray();   
         }//end if

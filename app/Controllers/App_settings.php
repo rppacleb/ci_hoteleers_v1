@@ -4,7 +4,7 @@ namespace App\Controllers;
 use App\Models\Homepage_banner_model;
 use App\Models\Audit_trail_model;
 use App\Libraries\Pcl_lib;
-class Homepage_banner extends BaseController{
+class App_settings extends BaseController{
 	protected $model;
 	protected $session;
 	protected $audit_trail;
@@ -44,9 +44,9 @@ class Homepage_banner extends BaseController{
   			}//end if
   	
     		$response['type'] = $type;
-    		$response['page'] = 'banner';
+    		$response['page'] = 'settings';
   			
-			return view('Homepage_banner/index',$response);
+			return view('App_settings/index',$response);
   		}//end if
         
     }//end function

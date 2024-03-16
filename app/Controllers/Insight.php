@@ -62,7 +62,7 @@ class Insight extends BaseController{
 			$res 	= $this->model->get_counter($request);
 			if($res['num_rows'] > 0){
 				$param['counter_data_active'] = $res['data'];
-			}//end if
+			}
 
 			//get counter
   			$request['type'] 		= 'closed';

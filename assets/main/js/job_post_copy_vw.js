@@ -209,7 +209,6 @@ $(document).ready(function () {
 
     btn_text = "Publish";
     $("input[name=header\\[inactive\\]]").val(0);
-
     if (confirm("Are you sure you want to publish this record?")) {
       $.ajax({
         url: url,
@@ -224,6 +223,9 @@ $(document).ready(function () {
       })
         .done(function (data) {
           //alert(Object.keys(data.messages).length);
+
+          // console.log(data);
+          // return;
           if (data.success === true) {
             var msg_html = "";
             var arr = [];

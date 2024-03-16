@@ -135,7 +135,7 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
 
 
             }//end if
-            $hired_total_vacancies = ($value['total_applicant_count'] == null? 0 : $value['total_applicant_count'])  . ' / ' .$value['total_vacancies'];
+            $hired_total_vacancies = ($value['total_applicant_count'] == null? 0 : $value['total_applicant_count']);
           
             if($value['total_job_post_views'] !== null){
               $hired_total_job_post_views = $value['total_job_post_views'];
@@ -361,7 +361,7 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
 		</div><!--./row-->
     <div class="row">
       <div class="col">
-        <p class="text-right"><a href="<?php echo base_url('insight_all?view_type=active') ?>" class="text-link">View All Active Job Post</a></p>
+        <!-- <p class="text-right"><a href="<?php echo base_url('insight_all?view_type=active') ?>" class="text-link">View All Active Job Post</a></p> -->
       </div><!--./col-->
     </div>
 
@@ -529,7 +529,7 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
 
     <div class="row">
       <div class="col">
-        <p class="text-right"><a href="<?php echo base_url('insight_all?view_type=hired') ?>" class="text-link">View All Hired Jobs</a></p>
+        <!-- <p class="text-right"><a href="<?php echo base_url('insight_all?view_type=hired') ?>" class="text-link">View All Hired Jobs</a></p> -->
       </div><!--./col-->
     </div>
 
@@ -575,14 +575,14 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
         </div>
     </div>
 
-    <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 col-xs-12 aj-countercol" style="min-width:2in;">
+    <!-- <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 col-xs-12 aj-countercol" style="min-width:2in;">
         <div class="card mb-3">
           <div class="card-body">
             <h6 class="card-title text-muted">HIRED</h6>
             <h3 id="insight_applicant_counter" class="card-text text-left text-primary"><?php echo $deactivated_total_vacancies?></h3>
           </div>
         </div>
-    </div>
+    </div> -->
 
     <div class="col-xl-2 col-lg-2 col-md-3 col-sm-6 col-xs-12 aj-countercol" style="min-width:2in;">
         <div class="card mb-3">
@@ -685,7 +685,7 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
 
     <div class="row">
       <div class="col">
-        <p class="text-right"><a href="<?php echo base_url('insight_all?view_type=deactivated ') ?>" class="text-link">View All Deactivated Jobs</a></p>
+        <!-- <p class="text-right"><a href="<?php echo base_url('insight_all?view_type=deactivated ') ?>" class="text-link">View All Deactivated Jobs</a></p> -->
       </div><!--./col-->
     </div>
 	</div><!--./col-->

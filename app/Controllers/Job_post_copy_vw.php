@@ -300,7 +300,6 @@ class Job_post_copy_vw extends BaseController{
     	$validator 			= [];
     	$data 				= array();
     	$param 				= $this->request->getVar();
-
     	
     	
     	$rules = [
@@ -401,10 +400,6 @@ class Job_post_copy_vw extends BaseController{
 
         if ($this->validate($rules)){
 			try{
-				
-
-				
-
 				define('DS', DIRECTORY_SEPARATOR);
 				$data['response'] 				= array();
 
@@ -479,9 +474,6 @@ class Job_post_copy_vw extends BaseController{
 					
 				}//end if
 				//end check job expiration date if greater than 4
-
-				
-
 				
 				//check if with applicant
 				if($param['placeholder']['type'] == 'edit'){
@@ -513,14 +505,9 @@ class Job_post_copy_vw extends BaseController{
 				$data['record_header']['employer'] 					= $this->session->get('employer');
 				$data['record_header']['vacancies_placeholder'] 	= $data['record_header']['vacancies'];
 				
-				
-				
-				
-				
 
 				
 				if($param['placeholder']['type'] == 'edit'){
-
 
 					//check if already 48 hours posted to disable editing and deleting
 					$res = $this->model->get_current_job_post($data);
@@ -571,11 +558,12 @@ class Job_post_copy_vw extends BaseController{
 					//--------------------------------------------------------------------------------------------------
 					//end update record
 				}else{
-
 					$data['record_header']['created_by'] 				= $this->session->get('userid');
-					
-
 					unset($data['record_header']['id']);
+
+					
+					// return json_encode($data);
+
 
 					//add record
 					//--------------------------------------------------------------------------------------------------
