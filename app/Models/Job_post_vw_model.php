@@ -510,18 +510,18 @@ class Job_post_vw_model extends Model {
 
         
         //--------------------------------add template--------------------------------
-        $builder = $this->db->table("ojob_post_template");
-        $builder->insert($data['record_header']);
-        $template_id = $this->db->insertID();
+        // $builder = $this->db->table("ojob_post_template");
+        // $builder->insert($data['record_header']);
+        // $template_id = $this->db->insertID();
         //--------------------------------add template--------------------------------
 
-        if(!$data['record_header']['inactive']){
+        if(!$data['record_header']['inactive'] && $data['table_name'] == 'ojob_post'){
             $this->db->query("UPDATE ".$data['table_name']." SET date_posted = DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p')
                              WHERE id = '".$id."'");
 
             //--------------------------------update template--------------------------------
-            $this->db->query("UPDATE ojob_post_template SET date_posted = DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p')
-                            WHERE id = '".$template_id."'");
+            // $this->db->query("UPDATE ojob_post_template SET date_posted = DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p')
+            //                 WHERE id = '".$template_id."'");
             //--------------------------------update template--------------------------------
         }//end if
 
