@@ -516,7 +516,7 @@ class Job_post_vw_model extends Model {
         //--------------------------------add template--------------------------------
 
         if(!$data['record_header']['inactive'] && $data['table_name'] == 'ojob_post'){
-            $this->db->query("UPDATE ".$data['table_name']." SET date_posted = '".$data['record_header']['job_start_date']." '.DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p')
+            $this->db->query("UPDATE ".$data['table_name']." SET date_posted = ".$data['record_header']['job_start_date'].".DATE_FORMAT(NOW(),'%m/%d/%Y %h:%i %p')
                   WHERE id = '".$id."'");
 
             //--------------------------------update template--------------------------------
