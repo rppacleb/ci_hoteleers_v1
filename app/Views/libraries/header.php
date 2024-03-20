@@ -17,8 +17,8 @@
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
 		<!-- Add this within the head section of your HTML template -->
-		<link rel="icon" href="<?= base_url('assets/favicon.jpg') ?>" type="image/x-icon">
-		<link rel="shortcut icon" href="<?= base_url('assets/favicon.jpg') ?>" type="image/x-icon">
+		<link rel="icon" href="<?= base_url('assets/favicon.png') ?>" type="image/x-icon">
+		<link rel="shortcut icon" href="<?= base_url('assets/favicon.png') ?>" type="image/x-icon">
 
 
 
