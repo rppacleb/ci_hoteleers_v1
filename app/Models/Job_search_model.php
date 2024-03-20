@@ -69,6 +69,7 @@ class Job_search_model extends Model {
                             ON t0.id = t3.job_post
                             AND t3.id = ".$request['user_id']."
                             WHERE t0.inactive = false
+                            AND STR_TO_DATE(t0.job_start_date,'%m/%d/%Y') <= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y'),'%m/%d/%Y')
                             AND STR_TO_DATE(t0.job_expiration_date,'%m/%d/%Y') >= STR_TO_DATE(DATE_FORMAT(NOW(),'%m/%d/%Y'),'%m/%d/%Y')
                             AND (t0.remove_on IS NULL OR t0.remove_on = '')
                             AND t0.vacancies > 0
