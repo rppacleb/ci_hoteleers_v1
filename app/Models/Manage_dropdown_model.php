@@ -106,7 +106,8 @@ class Manage_dropdown_model extends Model {
             //}else{
                 $qrystr     = "SELECT t0.* 
                                 FROM o".$param["type"]." t0
-                                WHERE t0.name IN ?";
+                                WHERE t0.created_by = '".$param['user_id']."'
+                                AND t0.name IN ?";
             //}
             
 
@@ -185,7 +186,7 @@ class Manage_dropdown_model extends Model {
             //}else{
                 $qrystr     = "SELECT t0.* 
                                 FROM o".$param["type"]." t0
-                                WHERE t0.id IN(SELECT id FROM operks_and_benefits_removed WHERE user_id = '".$param['user_id']."') 
+                                WHERE t0.created_by = '".$param['user_id']."'
                                 AND t0.name IN ?";
             //}
             
@@ -203,6 +204,8 @@ class Manage_dropdown_model extends Model {
            
             $query                      = $this->db->query($qrystr,[$param["names"]]);
             $response['num_rows']       = $query->getNumRows();
+            // $last_query = $this->db->getLastQuery();
+            // echo $last_query;
             if($query->getNumRows() > 0){
                 $response['data']       = $query->getResultArray();   
             }//end if

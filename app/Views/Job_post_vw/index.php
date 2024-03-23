@@ -46,9 +46,9 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
             <?php } ?>
             <?php if($type == 'add'){?>
                 <!-- <a href="<?php echo base_url('job_post/') ?>" class="btn mr-4 btn-pill-sm btn-pill-sm-outline-light-2x text-primary">See Drafts</a> -->
-                <button class="btn mr-2 btn-pill-sm btn-pill-sm-outline-light-2x text-primary btn_cancel" type="button">Cancel</button>
+                <!-- <button class="btn mr-2 btn-pill-sm btn-pill-sm-outline-light-2x text-primary btn_cancel" type="button">Cancel</button> -->
             <?php } ?>
-            <button class="btn-pill-sm-no-brdr btn-primary text-white btn_add btn-sm btn_submit" type="button" aria-type="Company">Publish</button>
+            <!-- <button class="btn-pill-sm-no-brdr btn-primary text-white btn_add btn-sm btn_submit" type="button" aria-type="Company">Publish</button> -->
 		</div><!--./text-right-->
 	</div><!--./col-->
 	
@@ -326,12 +326,11 @@ var country_dial_code           = <?php echo json_encode($country_dial_code["dat
             <?php if($type == 'view'){?>
                 <a href="<?php echo base_url('job_post/edit/'.$id.'') ?>" class="btn mr-4 btn-pill-sm btn_edit btn_orange">Edit</a>
             <?php } ?>
-            <?php if($type == 'add'){?>
+            <?php if($type == 'add' || $type == 'edit'){?>
                 <button class="btn mr-4 btn-pill-sm btn-pill-sm-outline-light-2x text-primary btn_draft" type="button">Save as Draft</button>
             <?php } ?>
 
         </div>
-
         
     </div><!--./col-->
     <div class="col">

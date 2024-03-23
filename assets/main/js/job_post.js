@@ -526,6 +526,9 @@ $(document).ready(function () {
     var url = homeurl;
     url += "/delete_data/?id=" + id;
 
+    console.log(url);
+    return;
+
     var prompt_message = "";
     if (daysPosted !== null && daysPosted !== undefined && daysPosted > 2) {
       prompt_message =

@@ -328,12 +328,6 @@ $(document).ready(function () {
     data.header.username = $(this).attr("aria-username");
 
     btn_text = "Publish";
-
-    if (parseInt(isActive)) {
-      btn_text = "Publish";
-    } else {
-      btn_text = "Save Draft";
-    } //end if
     $("input[name=header\\[inactive\\]]").val(0);
 
     if (confirm("Are you sure you want to publish this record?")) {
@@ -343,13 +337,15 @@ $(document).ready(function () {
         data: $("#frm_data_entry").serialize() + "&isActive=" + isActive,
         dataType: "JSON",
         beforeSend: function () {
-          $(".outside_button *").css("pointer-events", "none");
-          btn.text("Processing...");
-          btn.attr("disabled", "disabled");
+          // $(".outside_button *").css("pointer-events", "none");
+          // btn.text("Processing...");
+          // btn.attr("disabled", "disabled");
         },
       })
         .done(function (data) {
           //alert(Object.keys(data.messages).length);
+          // console.log(data);
+          // return;
           if (data.success === true) {
             var msg_html = "";
             var arr = [];
@@ -428,7 +424,6 @@ $(document).ready(function () {
     btn_text = "Submit";
 
     var to_save = false;
-
     if (
       $.trim(
         $("#frm_" + type)
@@ -454,6 +449,8 @@ $(document).ready(function () {
       })
         .done(function (data) {
           //alert(Object.keys(data.messages).length);
+          // console.log(data);
+          // return;
           if (data.success === true) {
             // The order of this function call is important to
             // properly rerender the previously selected "perks and benefits".
@@ -953,11 +950,7 @@ $(document).ready(function () {
           var data = response.data[0];
 
           if (param.mode == "edit" || param.mode == "view") {
-            if (parseInt(isActive)) {
-              btn_text = "Publish";
-            } else {
-              btn_text = "Save Draft";
-            } //end if
+            btn_text = "Publish";
 
             //view and edit mode
             //----------------------------------------------------------------------------------------------------

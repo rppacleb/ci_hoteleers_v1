@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\Job_post_vw_model;
+use App\Models\Job_post_model;
 use App\Models\Audit_trail_model;
 use App\Libraries\Pcl_lib;
 class Job_post_vw extends BaseController{
@@ -15,6 +16,7 @@ class Job_post_vw extends BaseController{
 	public function __construct(){
 		$this->lib 				= new Pcl_lib();
 		$this->model 			= new Job_post_vw_model();
+		$this->modeljp 			= new Job_post_model();
 		$this->audit_trail 		= new Audit_trail_model();
 		$this->record_type 		= 'job_post';
 		$this->session 			= session();
@@ -448,12 +450,7 @@ class Job_post_vw extends BaseController{
 			try{
 				define('DS', DIRECTORY_SEPARATOR);
 				$data['response'] 				= array();
-				if((int)$param['isActive']){
-					$data['table_name'] 			= 'ojob_post';
-				}else{
-					$data['table_name'] 			= 'ojob_post_template';
-				}//end if
-				
+				$data['table_name'] 			= 'ojob_post';
 				$data['record_header'] 			= $param['header'];
 				$data['record_lines'] 			= array();
 				$data['audit'] 					= array();
@@ -541,78 +538,44 @@ class Job_post_vw extends BaseController{
 				$data['record_header']['employer'] 				= $this->session->get('employer');
 				$data['record_header']['vacancies_placeholder'] = $data['record_header']['vacancies'];
 
+				
 				if($data['record_header']["id"] > 0){
-					if((int)$param['isActive']){
-						//---------------------------------check if already 48 hours posted to disable editing and deleting---------------------------------
-						$res = $this->model->get_current_job_post($data);
-						if(!$res["success"]){
-							throw new \Exception($res["message"]);
-						}//end if
-						
-						if($res["data"][0]['date_posted_diff'] > 2){
-							throw new \Exception('This job post has been published for more than 48 hours! Deleting/editing is not allowed.');
-						}//end if
-						//---------------------------------check if already 48 hours posted to disable editing and deleting---------------------------------
-					}//end if
+					$data['table_name'] = 'ojob_post_template';
+					$delres = $this->modeljp->delete_record($data);
+					// echo json_encode($delres); 
+				}
 					
-
-					
-					//---------------------------------update record---------------------------------
-
-					//---------------------------------Set Audit Trail---------------------------------
-					$header_keys 	= array_keys($data['record_header']);
-					$audit_res 			= $this->audit_trail->get_current_header_record($data['record_header']['id'],$data['table_name']);
-					
-					for ($i = 0; $i <= count($header_keys) - 1; $i++) {
-						if($data['record_header'][$header_keys[$i]] != $audit_res[0][$header_keys[$i]]){
-							$data['audit'][] = array(
-								'user_id' 	  				=> $this->session->get('userid'),
-								'action' 					=> 'updated',
-								'record_id' 				=> $data['record_header']['id'],
-								'record_type' 				=> $this->record_type,
-								'record_field' 				=> $header_keys[$i],
-								'record_field_old_value' 	=> $audit_res[0][$header_keys[$i]],
-								'record_field_new_value' 	=> $data['record_header'][$header_keys[$i]]
-							);
-						}//End if
-					}//End for
-					//---------------------------------Set Audit Trail---------------------------------
-					$res 		= $this->model->update_record($data);		
-					if(!$res['success']){
-						throw new \Exception($res['message']);
-					}//end if
-					$data['response'] = array(
-						'id' => $res['data']['id']
-					);
-					//---------------------------------update record---------------------------------
-				}else{
-					
-					//---------------------------------add record---------------------------------
-					$data['record_header']['created_by'] 			= $this->session->get('userid');
-					$res 		= $this->model->add_record($data);		
-					// $last_query = $this->db->getLastQuery();
-            		// echo json_encode($res);
-					// return;
-					if(!$res['success']){
-						throw new \Exception($res['message']);
-					}//end if
-					//end add record
-
-					$data['response'] = array(
-						'id' => $res['data']['id']
-					);
-
-					//---------------------------------Audit Trail---------------------------------
-					$data['audit'][] = array(
-						'record_id' 		=> $res['data']['id'],
-						'user_id' 	  		=> $this->session->get('userid'),
-						'action' 			=> 'created',
-						'record_type' 		=> $this->record_type
-					);
-					//---------------------------------Audit Trail---------------------------------
-					//---------------------------------add record---------------------------------
+				//---------------------------------add record---------------------------------
+				$data['record_header']['created_by'] 			= $this->session->get('userid');
+				
+				$data['table_name'] = 'ojob_post';
+				unset($data['record_header']['id']);
+				$res 		= $this->model->add_record($data);	
+				// $last_query = $this->db->getLastQuery();
+				// echo $last_query;	
+				// $last_query = $this->db->getLastQuery();
+				// echo json_encode($res);
+				// return;
+				if(!$res['success']){
+					throw new \Exception($res['message']);
 				}//end if
-		
+				//end add record
+
+				$data['response'] = array(
+					'id' => $res['data']['id']
+				);
+
+				//---------------------------------Audit Trail---------------------------------
+				$data['audit'][] = array(
+					'record_id' 		=> $res['data']['id'],
+					'user_id' 	  		=> $this->session->get('userid'),
+					'action' 			=> 'created',
+					'record_type' 		=> $this->record_type
+				);
+				//---------------------------------Audit Trail---------------------------------
+				//---------------------------------add record---------------------------------
+				
+				
 				
 				//---------------------------------Insert Audit Trail header---------------------------------
 				if(count($data['audit']) > 0){

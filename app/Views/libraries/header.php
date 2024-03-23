@@ -49,7 +49,7 @@
 	  	<script type="text/javascript">
 			var baseurl 					= "<?php echo base_url('') ?>";
 			var curdate 					= "<?php echo date('Y-m-d H:i:s'); ?>";
-			const env = 'staging'
+			const env = 'dev'
 			
 			//var action 			= "<?php //echo isset($action)?$action : ''; ?>";
 			//var id 				= "<?php //echo isset($id)?$id : ''; ?>";
