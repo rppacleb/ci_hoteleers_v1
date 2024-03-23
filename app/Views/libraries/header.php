@@ -47,9 +47,10 @@
 		
 		
 	  	<script type="text/javascript">
+			console.log('Hoteleers V1.2.18')
 			var baseurl 					= "<?php echo base_url('') ?>";
 			var curdate 					= "<?php echo date('Y-m-d H:i:s'); ?>";
-			const env = 'dev'
+			const env = 'staging'
 			
 			//var action 			= "<?php //echo isset($action)?$action : ''; ?>";
 			//var id 				= "<?php //echo isset($id)?$id : ''; ?>";
